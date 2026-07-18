@@ -1,0 +1,73 @@
+# COMMON HUMAN ANNOTATION INSTRUCTIONS
+
+"""
+<ul>
+  <li><strong>Task:</strong> Read the source text and competing translations. Highlight all errors. Rate each translation (each column is an output from a single model/translator). At the end, click <b>Next</b> in top-right corner.</li><br>
+  <li><strong>Highlighting errors:</strong>
+    <ul>
+      <li><strong>Mark errors</strong> by clicking the beginning and then clicking at the end of the erroneous text span. Then assign severity by hovering over the error span.</li>
+      <li>Use <span class="error_minor">minor severity</span> for imperfections or stylistic issues that do not impact the core message (e.g., awkward phrasing).</li>
+      <li>Use <span class="error_major">major severity</span> for errors that confuse meaning, misrepresent the source, or violate the message (e.g., incorrect information, confusing wording).</li>
+      <li><strong>Missing text:</strong> Select the <code style="font-family: monospace">[MISSING]</code> tag if the translation omits important source text.</li>
+      <li><strong>Instruction fault:</strong> If the translation does not follow the specialized evaluation instructions, mark it with the <code style="font-family: monospace">[instructions fault]</code> tag.</li>
+    </ul>
+  </li>
+  <br>
+  <li><strong>Important rules:</strong>
+    <ul>
+      <li><strong>Multiple errors:</strong> Use separate highlights for each error.</li>
+      <li><strong>Hallucinations:</strong> Highlight unsupported extra text; mark as major error.</li>
+      <li><strong>Wrong language:</strong> Highlight the entire text, mark as major error, and assign a score of 0.</li>
+      <li><strong>Consistency:</strong> Check translation consistency (e.g., technical terms) across the document.</li>
+    </ul>
+  </li>
+  <br>
+  <li><strong>Rating scale (0-100%):</strong>
+    <ul>
+      <li><strong>85-100% (Very Good):</strong> Complete meaning transfer; perfectly natural; no or minimal proofreading.</li>
+      <li><strong>65-80% (Good):</strong> Near-complete transfer, minor inaccuracies; mostly natural, minor awkwardness; needs light proofreading.</li>
+      <li><strong>45-60% (Acceptable):</strong> Main ideas conveyed, noticeable inaccuracies or omissions; uneven naturalness, awkward phrasing; usable only after substantial revision.</li>
+      <li><strong>25-40% (Borderline):</strong> Partial transfer; frequent misinterpretation or omission confusing the message; often unnatural; requires major rewrite.</li>
+      <li><strong>0-20% (Not acceptable):</strong> Violation of meaning; large portions mistranslated, missing, or incoherent; unusable without complete retranslation.</li>
+    </ul>
+  </li>
+  <br>
+  <li>For unexpected problems and remarks, use comment box in ⚙️ (top right).</li>
+</ul>
+"""
+
+
+# EDUCATIONAL DOMAIN (CZECH-X ONLY)
+
+## Additional human annotation instructions
+
+"""Translation should be accurate and maintain the instructional nature of the content. Ensure that technical terms are translated correctly and consistently."""
+
+
+# NEWS DOMAIN
+
+## Additional human annotation instructions
+
+"""Ensure the translation is formal and consistent with journalistic standards."""
+
+
+# SOCIAL DOMAIN
+
+## Additional human annotation instructions
+
+"""Spelling mistakes should not be reproduced. Marks of expressiveness that communicate meaningful intent (e.g. enthusiasm through capitalisation or elongation) in a way that is natural should be reproduced in the translation. URLs and user handles should be copied directly rather than being translated. Hashtags should be translated as appropriate for the translation to be natural for social media text. Punctuation of the source text should be followed as best as possible. Translation should be in an informal style, like close friends talking, even if it changes the original tone."""
+
+
+# SOFTWARE DOMAIN (NOT PRESENT IN CZECH-X)
+
+## Additional human annotation instructions
+
+"""Translation should translate the content of the JSON, without translating keys (such as "general.duration.years") and placeholders (e. g. "{{count}}")."""
+
+
+# SPEECH DOMAIN
+
+## Additional human annotation instructions
+
+"""Check the translation maintains the flow and colloquial style of the speaker. Translation should not include non-linguistic sounds (e.g. laughter, groans, hesitation sounds, etc.), but should include interjections. If a word is interrupted, translations should either guess the full word if possible or otherwise omit it. Foreign words should be preserved."""
+

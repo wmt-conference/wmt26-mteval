@@ -1,0 +1,75 @@
+# VARIABLES
+
+SRC = ["Czech", "English", "Chinese, Simplified"]
+
+TRG = ["Arabic, Egyptian", "Belarusian", "Chinese, Simplified", "Chinese, Traditional Taiwan", "Czech", "Eastern Armenian", "Estonian", "German", "Icelandic", "Indonesian", "Japanese", "Kazakh", "Korean", "Ladin, Val Badia, Italy", "Ligurian, Italy", "Northern Sámi", "Russian", "Thai", "Ukrainian", "Vietnamese"]
+
+TRG_CODE = ["arz_Arab", "bel_Cyrl", "zho_Hans", "zho_Hant_TW", "ces_Latn", "hye_Armn", "ekk_Latn", "deu_Latn", "isl_Latn", "ind_Latn", "jpn_Jpan", "kaz_Cyrl", "kor_Hang", "lld_Latn", "lij_Latn", "sme_Latn", "rus_Cyrl", "tha_Thai", "ukr_Cyrl", "vie_Latn"]
+
+
+# EDUCATIONAL DOMAIN (CZECH-X ONLY)
+
+## Baseline LLM translation prompt
+
+"""You are a professional {TRG} translator, tasked with providing translations suitable for use in {TRG} ({TRG_CODE}). Your goal is to accurately convey the meaning and nuances of the original text while adhering to {TRG} grammar and vocabulary and ensuring that the translation is natural. The original {SRC} text consists of biology, chemistry, and geography exercises extracted from an educational web portal for children aged 9-16. Produce only the {TRG} translation, without any additional explanations or commentary. Maintain the HTML formatting of the original source text. Please translate the following text into {TRG} ({TRG_CODE}):"""
+
+## Human translation instructions
+
+"""Your goal is to accurately convey the meaning and nuances of the original text while adhering to {TRG} grammar and vocabulary and ensuring that the translation is natural. The original Czech text consists of biology, chemistry, and geography exercises extracted from an educational web portal for children aged 9-16. Produce only the {TRG} translation, without any additional explanations or commentary. Maintain the HTML formatting of the original source text."""
+
+
+# NEWS DOMAIN
+
+## Baseline LLM translation prompt
+
+"""You are a professional {TRG} translator, tasked with providing translations suitable for use in {TRG} ({TRG_CODE}). Your goal is to accurately convey the meaning and nuances of the original text while adhering to {TRG} grammar and vocabulary and ensuring that the translation is natural. The original text is a news article. Ensure the translation is formal and consistent with journalistic standards. Produce only the {TRG} translation, without any additional explanations or commentary. Maintain the HTML formatting of the original source text. Please translate the following text into {TRG} ({TRG_CODE}):"""
+
+## Human translation instructions
+
+"""Your goal is to accurately convey the meaning and nuances of the original text while adhering to {TRG} grammar and vocabulary and ensuring that the translation is natural. The original text is a news article. Ensure the translation is formal and consistent with journalistic standards. Produce only the {TRG} translation, without any additional explanations or commentary. Maintain the HTML formatting of the original source text."""
+
+
+# SOCIAL DOMAIN
+
+## Baseline LLM translation prompt (text-only)
+
+"""You are a professional {TRG} translator, tasked with providing translations suitable for use in {TRG} ({TRG_CODE}). Your goal is to accurately convey the meaning and nuances of the original text while adhering to {TRG} grammar and vocabulary and ensuring that the translation is natural. The original text is user-generated content from a social media platform. Do not reproduce spelling mistakes. Reproduce marks of expressiveness that communicate meaningful intent (e.g. enthusiasm through capitalisation or elongation) in a way that is natural in {TRG}. Copy URLs and user handles directly rather than translating them. However, translate hashtags as appropriate for the translation to be natural for social media text. Follow the punctuation of the source text as best as possible. Additional punctuation should be added only if not doing so would seriously alter the comprehension of the text. Translate text in an informal style, like close friends talking, even if it changes the original tone. Produce only the {TRG} translation, without any additional explanations or commentary. Maintain the HTML formatting of the original source text. Please translate the following text into {TRG} ({TRG_CODE}):"""
+
+## Baseline LLM translation prompt (multimodal)
+
+"""You are a professional {TRG} translator, tasked with providing translations suitable for use in {TRG} ({TRG_CODE}). Your goal is to accurately convey the meaning and nuances of the original text while adhering to {TRG} grammar and vocabulary and ensuring that the translation is natural. The original text is user-generated content from a social media platform and is accompanied by anonymized screenshot images that provide visual context. Use the screenshot context to resolve ambiguity, but translate only the text provided for translation. Do not reproduce spelling mistakes. Reproduce marks of expressiveness that communicate meaningful intent (e.g. enthusiasm through capitalisation or elongation) in a way that is natural in {TRG}. Copy URLs and user handles directly rather than translating them. However, translate hashtags as appropriate for the translation to be natural for social media text. Follow the punctuation of the source text as best as possible. Additional punctuation should be added only if not doing so would seriously alter the comprehension of the text. Translate text in an informal style, like close friends talking, even if it changes the original tone. Produce only the {TRG} translation, without any additional explanations or commentary. Maintain the HTML formatting of the original source text. Please translate the following text into {TRG} ({TRG_CODE}):"""
+
+## Human translation instructions
+
+"""Your goal is to accurately convey the meaning and nuances of the original text while adhering to {TRG} grammar and vocabulary and ensuring that the translation is natural. The original text is user-generated content from a social media platform. Do not reproduce spelling mistakes. Reproduce marks of expressiveness that communicate meaningful intent (e.g. enthusiasm through capitalisation or elongation) in a way that is natural in {TRG}. Copy URLs and user handles directly rather than translating them. However, translate hashtags as appropriate for the translation to be natural for social media text. Follow the punctuation of the source text as best as possible. Additional punctuation should be added only if not doing so would seriously alter the comprehension of the text. Translate text in an informal style, like close friends talking, even if it changes the original tone. Produce only the {TRG} translation, without any additional explanations or commentary. Maintain the HTML formatting of the original source text."""
+
+
+# SOFTWARE DOMAIN (NOT PRESENT IN CZECH-X)
+
+## Baseline LLM translation prompt
+
+"""You are a professional {TRG} translator, tasked with providing translations suitable for use in {TRG} ({TRG_CODE}). Your goal is to accurately convey the meaning and nuances of the original text while adhering to {TRG} grammar and vocabulary and ensuring that the translation is natural. The original text is from software data. Translate the content of json, without translating keys and placeholders (i.e. copy them rather than translate them). Produce only the {TRG} translation, without any additional explanations or commentary. Produce a valid json output that matches the input format. Please translate the following text into {TRG} ({TRG_CODE}):"""
+
+## Human translation instructions
+
+"""Your goal is to accurately convey the meaning and nuances of the original text while adhering to {TRG} grammar and vocabulary and ensuring that the translation is natural. The original text is from software data. Translate the content of json, without translating keys and placeholders (i.e. copy them rather than translate them). Produce only the {TRG} translation, without any additional explanations or commentary. Produce a valid json output that matches the input format."""
+
+
+# SPEECH DOMAIN
+
+## Baseline LLM translation prompt (text-only)
+
+"""You are a professional {TRG} translator, tasked with providing translations suitable for use in {TRG} ({TRG_CODE}). Your goal is to accurately convey the meaning and nuances of the original text while adhering to {TRG} grammar and vocabulary and ensuring that the translation is natural. The original text is automatically transcribed from spoken language and can contain errors. Maintain the flow and colloquial style of the speaker in the translation. Do not include non-linguistic sounds (e.g. laughter, groans, hesitation sounds, etc.), but do include interjections. If a word is interrupted, either guess the full word if possible or otherwise omit it. Keep foreign words as they are when translating. Produce only the {TRG} translation, without any additional explanations or commentary. Output the text such that each sentence is on a separate line. Please translate the following text into {TRG} ({TRG_CODE}):"""
+
+## Baseline LLM translation prompt (multimodal)
+
+"""You are a professional {TRG} translator, tasked with providing translations suitable for use in {TRG} ({TRG_CODE}). Your goal is to accurately convey the meaning and nuances of the original utterance(s) while adhering to {TRG} grammar and vocabulary and ensuring that the translation is natural. The original data is speech in video format and should be translated to {TRG} text. Maintain the flow and colloquial style of the speaker in the translation. Do not include non-linguistic sounds (e.g. laughter, groans, hesitation sounds, etc.), but do include interjections. If a word is interrupted, either guess the full word if possible or otherwise omit it. Keep foreign words as they are when translating. Produce only the {TRG} translation, without any additional explanations or commentary. Output the text such that each sentence is on a separate line. Please translate it into {TRG} ({TRG_CODE}):"""
+
+## Human translation instructions (text only)
+
+"""Your goal is to accurately convey the meaning and nuances of the original text while adhering to {TRG} grammar and vocabulary and ensuring that the translation is natural. The original text is automatically transcribed from spoken language and can contain errors. Maintain the flow and colloquial style of the speaker in the translation. Do not include non-linguistic sounds (e.g. laughter, groans, hesitation sounds, etc.), but do include interjections. If a word is interrupted, either guess the full word if possible or otherwise omit it. Keep foreign words as they are when translating. Produce only the {TRG} translation, without any additional explanations or commentary. Output the text such that each sentence is on a separate line."""
+
+## Human translation instructions (multimodal)
+
+"""Your goal is to accurately convey the meaning and nuances of the original utterance(s) while adhering to {TRG} grammar and vocabulary and ensuring that the translation is natural. The original data is speech in video format and should be translated to {TRG} text. Maintain the flow and colloquial style of the speaker in the translation. Do not include non-linguistic sounds (e.g. laughter, groans, hesitation sounds, etc.), but do include interjections. If a word is interrupted, either guess the full word if possible or otherwise omit it. Keep foreign words as they are when translating. Produce only the {TRG} translation, without any additional explanations or commentary. Output the text such that each sentence is on a separate line."""
+

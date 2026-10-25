@@ -6,7 +6,8 @@ of `src/wmt26_mteval/__init__.py`.
 ## v0.9: pre-release (date: YYYY-MM-DD, to be set at release)
 
 The first release: typed data configs and documentation. The steps that make the release, among
-them setting the date above, are in [`RELEASE.md`](RELEASE.md).
+them setting the date above, are in [`RELEASE.md`](RELEASE.md). No licence is attached to the data
+or to the code.
 
 ### Added
 
@@ -49,5 +50,4 @@ Planned for v1.0, which also needs the organisers' scoring code:
 
 ### Known issues
 
-- The licence is to be confirmed; the card says `license: other` until it is.
 - Differences between the findings paper and the data are in [`ERRATA.md`](ERRATA.md).

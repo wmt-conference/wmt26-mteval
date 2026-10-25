@@ -1,6 +1,5 @@
 ---
 pretty_name: WMT26 MT-Eval
-license: other
 task_categories:
 - translation
 language:
@@ -89,7 +88,7 @@ This is **v0.9**: typed data configs and documentation.
   and the scoring code.
   The unchanged `grand` config still carries the organisers' raw annotation records in its
   `ground_truth__record` column; see [Human annotations](#human-annotations).
-- The licence is to be confirmed; see [Licence](#licence).
+- No licence is attached to this dataset; see [Licence](#licence).
 
 ## Quick start
 
@@ -296,9 +295,9 @@ rows of every Parquet file, and the GitHub repository lists the source files in
 
 ## Licence
 
-The licence of this release is to be confirmed. Until it is, the `license` field of this card is
-`other` and no licence is granted by this card. The data come from the WMT26 General MT task, so
-read the terms of its release as well.
+No licence is attached to this dataset, and this card grants none. The source texts and the
+translations come from the WMT26 General MT task, so read what its release says about their use as
+well.
 
 ## Citation
 

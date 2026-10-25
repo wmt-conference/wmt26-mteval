@@ -86,8 +86,7 @@ writing. What to put in front of him:
 
 - the rendered card, `$OUT/README.md`, read from top to bottom, and `docs/ERRATA.md`;
 - the output of steps 2 and 3;
-- the open decisions: the licence (the card says `license: other` and "to be confirmed", and the
-  repository has no licence file yet), General MT's agreement to the use of their data and
+- the open decisions: General MT's agreement to the use of their data and
   annotations, the agreement of whoever else has write access to the Hub repository, the links
   that teams volunteered in `systems.link`, the `ref_type` `unknown` (below) and the Hub card
   (below);

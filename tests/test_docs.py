@@ -161,7 +161,7 @@ def test_card_metadata(card, built):
     y = front_matter(card)
     assert y["pretty_name"] == "WMT26 MT-Eval"
     assert y["task_categories"] == ["translation"]
-    assert y["license"] == "other"  # the licence is undecided: see the card's licence section
+    assert "license" not in y  # no licence is attached to the data: see the card's licence section
     assert [c["config_name"] for c in y["configs"]].count("pairs") == 1
     assert sum(1 for c in y["configs"] if c.get("default")) == 1
     assert y["size_categories"] == [size_category(max(manifest["stats"]["rows"].values()))]
@@ -222,7 +222,7 @@ def test_card_states_the_facts_a_user_must_know(card):
         HUMEVAL,
         "`multimodal_inputs.zip`",
         "relative to",
-        "to be confirmed",
+        NO_LICENCE,
         "`Cohere CAT+`",
         "outside 0-100",
         "datasets>=4.7.0",
@@ -300,6 +300,24 @@ def test_card_names_the_thin_language_pairs_with_the_papers_percentages(card):
     text = squash(card)
     for fragment in ("ces-vie", "10.6 %", "eng-zho_CN", "17.1 %", "eng-sme", "19.0 %"):
         assert fragment in text, fragment
+
+
+NO_LICENCE = "No licence is attached"
+
+
+def test_the_card_attaches_no_licence(card):
+    assert NO_LICENCE in card
+    assert "to be confirmed" not in card.lower()
+
+
+def test_the_repository_attaches_no_licence(repo_root):
+    assert not list(repo_root.glob("LICEN[CS]E*")) and not list(repo_root.glob("DATA_LICEN[CS]E*"))
+    assert NO_LICENCE in (repo_root / "README.md").read_text(encoding="utf-8")
+    assert "license" not in yaml.safe_load((repo_root / "CITATION.cff").read_text(encoding="utf-8"))
+    for name in ("README.md", "docs/CHANGELOG.md", "docs/RELEASE.md"):
+        text = (repo_root / name).read_text(encoding="utf-8").lower()
+        assert "licence is to be confirmed" not in text, name
+        assert "license: other" not in text, name
 
 
 def test_card_carries_every_section_a_newcomer_looks_for(card):
@@ -1015,7 +1033,7 @@ def test_the_readme_gives_the_contact_the_commands_and_the_layout(repo_root):
         "docs/ERRATA.md",
         "docs/RELEASE.md",
         "CITATION.cff",
-        "to be confirmed",
+        NO_LICENCE,
         HUMEVAL,
     ):
         assert fragment in text, fragment

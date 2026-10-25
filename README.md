@@ -124,5 +124,4 @@ The organisers: `wmt-qe-metrics-organizers@googlegroups.com`.
 
 ## Licence
 
-The licence is to be confirmed. This repository has no licence file yet, so no licence is granted
-until one is added.
+No licence is attached to this repository or to the data it builds, and none is granted.

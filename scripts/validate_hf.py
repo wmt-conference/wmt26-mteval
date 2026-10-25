@@ -2,8 +2,10 @@
 
     uv run python scripts/validate_hf.py --out OUT --grand GRAND --expected EXPECTED [--no-checksum]
 
-Checks the row counts, Table 2, personal data, the schemas and a round trip of every run against
-the grand file (see ``wmt26_mteval.validate``).  Prints each failure and then the number of
+Checks that the card and the manifest exist, the row counts, Table 2, personal data, the schemas,
+the keys that link the configs, the texts of ``items`` and ``pairs`` and a round trip of every run
+against the grand file, and that the Task 2 scores dropped from the ``alt`` baselines are those of
+the official ones (see ``wmt26_mteval.validate``).  Prints each failure and then the number of
 failures, and exits 1 if there is any.  OUT and GRAND are only read.  The grand file is checked
 against its known sha256 unless ``--no-checksum`` is given (for subsets of it, such as a test
 fixture).

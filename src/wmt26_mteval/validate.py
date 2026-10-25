@@ -1,25 +1,42 @@
 """Validation gates for a staged release: nothing is uploaded unless all of them pass.
 
-``validate`` runs five gates over a build made by ``build_all`` and returns the failures as plain
-messages (an empty list means every gate passed):
+``validate`` runs the gates below over a build made by ``build_all`` and returns the failures as
+plain messages (an empty list means every gate passed):
 
-1. ``check_row_counts``: the rows of each config on disk equal what is expected;
-2. ``check_table2``: the official items and pairs per language pair equal Table 2 of the findings
+1. ``check_required_files``: the dataset card ``README.md`` and ``build_manifest.json`` exist;
+2. ``check_row_counts``: the rows of each config on disk equal what is expected;
+3. ``check_table2``: the official items and pairs per language pair equal Table 2 of the findings
    paper (``data/metadata/table2.tsv``);
-3. ``find_pii``: the metadata-derived outputs hold no personal data;
-4. ``check_schemas``: every Parquet file has exactly the columns of ``schemas.SCHEMAS``;
-5. ``check_round_trip``: every run file, folded back into records, equals its column of the grand
-   file, so that the tables lose nothing.
+4. ``find_pii``: the metadata-derived outputs hold no personal data;
+5. ``check_schemas``: every Parquet file has exactly the columns of ``schemas.SCHEMAS``;
+6. ``check_item_texts``: the text columns of ``items`` and ``pairs`` equal the grand file, item by
+   item and pair by pair (``src``, ``ref_text``, ``hyp``, ``asr``, ``video_path``,
+   ``screenshot_path`` and ``n_systems``);
+7. ``check_keys``: every ``(item_id, system)`` of ``submissions`` and ``baselines`` is a row of
+   ``pairs``, and every ``run_id`` of both is a row of ``systems``;
+8. ``check_alt_task2``: the Task 2 scores of every ``alt`` baseline equal those of its ``official``
+   counterpart in the grand file, so that the ``alt`` tables lose nothing by keeping Task 1 only;
+9. ``check_round_trip``: every run file, folded back into records, equals its column of the grand
+   file, so that the prediction tables lose nothing.
+
+What is compared with the grand file, then, is everything the grand file holds that the typed
+configs copy: the item fields (gate 6) and the predictions of every run (gate 9).  The columns that
+the builder derives from them (``item_id`` fields, ``ref_type``, ``is_reference_candidate`` and the
+like) are checked by Table 2, the row counts and the schemas.  ``systems``, ``mt_systems`` and
+``challenge_sets`` are built from curated tables and scrubbed model cards, not from the grand file,
+and are covered by the row counts, the schemas, the personal-data scan and the key check.
 
 The gates read the Parquet files on disk, never the build manifest, and know the file naming of
 the build only from the documented layout (``data/<config>/test-*.parquet``), so a mistake in the
 builder cannot also hide itself here.  A failure message names the file and column concerned and
-never quotes personal data.
+never quotes personal data or the text of a source, reference or hypothesis.
 """
 
 from __future__ import annotations
 
 import csv
+import hashlib
+import sys
 from collections import Counter
 from collections.abc import Iterator
 from contextlib import contextmanager
@@ -29,15 +46,14 @@ import pyarrow as pa
 import pyarrow.compute as pc
 import pyarrow.parquet as pq
 
-from wmt26_mteval.build import MANIFEST_NAME
+from wmt26_mteval.build import MANIFEST_NAME, README_NAME
 from wmt26_mteval.cards import EMAIL_RE
 from wmt26_mteval.grand import Grand
 from wmt26_mteval.runs import RunSpec, list_runs
 from wmt26_mteval.schemas import SCHEMAS
-from wmt26_mteval.tables.predictions import T1, normalise_raw_record, roundtrip_record
+from wmt26_mteval.tables.predictions import T1, T2, normalise_raw_record, roundtrip_record
 
 DEFAULT_TABLE2_PATH = Path(__file__).resolve().parents[2] / "data" / "metadata" / "table2.tsv"
-README_NAME = "README.md"
 
 # The only address that may appear in the metadata-derived outputs: the organisers' mailing list.
 ALLOWED_EMAILS = frozenset({"wmt-qe-metrics-organizers@googlegroups.com"})
@@ -87,7 +103,24 @@ def _read_columns(out_dir: Path, config: str, columns: list[str]) -> pa.Table:
     return pa.concat_tables(tables)
 
 
-# --- gate 1: row counts --------------------------------------------------------------------------
+# --- gate 1: the files every build has -----------------------------------------------------------
+
+
+def check_required_files(out_dir: Path) -> list[str]:
+    """Failures for a build that lacks its dataset card or its manifest.
+
+    ``build_all`` writes ``README.md`` and, last of all, ``build_manifest.json``; a directory
+    without either is not a finished build.  The other gates skip a file that is not there (the
+    personal-data scan does), so this one makes the absence a failure.
+    """
+    return [
+        f"{name}: file is missing"
+        for name in (README_NAME, MANIFEST_NAME)
+        if not (Path(out_dir) / name).is_file()
+    ]
+
+
+# --- gate 2: row counts --------------------------------------------------------------------------
 
 
 def check_row_counts(out_dir: Path, expected: dict) -> list[str]:
@@ -113,7 +146,7 @@ def check_row_counts(out_dir: Path, expected: dict) -> list[str]:
     return failures
 
 
-# --- gate 2: Table 2 -----------------------------------------------------------------------------
+# --- gate 3: Table 2 -----------------------------------------------------------------------------
 
 
 def load_table2(path: Path) -> dict[str, tuple[int, int]]:
@@ -166,7 +199,7 @@ def check_table2(out_dir: Path, table2_path: Path = DEFAULT_TABLE2_PATH) -> list
     return failures
 
 
-# --- gate 3: personal data -----------------------------------------------------------------------
+# --- gate 4: personal data -----------------------------------------------------------------------
 
 
 def _strings(value) -> Iterator[str]:
@@ -251,7 +284,7 @@ def find_pii(out_dir: Path) -> list[str]:
     return failures
 
 
-# --- gate 4: schemas -----------------------------------------------------------------------------
+# --- gate 5: schemas -----------------------------------------------------------------------------
 
 
 def _normalised(type_: pa.DataType) -> pa.DataType:
@@ -318,7 +351,217 @@ def check_schemas(out_dir: Path) -> list[str]:
     return failures
 
 
-# --- gate 5: round trip --------------------------------------------------------------------------
+# --- gate 6: items and pairs against the grand file ----------------------------------------------
+
+# The columns of ``items`` and of ``pairs`` that copy a value of the grand file.
+_ITEM_VALUES = ("src", "ref_text", "asr", "video_path", "screenshot_path", "n_systems")
+_PAIR_VALUES = ("src", "hyp", "ref_text")
+
+
+def _grand_item_values(item: dict) -> dict:
+    """The values of one grand item that ``items`` copies, under the names of its columns."""
+    ref, resources = item["ref"], item["resources"] or {}
+    return {
+        "src": item["src"],
+        "ref_text": None if ref is None else ref.get("text"),
+        "asr": resources.get("asr"),
+        "video_path": resources.get("video"),
+        "screenshot_path": resources.get("screenshot"),
+        "n_systems": len(item["hyps"]),
+    }
+
+
+def _digest(text: str | None) -> bytes | None:
+    """An 8-byte fingerprint of ``text``, so that a pair is remembered without its text."""
+    if text is None:
+        return None
+    return hashlib.blake2b(text.encode("utf-8", "surrogatepass"), digest_size=8).digest()
+
+
+def _read_item_rows(out_dir: Path) -> tuple[dict[str, dict], list[str]]:
+    """``items`` as ``item_id -> its values``, and the items that have more than one row."""
+    table = _read_columns(out_dir, "items", ["item_id", *_ITEM_VALUES])
+    rows: dict[str, dict] = {}
+    repeated: list[str] = []
+    for row in table.to_pylist():
+        if row["item_id"] in rows:
+            repeated.append(row["item_id"])
+        rows[row["item_id"]] = row
+    return rows, repeated
+
+
+def _read_pair_digests(out_dir: Path) -> tuple[dict[tuple[str, str], tuple], list[tuple[str, str]]]:
+    """``pairs`` as ``(item_id, system) -> fingerprints of src, hyp and ref_text``.
+
+    One file is held as Python objects at a time and only the fingerprints are kept.  The second
+    result lists the keys that more than one row has.
+    """
+    digests: dict[tuple[str, str], tuple] = {}
+    repeated: list[tuple[str, str]] = []
+    for path in _config_files(out_dir, "pairs"):
+        with _readable(out_dir, path):
+            table = pq.read_table(path, columns=["item_id", "system", *_PAIR_VALUES])
+        columns = {name: table.column(name).to_pylist() for name in table.column_names}
+        for i, (item_id, system) in enumerate(zip(columns["item_id"], columns["system"])):
+            key = (sys.intern(item_id), sys.intern(system))
+            if key in digests:
+                repeated.append(key)
+            digests[key] = tuple(_digest(columns[name][i]) for name in _PAIR_VALUES)
+    return digests, repeated
+
+
+def check_item_texts(out_dir: Path, grand: Grand) -> list[str]:
+    """``items`` and ``pairs`` against the grand file, for every item and every pair.
+
+    - ``items`` must have exactly one row for each item of the grand file, and no other, with the
+      grand values of ``src``, ``ref_text``, ``asr``, ``video_path``, ``screenshot_path`` and
+      ``n_systems`` (the number of hypotheses);
+    - ``pairs`` must have exactly one row for each hypothesis of each item, and no other, with the
+      grand ``hyp``, ``src`` and ``ref_text``.
+
+    Texts are compared to the character (nothing is trimmed) and a null is different from an
+    empty text.  The grand file is read once, in a stream.  ``pairs`` is held as fingerprints of
+    its texts, one file's rows as objects at a time, so the memory stays bounded.  A failure names
+    the item, the system and the columns, and never quotes a text.
+    """
+    out_dir = Path(out_dir)
+    rows, repeated_items = _read_item_rows(out_dir)
+    digests, repeated_pairs = _read_pair_digests(out_dir)
+    item_problems = [f"item {item_id!r}: listed more than once" for item_id in repeated_items]
+    pair_problems = [
+        f"item {item_id!r}, system {system!r}: listed more than once"
+        for item_id, system in repeated_pairs
+    ]
+
+    for item in grand.items():
+        item_id = item["item_id"]
+        want = _grand_item_values(item)
+        row = rows.pop(item_id, None)
+        if row is None:
+            item_problems.append(f"item {item_id!r}: no row")
+        else:
+            differ = [name for name in _ITEM_VALUES if row[name] != want[name]]
+            if differ:
+                item_problems.append(
+                    f"item {item_id!r}: {', '.join(differ)} differ from the grand file"
+                )
+        src, ref = _digest(want["src"]), _digest(want["ref_text"])
+        for system, hyp in item["hyps"].items():
+            got = digests.pop((item_id, system), None)
+            if got is None:
+                pair_problems.append(f"item {item_id!r}, system {system!r}: no row")
+                continue
+            differ = [
+                name
+                for name, found, wanted in zip(_PAIR_VALUES, got, (src, _digest(hyp), ref))
+                if found != wanted
+            ]
+            if differ:
+                pair_problems.append(
+                    f"item {item_id!r}, system {system!r}: {', '.join(differ)} differ from the "
+                    "grand file"
+                )
+
+    item_problems += [
+        f"item {item_id!r}: row of an item that is not in the grand file"
+        for item_id in sorted(rows)
+    ]
+    pair_problems += [
+        f"item {item_id!r}, system {system!r}: row of a pair that is not in the grand file"
+        for item_id, system in sorted(digests)
+    ]
+    return _capped("data/items", item_problems) + _capped("data/pairs", pair_problems)
+
+
+# --- gate 7: keys across configs -----------------------------------------------------------------
+
+_KEY_COLUMNS = ["run_id", "item_id", "system"]
+
+
+def check_keys(out_dir: Path) -> list[str]:
+    """Every prediction points at a pair and at a run that the release lists.
+
+    - each ``(item_id, system)`` of every ``submissions`` and ``baselines`` file is a row of
+      ``pairs``;
+    - each ``run_id`` of those files is a row of ``systems``.
+
+    A file that lacks one of the three columns is skipped here, since the schema gate reports it.
+    The files are read one at a time and only their key columns.
+    """
+    out_dir = Path(out_dir)
+    pairs = _read_columns(out_dir, "pairs", ["item_id", "system"])
+    known_runs = set(_read_columns(out_dir, "systems", ["run_id"]).column(0).to_pylist())
+    failures = []
+    for config in ("submissions", "baselines"):
+        for path in _config_files(out_dir, config):
+            with _readable(out_dir, path):
+                if not set(_KEY_COLUMNS) <= set(pq.read_schema(path).names):
+                    continue
+                table = pq.read_table(path, columns=_KEY_COLUMNS)
+            run_ids = pc.unique(table.column("run_id")).to_pylist()
+            problems = [
+                f"run_id {run_id!r} is not in systems"
+                for run_id in sorted((r for r in run_ids if r not in known_runs), key=str)
+            ]
+            keys = table.select(["item_id", "system"])
+            lost = keys.join(pairs, keys=["item_id", "system"], join_type="left anti")
+            first = lost.sort_by([("item_id", "ascending"), ("system", "ascending")]).slice(
+                0, MAX_ITEM_FAILURES
+            )
+            problems += [
+                f"item {row['item_id']!r}, system {row['system']!r}: no such pair in pairs"
+                for row in first.to_pylist()
+            ]
+            failures += _capped(
+                _relative(out_dir, path), problems, total=len(problems) - len(first) + lost.num_rows
+            )
+    return failures
+
+
+# --- gate 8: the Task 2 scores of the alt baselines ----------------------------------------------
+
+
+def _task2_scores(grand: Grand, run: RunSpec) -> Iterator[tuple[str, dict[str, float]]]:
+    """``(item_id, its Task 2 scores)`` for each item the run covers; an empty dict for none."""
+    for item_id, raw in grand.iter_records(run.column):
+        yield item_id, normalise_raw_record(raw).get(T2, {})
+
+
+def _task2_differences(grand: Grand, alt: RunSpec, official: RunSpec) -> list[str]:
+    scores = {item_id: s for item_id, s in _task2_scores(grand, alt) if s}
+    problems = []
+    for item_id, want in _task2_scores(grand, official):
+        if scores.pop(item_id, {}) != want:
+            problems.append(f"item {item_id!r}: Task 2 scores differ from the official baseline")
+    problems += [
+        f"item {item_id!r}: Task 2 scores that the official baseline does not have"
+        for item_id in sorted(scores)
+    ]
+    return problems
+
+
+def check_alt_task2(grand: Grand) -> list[str]:
+    """For every ``alt`` baseline, its Task 2 scores in the grand file equal its official ones.
+
+    An ``alt`` table keeps Task 1 only, because the Task 2 scores of the original snapshot are
+    those of the official one.  This is the check that dropping them loses nothing: the two grand
+    columns must have the same scores for every item and system (an item with no scores in one of
+    them must have none in the other).  The run files are not read.
+    """
+    runs = list_runs(grand)
+    official = {r.run_id: r for r in runs if r.kind == "baseline" and r.variant == "official"}
+    failures = []
+    for alt in (r for r in runs if r.variant == "alt"):
+        name = run_file(alt)
+        counterpart = official.get(alt.run_id)
+        if counterpart is None:
+            failures.append(f"{name}: there is no official baseline to compare its Task 2 with")
+            continue
+        failures += _capped(name, _task2_differences(grand, alt, counterpart))
+    return failures
+
+
+# --- gate 9: round trip --------------------------------------------------------------------------
 
 
 def run_file(run: RunSpec) -> str:
@@ -387,11 +630,15 @@ def _round_trip_problems(table: pa.Table, grand: Grand, run: RunSpec) -> list[st
     return problems
 
 
-def _capped(name: str, problems: list[str]) -> list[str]:
-    """``problems`` as failures of file ``name``, showing at most ``MAX_ITEM_FAILURES``."""
+def _capped(name: str, problems: list[str], total: int | None = None) -> list[str]:
+    """``problems`` as failures of ``name``, showing at most ``MAX_ITEM_FAILURES``.
+
+    ``total`` is the number of problems when ``problems`` only holds the first few of them.
+    """
+    total = len(problems) if total is None else total
     shown = [f"{name}: {problem}" for problem in problems[:MAX_ITEM_FAILURES]]
-    if len(problems) > MAX_ITEM_FAILURES:
-        shown.append(f"{name}: ... and {len(problems) - MAX_ITEM_FAILURES} more")
+    if total > MAX_ITEM_FAILURES:
+        shown.append(f"{name}: ... and {total - MAX_ITEM_FAILURES} more")
     return shown
 
 
@@ -441,15 +688,19 @@ def validate(
 
     An empty list means the build passes.  ``expected`` holds ``rows`` (rows per config),
     optionally ``pairs_by_collection``, and ``check_table2`` to switch the Table 2 gate on.  A
-    gate that cannot read what it needs reports that as a failure instead of raising.
+    gate that cannot read what it needs reports that as a failure instead of raising.  A build
+    without its ``README.md`` or its ``build_manifest.json`` fails.
     """
     out_dir = Path(out_dir)
-    gates = [(check_row_counts, (out_dir, expected))]
+    gates = [(check_required_files, (out_dir,)), (check_row_counts, (out_dir, expected))]
     if expected.get("check_table2"):
         gates.append((check_table2, (out_dir, table2_path)))
     gates += [
         (find_pii, (out_dir,)),
         (check_schemas, (out_dir,)),
+        (check_keys, (out_dir,)),
+        (check_item_texts, (out_dir, grand)),
+        (check_alt_task2, (grand,)),
         (check_round_trip, (out_dir, grand)),
     ]
     failures: list[str] = []

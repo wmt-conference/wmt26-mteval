@@ -12,8 +12,10 @@ import pyarrow.compute as pc
 import pyarrow.parquet as pq
 import pytest
 
+from wmt26_mteval import validate as gates
 from wmt26_mteval.build import build_all
 from wmt26_mteval.grand import Grand
+from wmt26_mteval.runs import list_runs
 from wmt26_mteval.schemas import SCHEMAS
 from wmt26_mteval.validate import (
     ALLOWED_EMAILS,
@@ -547,6 +549,359 @@ def test_failures_per_run_are_capped(out, mini_grand, expected_mini):
     failures = [f for f in validate(out, mini_grand, expected_mini) if path.name in f]
     assert len(failures) == MAX_ITEM_FAILURES + 1
     assert "more" in failures[-1]
+
+
+# --- the gate on the files every build has -------------------------------------------------------
+
+
+@pytest.mark.parametrize("name", ["README.md", "build_manifest.json"])
+def test_a_build_without_its_card_or_manifest_fails(out, mini_grand, expected_mini, name):
+    (out / name).unlink()
+    failures = validate(out, mini_grand, expected_mini)
+    assert any(name in f and "missing" in f for f in failures), failures
+
+
+def test_the_required_files_gate_is_clean_on_a_complete_build(out):
+    assert gates.check_required_files(out) == []
+
+
+def test_the_required_files_gate_names_both_missing_files(out):
+    (out / "README.md").unlink()
+    (out / "build_manifest.json").unlink()
+    failures = gates.check_required_files(out)
+    assert len(failures) == 2
+    assert "README.md" in failures[0] and "build_manifest.json" in failures[1]
+
+
+def test_a_directory_in_place_of_the_card_is_missing_too(out):
+    (out / "README.md").unlink()
+    (out / "README.md").mkdir()
+    assert gates.check_required_files(out) == ["README.md: file is missing"]
+
+
+# --- the text round trip of items and pairs ------------------------------------------------------
+
+ITEMS = "data/items/test-00000.parquet"
+ITEM_TEXT_COLUMNS = ["src", "ref_text", "asr", "video_path", "screenshot_path", "n_systems"]
+PAIR_TEXT_COLUMNS = ["src", "hyp", "ref_text"]
+
+
+def different(value):
+    """A value of the same kind as ``value`` that is not ``value`` (``None`` is not a value)."""
+    if value is None:
+        return "not in the grand file"
+    return value + 1 if isinstance(value, int) else value + " (changed)"
+
+
+def row_where(path: Path, column: str, filled: bool) -> int:
+    values = pq.read_table(path, columns=[column]).column(0).to_pylist()
+    return next(i for i, value in enumerate(values) if (value is not None) == filled)
+
+
+def test_the_item_and_pair_texts_of_a_clean_build_equal_the_grand_file(out, mini_grand):
+    assert gates.check_item_texts(out, mini_grand) == []
+
+
+@pytest.mark.parametrize("column", ITEM_TEXT_COLUMNS)
+def test_a_changed_item_value_is_reported(out, mini_grand, column):
+    path = out / ITEMS
+    row = row_where(path, column, filled=True)
+    table = pq.read_table(path)
+    item_id = table.column("item_id")[row].as_py()
+    set_cell(path, column, row, different(table.column(column)[row].as_py()))
+    failures = gates.check_item_texts(out, mini_grand)
+    assert len(failures) == 1, failures
+    assert "items" in failures[0] and item_id in failures[0] and column in failures[0]
+
+
+@pytest.mark.parametrize("column", ["ref_text", "asr", "video_path", "screenshot_path"])
+def test_an_item_value_made_null_or_filled_in_is_reported(out, mini_grand, column):
+    path = out / ITEMS
+    for filled in (True, False):
+        before = pq.read_table(path, columns=[column]).column(0).to_pylist()
+        row = row_where(path, column, filled)
+        set_cell(path, column, row, None if filled else "invented")
+        failures = gates.check_item_texts(out, mini_grand)
+        assert len(failures) == 1 and column in failures[0], (filled, failures)
+        set_cell(path, column, row, before[row])
+        assert gates.check_item_texts(out, mini_grand) == []
+
+
+def test_the_text_of_an_item_is_compared_to_the_character(out, mini_grand):
+    path = out / ITEMS
+    src = pq.read_table(path, columns=["src"]).column(0)[0].as_py()
+    set_cell(path, "src", 0, src + " ")  # one trailing space is a difference
+    assert any("src" in f for f in gates.check_item_texts(out, mini_grand))
+
+
+def test_an_item_without_a_row_is_reported(out, mini_grand):
+    path = out / ITEMS
+    item_id = pq.read_table(path, columns=["item_id"]).column(0)[0].as_py()
+    rewrite(path, lambda t: t.slice(1))
+    failures = gates.check_item_texts(out, mini_grand)
+    assert any(item_id in f and "no row" in f for f in failures), failures
+
+
+def test_an_item_that_is_not_in_the_grand_file_is_reported(out, mini_grand):
+    path = out / ITEMS
+
+    def add_stranger(table):
+        stranger = set_values(table.slice(0, 1), "item_id", ["not_an_item"])
+        return pa.concat_tables([table, stranger])
+
+    rewrite(path, add_stranger)
+    failures = gates.check_item_texts(out, mini_grand)
+    assert any("not_an_item" in f and "not in the grand file" in f for f in failures), failures
+
+
+def test_an_item_repeated_in_items_is_reported(out, mini_grand):
+    path = out / ITEMS
+    item_id = pq.read_table(path, columns=["item_id"]).column(0)[0].as_py()
+    rewrite(path, lambda t: pa.concat_tables([t, t.slice(0, 1)]))
+    failures = gates.check_item_texts(out, mini_grand)
+    assert any(item_id in f and "more than once" in f for f in failures), failures
+
+
+@pytest.mark.parametrize("column", PAIR_TEXT_COLUMNS)
+def test_a_changed_pair_text_is_reported(out, mini_grand, column):
+    path = first_file(out, "data/pairs/*.parquet")
+    row = row_where(path, column, filled=True)
+    table = pq.read_table(path)
+    item_id, system = table.column("item_id")[row].as_py(), table.column("system")[row].as_py()
+    set_cell(path, column, row, different(table.column(column)[row].as_py()))
+    failures = gates.check_item_texts(out, mini_grand)
+    assert len(failures) == 1, failures
+    assert "pairs" in failures[0] and item_id in failures[0] and repr(system) in failures[0]
+    assert column in failures[0]
+
+
+def test_a_pair_reference_made_null_is_reported(out, mini_grand):
+    path = first_file(out, "data/pairs/*.parquet")
+    row = row_where(path, "ref_text", filled=True)
+    set_cell(path, "ref_text", row, None)
+    failures = gates.check_item_texts(out, mini_grand)
+    assert len(failures) == 1 and "ref_text" in failures[0], failures
+
+
+def test_an_empty_hypothesis_made_into_whitespace_is_reported(out, mini_grand):
+    """A whitespace change is a change: nothing is trimmed anywhere in the release."""
+    for path in sorted(out.glob("data/pairs/*.parquet")):
+        hyps = pq.read_table(path, columns=["hyp"]).column(0).to_pylist()
+        if "" in hyps:
+            set_cell(path, "hyp", hyps.index(""), " ")
+            break
+    else:
+        pytest.fail("the mini grand file has no empty hypothesis")
+    failures = gates.check_item_texts(out, mini_grand)
+    assert len(failures) == 1 and "hyp" in failures[0], failures
+
+
+def test_a_dropped_pair_is_reported(out, mini_grand):
+    path = first_file(out, "data/pairs/*.parquet")
+    table = pq.read_table(path)
+    item_id, system = table.column("item_id")[0].as_py(), table.column("system")[0].as_py()
+    rewrite(path, lambda t: t.slice(1))
+    failures = gates.check_item_texts(out, mini_grand)
+    assert any(item_id in f and repr(system) in f and "no row" in f for f in failures), failures
+
+
+def test_a_pair_for_a_system_the_grand_file_does_not_list_is_reported(out, mini_grand):
+    path = first_file(out, "data/pairs/*.parquet")
+    rewrite(
+        path,
+        lambda t: pa.concat_tables([t, set_values(t.slice(0, 1), "system", ["No Such System"])]),
+    )
+    failures = gates.check_item_texts(out, mini_grand)
+    assert any("No Such System" in f and "not in the grand file" in f for f in failures), failures
+
+
+def test_a_repeated_pair_is_reported(out, mini_grand):
+    path = first_file(out, "data/pairs/*.parquet")
+    rewrite(path, lambda t: pa.concat_tables([t, t.slice(0, 1)]))
+    failures = gates.check_item_texts(out, mini_grand)
+    assert any("more than once" in f or "not in the grand file" in f for f in failures), failures
+
+
+def test_pair_failures_are_capped_and_never_quote_the_text(out, mini_grand):
+    path = first_file(out, "data/pairs/*.parquet")
+    rewrite(path, lambda t: set_values(t, "hyp", ["SECRET hypothesis"] * t.num_rows))
+    failures = [f for f in gates.check_item_texts(out, mini_grand) if "pairs" in f]
+    assert len(failures) == MAX_ITEM_FAILURES + 1 and "more" in failures[-1]
+    assert not any("SECRET" in f for f in failures)
+
+
+def test_the_text_gate_runs_inside_validate(out, mini_grand, expected_mini):
+    path = first_file(out, "data/pairs/*.parquet")
+    set_cell(path, "hyp", 0, "a different translation")
+    failures = validate(out, mini_grand, expected_mini)
+    assert len(failures) == 1 and "pairs" in failures[0] and "hyp" in failures[0], failures
+
+
+# --- cross-config key integrity ------------------------------------------------------------------
+
+
+def test_the_keys_of_a_clean_build_are_all_present(out):
+    assert gates.check_keys(out) == []
+
+
+@pytest.mark.parametrize(
+    "pattern",
+    [
+        "data/submissions/test-task2-*.parquet",
+        "data/baselines/*-official.parquet",
+        "data/baselines/*-alt.parquet",
+    ],
+)
+def test_a_prediction_for_a_pair_that_does_not_exist_is_reported(out, pattern):
+    path = first_file(out, pattern)
+    table = pq.read_table(path)
+    item_id = table.column("item_id")[0].as_py()
+    set_cell(path, "system", 0, "No Such System")
+    failures = gates.check_keys(out)
+    assert len(failures) == 1, failures
+    assert path.name in failures[0] and item_id in failures[0]
+    assert "No Such System" in failures[0] and "pairs" in failures[0]
+
+
+def test_a_prediction_for_an_item_that_does_not_exist_is_reported(out):
+    path = first_file(out, "data/submissions/test-task1-*.parquet")
+    set_cell(path, "item_id", 0, "not_an_item")
+    failures = gates.check_keys(out)
+    assert len(failures) == 1 and "not_an_item" in failures[0], failures
+
+
+@pytest.mark.parametrize(
+    "pattern", ["data/submissions/test-task3-*.parquet", "data/baselines/*-alt.parquet"]
+)
+def test_a_run_id_that_systems_does_not_have_is_reported(out, pattern):
+    path = first_file(out, pattern)
+    rewrite(path, lambda t: set_values(t, "run_id", ["ghost-run"] * t.num_rows))
+    failures = gates.check_keys(out)
+    assert len(failures) == 1, failures
+    assert path.name in failures[0] and "ghost-run" in failures[0] and "systems" in failures[0]
+
+
+def test_the_key_failures_of_a_file_are_capped(out):
+    path = first_file(out, "data/submissions/test-task2-*.parquet")
+    rewrite(path, lambda t: set_values(t, "system", ["No Such System"] * t.num_rows))
+    failures = [f for f in gates.check_keys(out) if path.name in f]
+    assert len(failures) == MAX_ITEM_FAILURES + 1 and "more" in failures[-1]
+
+
+def test_the_key_gate_skips_a_file_whose_columns_the_schema_gate_reports(out, mini_grand):
+    path = first_file(out, "data/submissions/test-task2-*.parquet")
+    rewrite(path, lambda t: t.drop_columns(["system"]))
+    assert gates.check_keys(out) == []
+    assert any(path.name in f for f in validate(out, mini_grand, {"rows": {}}))
+
+
+def test_the_key_gate_runs_inside_validate(out, mini_grand, expected_mini):
+    path = first_file(out, "data/baselines/*-alt.parquet")
+    rewrite(path, lambda t: set_values(t, "run_id", ["ghost-run"] * t.num_rows))
+    assert any("ghost-run" in f for f in validate(out, mini_grand, expected_mini))
+
+
+# --- the Task 2 scores of the alt baselines ------------------------------------------------------
+
+
+def edit_grand(source: Path, target: Path, column: str, row: int, change) -> None:
+    """Write ``source`` to ``target``, applying ``change(record)`` to one record of ``column``."""
+    table = pq.read_table(source)
+    index = table.schema.get_field_index(column)
+    field = table.schema.field(index)
+    cells = table.column(column).to_pylist()
+    records = json.loads(cells[row])
+    change(records[0])
+    cells[row] = json.dumps(records)
+    storage = pa.array(cells, pa.string())
+    edited = table.set_column(index, field, pa.ExtensionArray.from_storage(field.type, storage))
+    pq.write_table(edited, target)
+
+
+def alt_and_official(grand: Grand):
+    runs = list_runs(grand)
+    alt = next(r for r in runs if r.variant == "alt")
+    official = next(r for r in runs if r.kind == "baseline" and r.run_id == alt.run_id and r != alt)
+    return alt, official
+
+
+def covered_row(path: Path, column: str) -> int:
+    return row_where(path, column, filled=True)
+
+
+def test_the_alt_baselines_have_the_task_2_scores_of_the_official_ones(mini_grand):
+    runs = list_runs(mini_grand)
+    assert sum(r.variant == "alt" for r in runs) >= 2, "needs several alt baselines"
+    assert gates.check_alt_task2(mini_grand) == []
+
+
+def test_a_changed_alt_score_is_reported(mini_grand, mini_grand_path, tmp_path):
+    alt, _ = alt_and_official(mini_grand)
+    row = covered_row(mini_grand_path, alt.column)
+
+    def change(record):
+        system = next(iter(record["task2_pred"]))
+        record["task2_pred"][system] += 1.5
+
+    edit_grand(mini_grand_path, tmp_path / "g.parquet", alt.column, row, change)
+    failures = gates.check_alt_task2(Grand(tmp_path / "g.parquet", expected_sha256=None))
+    assert len(failures) == 1, failures
+    assert f"test-{alt.run_id}-alt.parquet" in failures[0] and "Task 2" in failures[0]
+    item_id = pq.read_table(mini_grand_path, columns=["item_id"]).column(0)[row].as_py()
+    assert item_id in failures[0]
+
+
+def test_a_changed_official_score_is_reported_too(mini_grand, mini_grand_path, tmp_path):
+    alt, official = alt_and_official(mini_grand)
+    row = covered_row(mini_grand_path, official.column)
+
+    def change(record):
+        system = next(iter(record["task2_pred"]))
+        record["task2_pred"][system] -= 0.25
+
+    edit_grand(mini_grand_path, tmp_path / "g.parquet", official.column, row, change)
+    failures = gates.check_alt_task2(Grand(tmp_path / "g.parquet", expected_sha256=None))
+    assert len(failures) == 1 and alt.run_id in failures[0], failures
+
+
+def test_an_alt_score_that_the_official_run_lacks_is_reported(
+    mini_grand, mini_grand_path, tmp_path
+):
+    alt, official = alt_and_official(mini_grand)
+    row = covered_row(mini_grand_path, official.column)
+    edit_grand(
+        mini_grand_path,
+        tmp_path / "g.parquet",
+        official.column,
+        row,
+        lambda record: record.pop("task2_pred"),
+    )
+    failures = gates.check_alt_task2(Grand(tmp_path / "g.parquet", expected_sha256=None))
+    assert len(failures) == 1 and alt.run_id in failures[0], failures
+
+
+def test_an_alt_run_with_no_official_counterpart_is_reported(mini_grand, monkeypatch):
+    runs = [
+        r for r in list_runs(mini_grand) if not (r.kind == "baseline" and r.variant == "official")
+    ]
+    monkeypatch.setattr(gates, "list_runs", lambda grand: runs)
+    failures = gates.check_alt_task2(mini_grand)
+    assert failures and all("official" in f for f in failures)
+
+
+def test_the_alt_gate_runs_inside_validate(
+    mini_grand, mini_grand_path, tmp_path, out, expected_mini
+):
+    alt, _ = alt_and_official(mini_grand)
+    row = covered_row(mini_grand_path, alt.column)
+
+    def change(record):
+        record["task2_pred"][next(iter(record["task2_pred"]))] += 3.0
+
+    edit_grand(mini_grand_path, tmp_path / "g.parquet", alt.column, row, change)
+    edited = Grand(tmp_path / "g.parquet", expected_sha256=None)
+    failures = [f for f in validate(out, edited, expected_mini) if "Task 2" in f]
+    assert len(failures) == 1 and alt.run_id in failures[0], failures
 
 
 # --- the scripts ---------------------------------------------------------------------------------

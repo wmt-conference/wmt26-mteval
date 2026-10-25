@@ -51,7 +51,8 @@ class ManifestEntry:
     canonical_column: str
 
 
-def _sha256_of(path: Path) -> str:
+def sha256_of(path: Path) -> str:
+    """Hex sha256 of the file at ``path``, read in chunks."""
     digest = hashlib.sha256()
     with open(path, "rb") as handle:
         for chunk in iter(lambda: handle.read(_HASH_CHUNK_BYTES), b""):
@@ -69,11 +70,9 @@ class Grand:
     def __init__(self, path: Path, expected_sha256: str | None = GRAND_SHA256):
         self.path = Path(path)
         if expected_sha256 is not None:
-            actual = _sha256_of(self.path)
+            actual = sha256_of(self.path)
             if actual != expected_sha256:
-                raise ChecksumError(
-                    f"{self.path}: sha256 is {actual}, expected {expected_sha256}"
-                )
+                raise ChecksumError(f"{self.path}: sha256 is {actual}, expected {expected_sha256}")
         schema = pq.read_schema(self.path)
         self._column_names = frozenset(schema.names)
         raw = (schema.metadata or {}).get(MANIFEST_KEY)

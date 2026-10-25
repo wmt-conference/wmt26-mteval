@@ -1,0 +1,23 @@
+{
+  "answers": {
+    "allow_t1_to_t2": "true",
+    "allow_t1_to_t3": "true",
+    "allow_t2_to_t3": "true",
+    "api_provider": "",
+    "closed_model_name": "",
+    "description": "Our approach uses an LLM-as-a-judge within the MQM error typology, with the novel addition of asking the LLM to verbalize its confidence in each error type assessment.",
+    "ensemble": "false",
+    "fine_tuned": "true",
+    "link": "",
+    "model_size": "27B",
+    "name": "First try",
+    "open_source": "true",
+    "open_weight": "true",
+    "org": "AIST",
+    "reference_usage": "",
+    "t3_threshold": "",
+    "threshold_inclusive": "",
+    "uses_reference": "false"
+  },
+  "run_id": "874374"
+}

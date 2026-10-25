@@ -1,0 +1,23 @@
+{
+  "answers": {
+    "allow_t1_to_t2": "false",
+    "allow_t1_to_t3": "false",
+    "allow_t2_to_t3": "false",
+    "api_provider": "OpenAI",
+    "closed_model_name": "GPT-5.4",
+    "description": "Pterodactyl is a highly customizable, ultra-low-cost system optimized for binary classification in translation triage and data curation. It is based on an LLM-as-a-judge approach, with prompt engineering and model selection guided by ROC analysis. Austriadraco is derived from Pterodactyl and specifically optimized for Task 3, employing a threshold-setting strategy based on one set of patterns observed in the WMT25 data.",
+    "ensemble": "false",
+    "fine_tuned": "false",
+    "link": "",
+    "model_size": "",
+    "name": "Austriadraco, a variant of Pterodactyl",
+    "open_source": "false",
+    "open_weight": "false",
+    "org": "1020 Group",
+    "reference_usage": "",
+    "t3_threshold": "",
+    "threshold_inclusive": "",
+    "uses_reference": "false"
+  },
+  "run_id": "870958"
+}

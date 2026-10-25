@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "Google; OpenAI",
+    "closed_model_name": "GPT-5.4; gemini-3.5-flash; GPT-5.6-luna",
+    "description": "PRIMARY Ensemble + Gemini-3-Pro on all covered normal columns; Ladin=Gemini+sol; Lig/Sami=Gemini",
+    "ensemble": "true",
+    "fine_tuned": "false",
+    "link": "",
+    "model_size": "ensemble: bytepop, GPT-5.4, Flash-NT, COMET-22, Gemini-3-Pro, Pro-full, sol-lld, luna",
+    "name": "bytepop_pro10",
+    "open_source": "false",
+    "open_weight": "true",
+    "org": "8AI LLC + Rutgers University",
+    "reference_usage": "Uses whatever reference type is provided (native/postedit/pseudo) by matching the hypothesis to it; falls back to the source when no reference exists.",
+    "threshold_inclusive": "≥",
+    "uses_reference": "true"
+  },
+  "run_id": "876231"
+}

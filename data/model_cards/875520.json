@@ -1,0 +1,23 @@
+{
+  "answers": {
+    "allow_t1_to_t2": "false",
+    "allow_t1_to_t3": "false",
+    "allow_t2_to_t3": "false",
+    "api_provider": "",
+    "closed_model_name": "",
+    "description": "We used a bottom-up approach that targets the weakness of the MCC metric. After fine-tuning a LightGBM classifier with WMT25's data sets and applying data filtering strategies and CometKiwi filtering, we used multifactorial phraseology heuristics based on corpus linguistics and collocation measures: entropy, logDice, MI filtering, etc. We also used an LLM-as-a-judge strategy, further specializing the prompt by highlighting the disagreements between error-free segments and the classifier's predictions. Language pairs: eng_Latn-bel_Cyrl, eng_Latn-deu_Latn, eng_Latn-rus_Cyrl, eng_Latn-ukr_Cyrl, eng_Latn-zho_Hans, eng_Latn-zho_Hant_TW",
+    "ensemble": "false",
+    "fine_tuned": "false",
+    "link": "",
+    "model_size": "126M (fastText lid.176)",
+    "name": "PTT-MULTITAN-v2",
+    "open_source": "true",
+    "open_weight": "true",
+    "org": "ALTAE, Université Paris Cité",
+    "reference_usage": "",
+    "t3_threshold": "",
+    "threshold_inclusive": "",
+    "uses_reference": "false"
+  },
+  "run_id": "875520"
+}

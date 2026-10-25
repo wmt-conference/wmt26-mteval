@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "",
+    "closed_model_name": "",
+    "description": "Vertical is an MT evaluation metric trained using an LLM as backbone (namely google/gemma-3-1b-it). We insert a special token into the input sequence, and the model uses it as the representation of the full sequence; hidden states across all layers are combined via a layer-wise attention mechanism before being fed to a two-layer linear network that predicts the final score on a 0 to 1 scale. We use the unified training approach, meaning we train the model on reference-based and reference-free data and leverage the decoder-only causal attention to predict the score under two variants: using the source and hypothesis as inputs (the special token is inserted after the hypothesis, so it only attends to the previous sequence) and using the source, hypothesis and reference as inputs (a second special token is inserted after the reference, so it attends to all previous tokens). The model is trained to minimize the weighted average of the MSE losses of the two variants against the ground truth score. At inference time, we use the appropriate variant depending on whether the reference is available, but any post-hoc combination of the two variant scores is possible when both exist. The model is trained on public WMT data from previous years. To boost performance on longer inputs, we propose a training curriculum that splits data into three stages: 1) sentence-level data, 2) paragraphs reconstructed from sentences, and 3) real paragraphs (WMT25 data).",
+    "ensemble": "false",
+    "fine_tuned": "true",
+    "link": "",
+    "model_size": "1B",
+    "name": "Vertical_2",
+    "open_source": "true",
+    "open_weight": "true",
+    "org": "Université Grenoble Alpes, OVHai LLM",
+    "reference_usage": "The model uses any reference available.",
+    "threshold_inclusive": "≥",
+    "uses_reference": "true"
+  },
+  "run_id": "870257"
+}

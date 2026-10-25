@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "Google AI Studio / Gemini API",
+    "closed_model_name": "gemini-3.5-flash",
+    "description": "fluency2-gemini35-esa: Gemini 3.5 Flash fluency2 judge with fluency201 (γ=1.8, cap 9) display transform; ESA via WMT25 linear calib on fluency201 + moment-match to WMT25 score marginal (avoids ESA=100 saturation). Official 21 LPs + challenge. Task3 threshold 85 inclusive. Unscored hyps (~4% official) filled with ESA=50.0 fallback.",
+    "ensemble": "false",
+    "fine_tuned": "false",
+    "link": "",
+    "model_size": "",
+    "name": "fluency2-gemini35-esa",
+    "open_source": "false",
+    "open_weight": "false",
+    "org": "Algebras",
+    "reference_usage": "",
+    "threshold_inclusive": "inclusive",
+    "uses_reference": "false"
+  },
+  "run_id": "872328"
+}

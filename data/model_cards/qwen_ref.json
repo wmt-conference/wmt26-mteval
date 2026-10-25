@@ -1,0 +1,23 @@
+{
+  "answers": {
+    "allow_t1_to_t2": "true",
+    "allow_t1_to_t3": "true",
+    "allow_t2_to_t3": "true",
+    "api_provider": "",
+    "closed_model_name": "",
+    "description": "Reference-based Qwen 3.6 (Qwen/Qwen3.6-35B-A3B) with reasoning enabled.",
+    "ensemble": "false",
+    "fine_tuned": "false",
+    "link": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B",
+    "model_size": "35B Parameters, 3B Activated",
+    "name": "Qwen 3.6 Reference-based - Reasoning Baseline",
+    "open_source": "true",
+    "open_weight": "true",
+    "org": "WMT Automated MT Evaluation Organizing Committee",
+    "reference_usage": "Our system uses all three reference types (native/human, postedit, and pseudo) where available, with the reference type determined per language pair from the shared task data. The reference translation is included in both stages of our two-stage GEMBA-ESA prompting pipeline: in Stage 1, the model is shown the source, MT hypothesis, and reference together when annotating error spans; in Stage 2, the reference is again provided alongside the source, hypothesis, and Stage 1 error annotations when assigning the final quality score. The prompt labels the reference according to its type (\"Human reference translation,\" \"Post-edited reference translation,\" or \"High-quality machine translation reference\") so the model can appropriately weight it. For language pairs where no reference is available, the system falls back to the reference-free prompt variant.",
+    "t3_threshold": "85",
+    "threshold_inclusive": "inclusive",
+    "uses_reference": "true"
+  },
+  "run_id": "qwen_ref"
+}

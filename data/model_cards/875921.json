@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "OpenAI",
+    "closed_model_name": "GPT-5.5 (reasoning_effort=none)",
+    "description": "PragmaSpan is a training-free, few-shot GPT-5.5 span-error detector wrapped in a reliability-oriented inference and submission harness. References are included as optional prompt context when provided, and provided ASR transcripts are used as text context for speech items; video and screenshots are not consumed. The harness converts structured API responses into complete, deterministic, format-valid WMT26 Task 1 artifacts through truncation-aware row retries, conservative JSON and offset recovery, deterministic exact-span deduplication, exact item/system completeness checks against the official input, and mandatory validation before packaging. These safeguards target artifact reliability rather than claiming to improve diagnostic accuracy. The detector uses a seven-axis diagnostic taxonomy covering semantic, linguistic, discourse, and interpersonal errors; an ablation found that its four pragmatic axes provide interpretive structure but change detection accuracy by at most ±0.001 F on the evaluated domain mix. Model and prompt choices were evaluated against WMT25 ESA surrogate gold and WMT22 MQM en-de using the official severity-weighted MPP metric, and several prompt, span, and severity refinements were tested but excluded after failing to improve consistently across benchmarks.",
+    "ensemble": "false",
+    "fine_tuned": "false",
+    "link": "",
+    "model_size": "Not publicly disclosed (closed-source API model)",
+    "name": "PragmaSpan",
+    "open_source": "false",
+    "open_weight": "false",
+    "org": "BrainVentures",
+    "reference_usage": "The submitted directions use the provided pseudo references for English-Indonesian and the provided references labeled undefined for the English-Korean QEbreak set. Reference text is included as optional prompt context when present; the system does not otherwise treat reference types differently and remains functional without a reference. No native or postedit references are used in this submission.",
+    "threshold_inclusive": "",
+    "uses_reference": "true"
+  },
+  "run_id": "875921"
+}

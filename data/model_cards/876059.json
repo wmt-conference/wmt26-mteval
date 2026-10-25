@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "",
+    "closed_model_name": "",
+    "description": "A frozen supervised regression model over aggregate error features produced by a two-stage MQM-style Gemma 4 31B detector (cuni-v14 task 1 submission). The constrained weighted-error regression was fit and selected only on WMT25 training data using underlying-document grouped validation, excludes prediction failures from fitting, and uses a frozen train-mean fallback. It does not use reference translations. This submission covers the eight WMT26 high-priority language pairs plus English-Czech, Czech-Ukrainian, and all released English-Chinese variants.",
+    "ensemble": "false",
+    "fine_tuned": "true",
+    "link": "",
+    "model_size": "31B parameters (4-bit AWQ) plus constrained linear regression",
+    "name": "cuni-v14-regression",
+    "open_source": "false",
+    "open_weight": "true",
+    "org": "Charles University",
+    "reference_usage": "",
+    "threshold_inclusive": "",
+    "uses_reference": "false"
+  },
+  "run_id": "876059"
+}

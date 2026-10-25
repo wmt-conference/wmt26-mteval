@@ -1,0 +1,74 @@
+run_id	canonical_name	underlying_model	paper_citation
+867652	Pterodactyl	GPT-5.4	Garland and Berger, 2026
+869016	QwenSpan	Qwen3-14B	[Citation missing]
+869543	FACET	GPT-4.1 Mini (2025-04-14)	Kim et al., 2026
+869546	doc-FACET	GPT-4.1 Mini (2025-04-14)	Kim et al., 2026
+869552	gemba-poly	Llama 3.3 70B	Züfle et al., 2025
+869556	FACET	GPT-4.1 Mini (2025-04-14)	Kim et al., 2026
+869557	FACET	GPT-4.1 Mini (2025-04-14)	Kim et al., 2026
+870257	Vertical_2	Gemma 3 1B IT	Nakhlé et al., 2026
+870554	Vertical_1	Gemma 3 1B IT	Nakhlé et al., 2026
+870859	Austriadactylus	GPT-5.4 + GPT-5.6 Terra	Garland and Berger, 2026
+870955	Wukongopterus	GPT-5.4	Garland and Berger, 2026
+870958	Austriadraco	GPT-5.4	Garland and Berger, 2026
+871298	AEGIS	XLM-R-large + mT5-large	Mishra et al., 2026
+871400	MQM-LLM	Not specified (27B)	Servajean et al., 2026
+871401	MQM-LLM Confidence Aware	Not specified (27B)	Servajean et al., 2026
+871721	First try	Qwen3.6-27B	Servajean et al., 2026
+871892	PhraseT1-01	Gemini 3.5 Flash	Eckhardt et al., 2026
+871898	fluencyscore-multispan-v2	Gemini 3.5 Flash	Mongush and Pukhov, 2026
+872013	BERTScore	XLM-R-large	Lavie et al., 2026 (findings paper)
+872022	PhraseT1-02	Gemini 3.5 Flash + Gemma 4 12B + Gemma 4 31B	Eckhardt et al., 2026; Hrabal and Bojar, 2026
+872028	BLEU	—	Lavie et al., 2026 (findings paper)
+872029	chrF	—	Lavie et al., 2026 (findings paper)
+872030	COMET22	XLM-R-large	Lavie et al., 2026 (findings paper)
+872031	spBLEU	—	Lavie et al., 2026 (findings paper)
+872032	PhraseT2-01	Gemini 3.5 Flash + Gemma 4 12B	Eckhardt et al., 2026
+872033	PhraseT2-02	Gemini 3.5 Flash + Gemma 4 12B + Gemma 4 31B	Eckhardt et al., 2026; Hrabal and Bojar, 2026
+872036	PhraseT3-01	Gemini 3.5 Flash	Eckhardt et al., 2026
+872037	PhraseT3-02	Gemini 3.5 Flash	Eckhardt et al., 2026; Hrabal and Bojar, 2026
+872328	fluency2-gemini35-esa	Gemini 3.5 Flash	Mongush and Pukhov, 2026
+873001	YiSi-1	XLM-R-large	Lavie et al., 2026 (findings paper)
+873002	COMETKiwi22	XLM-R-large	Lavie et al., 2026 (findings paper)
+873483	fluencyscore-multispan-v2.1	Gemini 3.5 Flash	Mongush and Pukhov, 2026
+874374	First try	Babel-83B-Chat	Servajean et al., 2026
+875417	Qwen-based Omission	Qwen3-32B	Servajean et al., 2026
+875519	PTT-MULTITAN-v2	not stated in the paper	Zhu et al., 2026
+875520	PTT-MULTITAN-v2	not stated in the paper	Zhu et al., 2026
+875796	Rule-based Omission	Qwen3-32B	Servajean et al., 2026
+875857	cuni-cat-v4	Gemma 4 31B	Hrabal and Bojar, 2026
+875859	cuni-v14	Gemma 4 31B	Hrabal and Bojar, 2026
+875860	XCOMOffset	xCOMET + reasoning LLM	Pong, 2026
+875921	PragmaSpan	GPT-5.5	Lee, 2026
+875949	bytepop_pro9	GPT-5.4 + Gemini 3.5 Flash + GPT-5.6 Luna + COMET-22	Xu, 2026
+876039	cuni-da-6d	Gemma 4 31B IT	Hrabal and Bojar, 2026
+876059	cuni-v14-regression	Gemma 4 31B IT	Hrabal and Bojar, 2026
+876224	gemma4-31b-v4ref-struct-best	Gemma 4 31B IT	Jang et al., 2026
+876231	bytepop_pro10	GPT-5.4 + Gemini 3.5 Flash + GPT-5.6 Luna + COMET-22	Xu, 2026
+876237	Lexicala-QE-Ensemble (Majority-Vote)	Gemini 2.5 Flash + DeepSeek V4 Flash + Qwen Plus	Siani, 2026
+876238	Lexicala-QE-Ensemble (STAPLE)	Gemini 2.5 Flash + DeepSeek V4 Flash + Qwen Plus	Siani, 2026
+876242	Lexicala-QE-Ensemble (Majority-Vote)	Gemini 2.5 Flash + DeepSeek V4 Flash + Qwen Plus	Siani, 2026
+876244	Lexicala-QE-Ensemble (STAPLE)	Gemini 2.5 Flash + DeepSeek V4 Flash + Qwen Plus	Siani, 2026
+876247	Lexicala-QE-Ensemble (Majority-Vote)	Gemini 2.5 Flash + DeepSeek V4 Flash + Qwen Plus	Siani, 2026
+876248	Lexicala-QE-Ensemble (STAPLE)	Gemini 2.5 Flash + DeepSeek V4 Flash + Qwen Plus	Siani, 2026
+876250	RAGthoven Error-Free	Gemma 4 31B IT + Mistral Large 3 + Gemini 3.1 Pro	[Citation missing]
+876271	Cohere CAT+ ensemble	Command A+	Kocmi et al., 2026b
+876357	doc-FACET	GPT-4.1 Mini (2025-04-14)	Kim et al., 2026
+876365	FACET	GPT-4.1 Mini (2025-04-14)	Kim et al., 2026
+876421	Cohere CAT+	Command A+	Kocmi et al., 2026b
+gemini	Gemini-3.6-Flash	Gemini 3.6 Flash	Lavie et al., 2026 (findings paper)
+gemma	Gemma 4 - Reasoning	Gemma 4 31B IT	Lavie et al., 2026 (findings paper)
+gemma4_no_thinking	Gemma 4 - No Reasoning	Gemma 4 31B IT	Lavie et al., 2026 (findings paper)
+gemma_ref	Gemma 4 Reference-based - Reasoning	Gemma 4 31B IT	Lavie et al., 2026 (findings paper)
+gemma_ref_no_thinking	Gemma 4 Reference-based - No Reasoning	Gemma 4 31B IT	Lavie et al., 2026 (findings paper)
+gpt56_sol_xhigh_no_ref	GPT-5.6 Sol - Xhigh Reasoning	GPT-5.6 Sol	Lavie et al., 2026 (findings paper)
+gpt56_terra_no_ref	GPT-5.6 Terra	GPT-5.6 Terra	Lavie et al., 2026 (findings paper)
+gpt_56_sol_medium_no_ref	GPT-5.6 Sol - Medium Reasoning	GPT-5.6 Sol	Lavie et al., 2026 (findings paper)
+qwen	Qwen 3.6 - Reasoning	Qwen3.6-35B-A3B	Lavie et al., 2026 (findings paper)
+qwen36_no_thinking	Qwen 3.6 - No Reasoning	Qwen3.6-35B-A3B	Lavie et al., 2026 (findings paper)
+qwen_ref	Qwen 3.6 Reference-based - Reasoning	Qwen3.6-35B-A3B	Lavie et al., 2026 (findings paper)
+qwen_ref_no_thinking	Qwen 3.6 Reference-based - No Reasoning	Qwen3.6-35B-A3B	Lavie et al., 2026 (findings paper)
+xcomet_xl_no_ref	xCOMET XL (reference-free)	xCOMET-XL	Lavie et al., 2026 (findings paper)
+xcomet_xl_ref	xCOMET XL (reference-based)	xCOMET-XL	Lavie et al., 2026 (findings paper)
+xcomet_xxl_no_ref	xCOMET XXL (reference-free)	xCOMET-XXL	Lavie et al., 2026 (findings paper)
+xcomet_xxl_ref	xCOMET XXL (reference-based)	xCOMET-XXL	Lavie et al., 2026 (findings paper)

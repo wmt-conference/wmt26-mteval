@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "",
+    "closed_model_name": "",
+    "description": "AEGIS is a reference-skeptical, corruption-shielded evaluation system. Motivated by WMT26's shift to post-edited and synthetic references, it treats the reference as just another hypothesis: a reference-based COMET-22 score and a reference-free MetricX-24 (QE-mode) score are fused with a per-segment weight derived from the reference's own estimated quality and declared type (human / postedit / pseudo / absent), falling back to pure QE where no reference exists. Before neural scoring, a deterministic Unicode-hygiene layer separates orthographic integrity from semantic quality: default-ignorable codepoints, whitespace-class substitutions, homoglyph cloaking, and Indic conjunct-breaking joiners are detected and converted into transparent point penalties (we verified XLM-R-based metrics are provably blind to several of these corruptions), and a degeneracy guard catches empty, runaway, and repetition-loop outputs. We submit predictions for every official language pair, every system, and all challenge-set items.",
+    "ensemble": "true",
+    "fine_tuned": "false",
+    "link": "",
+    "model_size": "Unbabel wmt22-comet-da (XLM-RoBERTa-large backbone, ~580M parameters) + google/metricx-24-hybrid-large-v2p6 (mT5-large backbone, ~1.2B parameters); deterministic Unicode-hygiene and degeneracy layers add no learned parameters.",
+    "name": "AEGIS",
+    "open_source": "false",
+    "open_weight": "true",
+    "org": "IIT Patna; Shiv Nadar University",
+    "reference_usage": "All reference types are used when present, but with type- and quality-dependent trust: the reference-based score's fusion weight is scaled by the reference's declared type (native > postedit > pseudo) and by a reference-free quality estimate of the reference itself, so segments with unreliable references lean on the QE branch. Items without references are scored purely reference-free.",
+    "threshold_inclusive": "inclusive",
+    "uses_reference": "true"
+  },
+  "run_id": "871298"
+}

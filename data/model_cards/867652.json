@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "OpenAI",
+    "closed_model_name": "GPT-5.4",
+    "description": "Pterodactyl is a highly customizable, ultra-low-cost system optimized for binary classification in translation triage and data curation. It is based on an LLM-as-a-judge approach, with prompt engineering and model selection guided by ROC analysis.",
+    "ensemble": "false",
+    "fine_tuned": "false",
+    "link": "",
+    "model_size": "",
+    "name": "Pterodactyl",
+    "open_source": "false",
+    "open_weight": "false",
+    "org": "1020 Group",
+    "reference_usage": "",
+    "threshold_inclusive": "inclusive",
+    "uses_reference": "false"
+  },
+  "run_id": "867652"
+}

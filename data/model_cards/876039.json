@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "",
+    "closed_model_name": "",
+    "description": "A direct segment-level DA/ESA system based on the open-weight Gemma 4 31B instruction model with 4-bit AWQ quantization. It consumes source text, candidate translation, language information, and the provided translation instruction, but does not use references. Its frozen DSPy prompt includes six labeled demonstrations selected using WMT25 training data before WMT26 test inference and covers all translations in the eight WMT26 high-priority language pairs.",
+    "ensemble": "false",
+    "fine_tuned": "false",
+    "link": "",
+    "model_size": "31B parameters (4-bit AWQ)",
+    "name": "cuni-da-6d",
+    "open_source": "false",
+    "open_weight": "true",
+    "org": "Charles University",
+    "reference_usage": "",
+    "threshold_inclusive": "",
+    "uses_reference": "false"
+  },
+  "run_id": "876039"
+}

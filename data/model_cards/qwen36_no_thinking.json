@@ -1,0 +1,23 @@
+{
+  "answers": {
+    "allow_t1_to_t2": "true",
+    "allow_t1_to_t3": "true",
+    "allow_t2_to_t3": "true",
+    "api_provider": "",
+    "closed_model_name": "",
+    "description": "Reference-free Qwen 3.6 (Qwen/Qwen3.6-35B-A3B) WITHOUT reasoning enabled. The null task2_pred scores are imputed using the mean score of the same MT system across all non-null segments in the same language pair, falling back to that system's global mean across all pairs, and finally to the dataset-wide mean if no non-null scores exist for that system.",
+    "ensemble": "false",
+    "fine_tuned": "false",
+    "link": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B",
+    "model_size": "35B Parameters, 3B Activated",
+    "name": "Qwen 3.6 - No Reasoning Baseline",
+    "open_source": "true",
+    "open_weight": "true",
+    "org": "WMT Automated MT Evaluation Organizing Committee",
+    "reference_usage": "",
+    "t3_threshold": "85",
+    "threshold_inclusive": "inclusive",
+    "uses_reference": "false"
+  },
+  "run_id": "qwen36_no_thinking"
+}

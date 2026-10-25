@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "",
+    "closed_model_name": "",
+    "description": "Cohere CAT+ machine transaltion specific model is build on top of the Cohere Command A+ architecture which is a mixture-of-experts with 24 active parameters out of 218 total parameters. The utilized multistep training protocol: coarse SFT focussing also on non-machine translation capabilities, specialized MT SFT, followed by DPO, RLVR and finished with small targeted DPO. We utilize its instruction following capabilities to assess error spans and quality estimation with a variant of GEMBA-MQM prompt. The final score is average of three completions from the same model and the same prompt: one greedy pass at temperature 0 plus two sampled passes at temperatures 0.3.",
+    "ensemble": "true",
+    "fine_tuned": "false",
+    "link": "",
+    "model_size": "24A 218B",
+    "name": "Cohere CAT+ ensemble",
+    "open_source": "true",
+    "open_weight": "true",
+    "org": "Cohere",
+    "reference_usage": "",
+    "threshold_inclusive": "exclusive",
+    "uses_reference": "false"
+  },
+  "run_id": "876271"
+}

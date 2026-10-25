@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "Google",
+    "closed_model_name": "Gemini 3.5 Flash",
+    "description": "Reference-free span-level (ESA) error detection for machine translation, using Gemini 3.5 Flash (Wmt26SpanTaskV2Directive prompt) as a single judge, no combination with other systems.",
+    "ensemble": "false",
+    "fine_tuned": "false",
+    "link": "",
+    "model_size": "N/A (Gemini 3.5 Flash, proprietary, size undisclosed)",
+    "name": "PhraseT1-01",
+    "open_source": "false",
+    "open_weight": "false",
+    "org": "Phrase a.s.",
+    "reference_usage": "",
+    "threshold_inclusive": "",
+    "uses_reference": "false"
+  },
+  "run_id": "871892"
+}

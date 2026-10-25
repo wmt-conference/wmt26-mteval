@@ -111,6 +111,19 @@ SYSTEM = _field(
     "Name of the system that produced the hypothesis, exactly as in the source data.",
 )
 
+SYSTEM_TYPE = _field(
+    "system_type",
+    pa.string(),
+    "Kind of system: `mt`, `human_scratch`, `human_postedit`, `pseudo_ref` or `challenge_hyp`.",
+)
+
+RUN_ID = _field(
+    "run_id",
+    pa.string(),
+    "Identifier of the evaluator run: the numeric submission id, or the name of the "
+    "organisers' baseline (for example `gemma_ref` or `872013`).",
+)
+
 # The columns of the ``submissions`` and ``baselines`` configs: one row per run, item and system.
 T1_ERROR_TYPE = pa.struct(
     [
@@ -122,12 +135,7 @@ T1_ERROR_TYPE = pa.struct(
 )
 
 PREDICTION_FIELDS: tuple[pa.Field, ...] = (
-    _field(
-        "run_id",
-        pa.string(),
-        "Identifier of the evaluator run: the numeric submission id, or the name of the "
-        "organisers' baseline (for example `gemma_ref` or `872013`).",
-    ),
+    RUN_ID,
     _field(
         "task",
         pa.string(),
@@ -169,6 +177,240 @@ PREDICTION_FIELDS: tuple[pa.Field, ...] = (
         pa.bool_(),
         "Task 3 judgement that the translation is free of errors, or null where the run makes "
         "no Task 3 prediction.",
+    ),
+)
+
+
+def _flag(true: str, false: str) -> str:
+    """Description of a Boolean card answer: what true and false mean, and when it is null."""
+    return (
+        f"True when the model card says {true}, false when it says {false}, and null when the "
+        "answer is missing or is neither yes nor no."
+    )
+
+
+def _conversion(source: str, target: str) -> str:
+    """Description of one of the three task-conversion permissions on the model card."""
+    return (
+        f"True when the team allows the organisers to convert its {source} output into a "
+        f"{target} prediction automatically, false when it does not, and null when the model "
+        "card gives no readable answer."
+    )
+
+
+# The columns of the ``systems`` config: one row per official run, from its scrubbed model card.
+SYSTEMS_FIELDS: tuple[pa.Field, ...] = (
+    RUN_ID,
+    _field(
+        "name",
+        pa.string(),
+        "Name the team gave the submission in its model card, followed by the run id in "
+        "brackets where several runs share that name, so that every name is unique.",
+    ),
+    _field(
+        "canonical_name",
+        pa.string(),
+        "Name under which the findings paper lists the system, curated by the organisers and "
+        "never suffixed with the run id.",
+    ),
+    _field(
+        "org",
+        pa.string(),
+        "Organisation or organisations that entered the run, as written in the model card.",
+    ),
+    _field(
+        "description",
+        pa.string(),
+        "Short free-text description of the system, copied from the model card.",
+    ),
+    _field(
+        "reference_usage",
+        pa.string(),
+        "Free-text account of which kinds of reference translation the system uses and how, "
+        "copied from the model card.",
+    ),
+    _field(
+        "model_size",
+        pa.string(),
+        "Size of the model behind the system, as the team wrote it in the model card.",
+    ),
+    _field(
+        "closed_model_name",
+        pa.string(),
+        "Name of the closed-source model the system calls, as written in the model card.",
+    ),
+    _field(
+        "api_provider",
+        pa.string(),
+        "Provider or host of the API through which the closed-source model is called, as "
+        "written in the model card.",
+    ),
+    _field(
+        "link",
+        pa.string(),
+        "Link to the submitted system that the team volunteered for publication in its model "
+        "card, or an empty string where it gave none.",
+    ),
+    _field(
+        "underlying_model",
+        pa.string(),
+        "Model or models behind the system as the findings paper reports them, curated by the "
+        "organisers (`—` for classic metrics, which use no model, and `not stated in the "
+        "paper` where the paper gives none).",
+    ),
+    _field(
+        "paper_citation",
+        pa.string(),
+        "Citation of the paper that describes the system, in the author-year form of the "
+        "findings paper, or `[Citation missing]` where the findings paper has none.",
+    ),
+    _field(
+        "is_baseline",
+        pa.bool_(),
+        "True for the organisers' baselines and false for participant submissions.",
+    ),
+    _field(
+        "uses_reference",
+        pa.bool_(),
+        _flag("that the system uses the provided reference translations", "that it does not"),
+    ),
+    _field(
+        "ensemble",
+        pa.bool_(),
+        _flag("that the system is an ensemble", "that it is not"),
+    ),
+    _field(
+        "fine_tuned",
+        pa.bool_(),
+        _flag("that the team fine-tuned its model", "that it did not"),
+    ),
+    _field(
+        "open_weight",
+        pa.bool_(),
+        _flag("that the system is based on open-weight models", "that it is not"),
+    ),
+    _field(
+        "open_source",
+        pa.bool_(),
+        _flag("that the submitted system is open-source", "that it is not"),
+    ),
+    _field(
+        "threshold_inclusive",
+        pa.bool_(),
+        "True when a Task 2 score equal to `t3_threshold` counts as error-free, false when only "
+        "a higher score does, and null when the model card says neither or both.",
+    ),
+    _field("allow_t1_to_t2", pa.bool_(), _conversion("Task 1", "Task 2")),
+    _field("allow_t1_to_t3", pa.bool_(), _conversion("Task 1", "Task 3")),
+    _field("allow_t2_to_t3", pa.bool_(), _conversion("Task 2", "Task 3")),
+    _field(
+        "covers_all_priority",
+        pa.bool_(),
+        "True when the run has at least one row for every one of the eight priority language "
+        "pairs among the official items.",
+    ),
+    _field(
+        "t3_threshold",
+        pa.float64(),
+        "Task 2 score above which the team's Task 2 predictions are converted to error-free "
+        "judgements, or null where the model card gives no numeric threshold.",
+    ),
+    _field(
+        "tasks",
+        pa.list_(pa.string()),
+        "Tasks the run has predictions for: the one task of a submission, `task1` and `task2` "
+        "for the organisers' Task 1 baselines, and `task2` for their classic metrics.",
+    ),
+    _field(
+        "lps",
+        pa.list_(pa.string()),
+        "Language pairs, as short codes sorted alphabetically, in which the run has at least "
+        "one row, challenge sets included.",
+    ),
+    _field(
+        "n_items",
+        pa.int64(),
+        "Number of distinct test items for which the run has at least one row.",
+    ),
+    _field(
+        "n_pairs",
+        pa.int64(),
+        "Number of rows (one per item and system) that the run has in its prediction table.",
+    ),
+)
+
+# The columns of the ``mt_systems`` config: one row per system that has hypotheses in ``pairs``.
+MT_SYSTEMS_FIELDS: tuple[pa.Field, ...] = (
+    SYSTEM,
+    SYSTEM_TYPE,
+    _field(
+        "n_items",
+        pa.int64(),
+        "Number of distinct test items for which the system has a hypothesis.",
+    ),
+    _field(
+        "lps",
+        pa.list_(pa.string()),
+        "Language pairs, as short codes sorted alphabetically, in which the system has hypotheses.",
+    ),
+)
+
+# The columns of the ``challenge_sets`` config: one row per challenge set.
+CHALLENGE_SETS_FIELDS: tuple[pa.Field, ...] = (
+    _field(
+        "name",
+        pa.string(),
+        "Name of the challenge set, as in the `challenge_set` column of `items` and `pairs`.",
+    ),
+    _field(
+        "full_name",
+        pa.string(),
+        "Full title of the challenge set, as in the findings paper or the paper that "
+        "introduced it.",
+    ),
+    _field(
+        "authors",
+        pa.string(),
+        "Authors of the challenge set, as in the reference list of the findings paper.",
+    ),
+    _field(
+        "citation",
+        pa.string(),
+        "Citation of the paper that describes the challenge set, in the author-year form of the "
+        "findings paper.",
+    ),
+    _field(
+        "what_it_tests",
+        pa.string(),
+        "One-sentence summary of the phenomenon that the challenge set probes, from the "
+        "findings paper.",
+    ),
+    _field(
+        "hyp_semantics",
+        pa.string(),
+        "What the hypotheses of the set are, and which `system` names they appear under, or "
+        "`not stated in the paper` where the paper does not say.",
+    ),
+    _field(
+        "ref_semantics",
+        pa.string(),
+        "What the reference of the set is, or `not stated in the paper` where the paper does "
+        "not say.",
+    ),
+    _field(
+        "lps",
+        pa.list_(pa.string()),
+        "Language pairs, as short codes sorted alphabetically, in which the set has items.",
+    ),
+    _field(
+        "n_items",
+        pa.int64(),
+        "Number of distinct items in the challenge set.",
+    ),
+    _field(
+        "n_pairs",
+        pa.int64(),
+        "Number of rows (one per item and system) that the challenge set has in `pairs`.",
     ),
 )
 
@@ -217,12 +459,7 @@ SCHEMAS: dict[str, pa.Schema] = {
             ITEM_ID,
             *SHARED_FIELDS,
             SYSTEM,
-            _field(
-                "system_type",
-                pa.string(),
-                "Kind of system: `mt`, `human_scratch`, `human_postedit`, `pseudo_ref` or "
-                "`challenge_hyp`.",
-            ),
+            SYSTEM_TYPE,
             SRC,
             _field(
                 "hyp",
@@ -257,4 +494,7 @@ SCHEMAS: dict[str, pa.Schema] = {
             ),
         ]
     ),
+    "systems": pa.schema(SYSTEMS_FIELDS),
+    "mt_systems": pa.schema(MT_SYSTEMS_FIELDS),
+    "challenge_sets": pa.schema(CHALLENGE_SETS_FIELDS),
 }

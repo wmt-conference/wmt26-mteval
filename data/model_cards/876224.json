@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "",
+    "closed_model_name": "",
+    "description": "Gemma-4-31B-it used off-the-shelf (no SFT/fine-tuning) as a translation error-span judge. Prompt engineering only: a reference-aware prompt with 8 few-shot demonstrations, JSON guided-decoding output, and a rule-based language-ID pre-filter for wrong-language segments. Calibration is applied per language pair rather than globally — severity, expected error density, span extent, and under/over-flagging guidance are tuned separately for each pair, using HUMEVAL25-VAL gold where that pair has gold coverage and structural cross-pair signals where it does not. The submission selects, for each of the 8 pairs, the variant that scored best on the shared-task leaderboard among our runs.",
+    "ensemble": "false",
+    "fine_tuned": "false",
+    "link": "",
+    "model_size": "31B",
+    "name": "gemma4-31b-v4ref-struct-best",
+    "open_source": "false",
+    "open_weight": "true",
+    "org": "Data Intelligence Lab, Hankuk University of Foreign Studies (HUFS)",
+    "reference_usage": "native human reference translations, included in the judge prompt as additional context alongside the source segment",
+    "threshold_inclusive": "",
+    "uses_reference": "true"
+  },
+  "run_id": "876224"
+}

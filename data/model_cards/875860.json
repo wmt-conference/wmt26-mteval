@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "",
+    "closed_model_name": "",
+    "description": "This submission refines the state-of-the-art xcomet metric by rebalancing the class labels based on the label distribution of the training data. It modifies xcomet by adding an offset to the logits, hence adjusting the softmax subword probabilities for each error class. It then ranks the error spans based on the model's entropy, selecting the top-k error spans to be re-classified or re-segmented by a reasoning LLM.",
+    "ensemble": "true",
+    "fine_tuned": "false",
+    "link": "",
+    "model_size": "",
+    "name": "XCOMOffset",
+    "open_source": "true",
+    "open_weight": "true",
+    "org": "University of Washington",
+    "reference_usage": "",
+    "threshold_inclusive": "",
+    "uses_reference": "No"
+  },
+  "run_id": "875860"
+}

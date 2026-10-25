@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "",
+    "closed_model_name": "",
+    "description": "A reference-free multilingual translation error span detection system based on Qwen3-14B. The English-German system is trained with supervised fine-tuning followed by GRPO. The English-Chinese system is further trained on a mixture of English-German and English-Chinese data. The system takes the source sentence and machine translation as input and predicts minor and major error spans without using the provided reference translations.",
+    "ensemble": "false",
+    "fine_tuned": "true",
+    "link": "",
+    "model_size": "14B",
+    "name": "QwenSpan",
+    "open_source": "false",
+    "open_weight": "true",
+    "org": "Soochow University",
+    "reference_usage": "",
+    "threshold_inclusive": "",
+    "uses_reference": "false"
+  },
+  "run_id": "869016"
+}

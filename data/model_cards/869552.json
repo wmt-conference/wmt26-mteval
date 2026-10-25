@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "",
+    "closed_model_name": "",
+    "description": "GEMBA-poly-cand is a reference-free, LLM-based quality estimation metric built on Llama 3.3 70B. Following the poly-cand approach introduced in Züfle et al. (2025, \"COMET-poly: Machine Translation Metric Grounded in Other Candidates\"), each translation is scored alongside up to 5 additional candidate translations of the same source segment, selected by cosine similarity over all-MiniLM-L12-v2 sentence embeddings, giving the model contrastive context rather than scoring the translation in isolation. Candidate pools are drawn primarily from other participating systems' outputs for the same source segment; for segments with too few available system outputs, additional synthetic candidates were generated with TranslateGemma-4B to ensure a sufficient pool for similarity-based selection.",
+    "ensemble": "false",
+    "fine_tuned": "false",
+    "link": "https://github.com/zouharvi/COMET-poly and https://github.com/TuAnh23/GEMBA/",
+    "model_size": "70B (Llama 3.3, scoring); 4B (TranslateGemma, synthetic candidate generation)",
+    "name": "gemba-poly",
+    "open_source": "true",
+    "open_weight": "true",
+    "org": "Karlsruhe Institute of Technology",
+    "reference_usage": "",
+    "threshold_inclusive": "inclusive (≥)",
+    "uses_reference": "false"
+  },
+  "run_id": "869552"
+}

@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "",
+    "closed_model_name": "",
+    "description": "We follow the same procedure for submission 875417 except the omission is computed using a rule-based approach on the basis of overall severity of a completed translation.",
+    "ensemble": "false",
+    "fine_tuned": "true",
+    "link": "",
+    "model_size": "27B",
+    "name": "Rule-based Omission",
+    "open_source": "true",
+    "open_weight": "true",
+    "org": "AIST",
+    "reference_usage": "",
+    "threshold_inclusive": "",
+    "uses_reference": "false"
+  },
+  "run_id": "875796"
+}

@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "",
+    "closed_model_name": "",
+    "description": "A two-stage MQM-style error detector based on the open-weight Gemma 4 31B instruction model with 4-bit AWQ quantization. The system uses few-shot prompting and one-pass self-refinement to identify major and minor target-side errors and source omissions. It uses source and candidate translation text without reference translations.",
+    "ensemble": "false",
+    "fine_tuned": "false",
+    "link": "",
+    "model_size": "31B parameters (4-bit AWQ)",
+    "name": "cuni-v14",
+    "open_source": "false",
+    "open_weight": "true",
+    "org": "Charles University",
+    "reference_usage": "",
+    "threshold_inclusive": "",
+    "uses_reference": "false"
+  },
+  "run_id": "875859"
+}

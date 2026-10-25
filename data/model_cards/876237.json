@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "Google AI (Gemini); DeepSeek (DeepSeek); Alibaba Cloud DashScope (Qwen)",
+    "closed_model_name": "gemini-2.5-flash; deepseek-v4-flash; qwen-plus",
+    "description": "A reference-free, LLM-ensemble quality-estimation system. Three independent LLM judges (Gemini 2.5 Flash, DeepSeek V4 Flash, Qwen Plus) annotate each translation under an MQM/ESA-style protocol; a neutral cross-verification stage re-judges every proposed span, and a dedicated source-coverage stage detects omissions. The verified per-character judge masks are fused by CHARACTER-LEVEL MAJORITY VOTE (a character is marked erroneous when at least two of the three judges cover it), giving Task-1 error spans with minor/major severity and an omission label. The Task-2 quality score is an inverse-variance fusion of a reliability-weighted holistic estimator and a span-derived MQM-penalty estimator (span confidence = vote share; judge reliability = agreement with the consensus), clamped to [0,100]. The Task-3 error-free label is an adequacy-gated conjunction (no error spans, no omission, and holistic quality at or above threshold). No reference translations are used at any stage.",
+    "ensemble": "true",
+    "fine_tuned": "false",
+    "link": "",
+    "model_size": "N/A — ensemble of hosted LLM APIs (no trained or fine-tuned model)",
+    "name": "Lexicala-QE-Ensemble (Majority-Vote)",
+    "open_source": "false",
+    "open_weight": "false",
+    "org": "Lexicala",
+    "reference_usage": "",
+    "threshold_inclusive": "inclusive",
+    "uses_reference": "false"
+  },
+  "run_id": "876237"
+}

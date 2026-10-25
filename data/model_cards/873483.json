@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "Google AI Studio / Gemini API",
+    "closed_model_name": "gemini-3.5-flash",
+    "description": "fluencyscore-multispan-v2.1: two-pass judge (base pass + second-opinion pass on empty hypotheses + exhaustive pass on five under-covered LPs), span union with dedup; reference-free LLM judge (Gemini 3.5 Flash) prompted to enumerate all distinct error spans per hypothesis (0..N) with major/minor severity following MQM-style conventions, plus an explicit omission field. Phrases are mapped to character spans with a deterministic Unicode-normalizing locator (exact / normalized / bounded-fuzzy tiers) with occurrence disambiguation; overlapping and adjacent same-severity spans are merged; whole-segment spans are restricted to garbled outputs. Empty or unscored hypotheses fall back to our prior single-span system. Covers official 21 LPs + challenge sets on mteval-test26.",
+    "ensemble": "false",
+    "fine_tuned": "false",
+    "link": "",
+    "model_size": "",
+    "name": "fluencyscore-multispan-v2.1",
+    "open_source": "false",
+    "open_weight": "false",
+    "org": "Algebras",
+    "reference_usage": "",
+    "threshold_inclusive": "inclusive",
+    "uses_reference": "false"
+  },
+  "run_id": "873483"
+}

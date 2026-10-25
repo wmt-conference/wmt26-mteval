@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "test_set_sha256": "aa2e17ebd075feedd07435f1b99d20cf3e98895ea5e86e43e5df9ef674163187",
+  "priority_directions": [
+    "ces_Latn-deu_Latn",
+    "ces_Latn-vie_Latn",
+    "eng_Latn-arz_Arab",
+    "eng_Latn-ekk_Latn",
+    "eng_Latn-ind_Latn",
+    "eng_Latn-isl_Latn",
+    "eng_Latn-sme_Latn",
+    "zho_Hans-jpn_Jpan"
+  ],
+  "coverage_sets": [
+    {
+      "set_id": "maximal_01",
+      "domains": [
+        "news",
+        "social",
+        "speech"
+      ],
+      "directions": [
+        "ces_Latn-deu_Latn",
+        "ces_Latn-vie_Latn",
+        "eng_Latn-arz_Arab",
+        "eng_Latn-ekk_Latn",
+        "eng_Latn-ind_Latn",
+        "eng_Latn-isl_Latn",
+        "eng_Latn-sme_Latn",
+        "zho_Hans-jpn_Jpan"
+      ]
+    },
+    {
+      "set_id": "maximal_02",
+      "domains": [
+        "news",
+        "social",
+        "software",
+        "speech"
+      ],
+      "directions": [
+        "eng_Latn-arz_Arab",
+        "eng_Latn-ekk_Latn",
+        "eng_Latn-ind_Latn",
+        "eng_Latn-isl_Latn",
+        "eng_Latn-sme_Latn"
+      ]
+    },
+    {
+      "set_id": "maximal_03",
+      "domains": [
+        "edu",
+        "factchecking",
+        "news",
+        "social",
+        "speech"
+      ],
+      "directions": [
+        "ces_Latn-deu_Latn",
+        "ces_Latn-vie_Latn"
+      ]
+    }
+  ]
+}

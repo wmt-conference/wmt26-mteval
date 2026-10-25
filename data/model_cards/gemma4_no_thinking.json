@@ -1,0 +1,23 @@
+{
+  "answers": {
+    "allow_t1_to_t2": "true",
+    "allow_t1_to_t3": "true",
+    "allow_t2_to_t3": "true",
+    "api_provider": "",
+    "closed_model_name": "",
+    "description": "Reference-free Gemma 4 (google/gemma-4-31B-it) WITHOUT reasoning enabled. The null task2_pred scores are imputed using the mean score of the same MT system across all non-null segments in the same language pair, falling back to that system's global mean across all pairs, and finally to the dataset-wide mean if no non-null scores exist for that system.",
+    "ensemble": "false",
+    "fine_tuned": "false",
+    "link": "https://huggingface.co/google/gemma-4-31B-it",
+    "model_size": "30.7B Parameters",
+    "name": "Gemma 4 - No Reasoning Baseline",
+    "open_source": "true",
+    "open_weight": "true",
+    "org": "WMT Automated MT Evaluation Organizing Committee",
+    "reference_usage": "",
+    "t3_threshold": "85",
+    "threshold_inclusive": "inclusive",
+    "uses_reference": "false"
+  },
+  "run_id": "gemma4_no_thinking"
+}

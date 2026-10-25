@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "wmt26-mteval"
+description = "Release tooling for the WMT26 MT-evaluation shared-task data."
+requires-python = ">=3.10"
+dynamic = ["version"]
+dependencies = [
+    "pyarrow>=20,<24",
+    "pyyaml>=6",
+    "huggingface_hub>=0.30",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "ruff>=0.6",
+]
+
+[tool.hatch.version]
+path = "src/wmt26_mteval/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/wmt26_mteval"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "fulldata: slow tests that need the full organiser data (deselect with -m \"not fulldata\")",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]

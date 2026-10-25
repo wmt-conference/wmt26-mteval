@@ -1,0 +1,23 @@
+{
+  "answers": {
+    "allow_t1_to_t2": "false",
+    "allow_t1_to_t3": "false",
+    "allow_t2_to_t3": "false",
+    "api_provider": "Google",
+    "closed_model_name": "Gemini 3.5 Flash",
+    "description": "Binary error-free segment classification combining two LLM judges: Gemini 3.5 Flash (closed-weight) and Gemma 12B (open-weight, locally served via vLLM), both prompted with the same reference-free error-span prompt (Wmt26SpanTaskV2Directive). A segment is classified error-free only if both judges independently agree (unweighted intersection voting on judge-detected spans).",
+    "ensemble": "true",
+    "fine_tuned": "false",
+    "link": "",
+    "model_size": "Gemini: undisclosed (proprietary); Gemma: 12B parameters",
+    "name": "PhraseT3-01",
+    "open_source": "false",
+    "open_weight": "true",
+    "org": "Phrase a.s.",
+    "reference_usage": "",
+    "t3_threshold": "",
+    "threshold_inclusive": "",
+    "uses_reference": "false"
+  },
+  "run_id": "872036"
+}

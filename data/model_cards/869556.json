@@ -1,0 +1,23 @@
+{
+  "answers": {
+    "allow_t1_to_t2": "true",
+    "allow_t1_to_t3": "true",
+    "allow_t2_to_t3": "true",
+    "api_provider": "OpenAI",
+    "closed_model_name": "GPT-4.1-mini-2025-04-14",
+    "description": "FACET evaluates each translation through three separate prompting passes. Fluency looks at the target sentence alone, accuracy at the source and target together, and consistency at the whole document rather than one segment. Each pass sees only the context its error type needs, which keeps the judgments clean: fluency does not get confused with source fidelity, and document-level consistency catches cross-segment errors like the same name or term translated differently in different places, which segment-level scoring misses. The three passes are merged per segment and scored on a shared four-point severity scale, with one fixed model across all passes.",
+    "ensemble": "false",
+    "fine_tuned": "false",
+    "link": "",
+    "model_size": "undisclosed",
+    "name": "FACET",
+    "open_source": "false",
+    "open_weight": "false",
+    "org": "Soongsil University",
+    "reference_usage": "",
+    "t3_threshold": "true",
+    "threshold_inclusive": "inclusive",
+    "uses_reference": "false"
+  },
+  "run_id": "869556"
+}

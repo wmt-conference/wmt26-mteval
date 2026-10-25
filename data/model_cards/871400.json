@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "",
+    "closed_model_name": "",
+    "description": "Our approach uses an LLM-as-a-judge within the MQM error typology. Error severities are used as inputs to train an MLP regressor to predict human annotations.",
+    "ensemble": "false",
+    "fine_tuned": "true",
+    "link": "",
+    "model_size": "27B",
+    "name": "MQM-LLM",
+    "open_source": "true",
+    "open_weight": "true",
+    "org": "AIST",
+    "reference_usage": "",
+    "threshold_inclusive": "",
+    "uses_reference": "false"
+  },
+  "run_id": "871400"
+}

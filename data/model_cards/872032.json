@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "Google",
+    "closed_model_name": "Gemini 3.5 Flash",
+    "description": "Segment-level quality scoring (ESA-style 0-100 score) combining two LLM judges: Gemini 3.5 Flash (closed-weight) and Gemma 12B (open-weight, locally served via vLLM), both prompted with the same reference-free error-span prompt (Wmt26SpanTaskV2Directive) and their derived scores combined via a scalar RRWA-weighted mean using a metric-specific (T2 Pearson) static reliability prior per judge.",
+    "ensemble": "true",
+    "fine_tuned": "false",
+    "link": "",
+    "model_size": "Gemini: undisclosed (proprietary); Gemma: 12B parameters",
+    "name": "PhraseT2-01",
+    "open_source": "false",
+    "open_weight": "true",
+    "org": "Phrase a.s.",
+    "reference_usage": "",
+    "threshold_inclusive": "",
+    "uses_reference": "false"
+  },
+  "run_id": "872032"
+}

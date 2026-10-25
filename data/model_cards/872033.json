@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "Google",
+    "closed_model_name": "Gemini 3.5 Flash",
+    "description": "Segment-level quality scoring (ESA-style 0-100 score) combining Gemini 3.5 Flash (closed-weight), Gemma 4 12B (open-weight, Phrase-served via local vLLM), and UFAL cat-v4 (Charles University's two-stage MQM-style error detector, based on open-weight Gemma 4 31B with 4-bit AWQ quantization, few-shot prompting and one-pass self-refinement), via a scalar mean of each system's own score weighted by a per-system reliability prior (each system's standalone Pearson correlation on held-out WMT25 dev data), with a Gemini+Gemma-only fallback for segments UFAL did not cover.",
+    "ensemble": "true",
+    "fine_tuned": "false",
+    "link": "",
+    "model_size": "Gemini: undisclosed (proprietary); Gemma 4 12B: 12B parameters; UFAL cat-v4 (Gemma 4 31B, 4-bit AWQ): 31B parameters",
+    "name": "PhraseT2-02",
+    "open_source": "false",
+    "open_weight": "true",
+    "org": "Phrase a.s. + CUNI",
+    "reference_usage": "",
+    "threshold_inclusive": "",
+    "uses_reference": "false"
+  },
+  "run_id": "872033"
+}

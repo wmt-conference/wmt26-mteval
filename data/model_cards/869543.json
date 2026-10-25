@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "OpenAI",
+    "closed_model_name": "GPT-4.1-mini-2025-04-14",
+    "description": "FACET evaluates each translation through two separate prompting passes. Fluency looks at the target alone and accuracy at the source and target together, so each judgment sees only the context its error type needs: fluency does not get confused with source fidelity, and meaning errors are checked against the source rather than guessed from the target. The two passes are merged per segment and scored on a shared four-point severity scale, with one fixed model across both passes. This submission works entirely at the segment level, matching the granularity at which the task scores.",
+    "ensemble": "false",
+    "fine_tuned": "false",
+    "link": "",
+    "model_size": "undisclosed",
+    "name": "FACET",
+    "open_source": "false",
+    "open_weight": "false",
+    "org": "Soongsil University",
+    "reference_usage": "",
+    "threshold_inclusive": "inclusive",
+    "uses_reference": "false"
+  },
+  "run_id": "869543"
+}

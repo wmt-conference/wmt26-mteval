@@ -1,0 +1,23 @@
+{
+  "answers": {
+    "allow_t1_to_t2": "false",
+    "allow_t1_to_t3": "false",
+    "allow_t2_to_t3": "false",
+    "api_provider": "Cisco Webex internal LiteLLM-compatible proxy",
+    "closed_model_name": "google/gemma-4-31b-it; mistral/mistral-large-3; google/gemini-3.1-pro-global",
+    "description": "A fixed reference-free pipeline for sentence-level error-free translation detection. It combines deterministic structural evidence with structured source-and-hypothesis judging, bounded independent verification, and deterministic aggregation.",
+    "ensemble": "true",
+    "fine_tuned": "false",
+    "link": "",
+    "model_size": "",
+    "name": "RAGthoven Error-Free",
+    "open_source": "false",
+    "open_weight": "false",
+    "org": "NaiveNeuron",
+    "reference_usage": "",
+    "t3_threshold": "",
+    "threshold_inclusive": "",
+    "uses_reference": "false"
+  },
+  "run_id": "876250"
+}

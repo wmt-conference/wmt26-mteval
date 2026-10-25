@@ -1,0 +1,23 @@
+{
+  "answers": {
+    "allow_t1_to_t2": "false",
+    "allow_t1_to_t3": "false",
+    "allow_t2_to_t3": "true",
+    "api_provider": "",
+    "closed_model_name": "",
+    "description": "Baselines run by task organizers",
+    "ensemble": "false",
+    "fine_tuned": "false",
+    "link": "https://huggingface.co/Unbabel/wmt22-cometkiwi-da",
+    "model_size": "",
+    "name": "COMETKiwi22",
+    "open_source": "true",
+    "open_weight": "true",
+    "org": "WMT mteval task",
+    "reference_usage": "",
+    "t3_threshold": "",
+    "threshold_inclusive": "",
+    "uses_reference": "false"
+  },
+  "run_id": "873002"
+}

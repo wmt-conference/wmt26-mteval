@@ -1,0 +1,23 @@
+{
+  "answers": {
+    "allow_t1_to_t2": "true",
+    "allow_t1_to_t3": "true",
+    "allow_t2_to_t3": "true",
+    "api_provider": "",
+    "closed_model_name": "",
+    "description": "xCOMET XXL without references.",
+    "ensemble": "false",
+    "fine_tuned": "false",
+    "link": "https://huggingface.co/Unbabel/XCOMET-XXL",
+    "model_size": "10.7B Parameters",
+    "name": "xCOMET XXL Reference-free - Baseline",
+    "open_source": "true",
+    "open_weight": "true",
+    "org": "WMT Automated MT Evaluation Organizing Committee",
+    "reference_usage": "",
+    "t3_threshold": "85",
+    "threshold_inclusive": "inclusive",
+    "uses_reference": "false"
+  },
+  "run_id": "xcomet_xxl_no_ref"
+}

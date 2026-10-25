@@ -1,0 +1,19 @@
+{
+  "answers": {
+    "api_provider": "",
+    "closed_model_name": "",
+    "description": "To address the Segment-Level Error Detection and Span Annotation, a reasoning-based LLM with few-shot learning that leverage structure output is applied. The Qwen3 32B model is adapted to generate the output that includes error span detection, classify each span according to its severity, and identify a possible omission for each segment in a completed translation.",
+    "ensemble": "false",
+    "fine_tuned": "true",
+    "link": "",
+    "model_size": "27B",
+    "name": "Qwen-based Omission",
+    "open_source": "true",
+    "open_weight": "true",
+    "org": "AIST",
+    "reference_usage": "",
+    "threshold_inclusive": "",
+    "uses_reference": "false"
+  },
+  "run_id": "875417"
+}

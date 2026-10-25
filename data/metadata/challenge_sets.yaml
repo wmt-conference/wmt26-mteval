@@ -1,0 +1,145 @@
+# Descriptions of the seven challenge sets of the WMT26 MT-evaluation shared task.
+#
+# The text follows Section 8 of the findings paper (Lavie et al., 2026; pages 956-958 of the
+# proceedings, Tables 14 and 15) and its reference list, and Section 5.2.1 (Figure 2) for the two
+# RefQuality sets.  Where the paper does not say, the entry says "not stated in the paper".  The
+# statements about the reference of a set (none for GAMBITP; a reference text of unrecorded type,
+# `ref_type` `unknown`, for the four submitted sets with one) and which `system` names their
+# hypotheses use are read from the released data rather than from the paper.
+#
+# `full_name` is the title of the paper that introduces the set, copied from the reference list of
+# the findings paper (the 2026 paper for GAMBIT+, which also has a WMT25 predecessor) without the
+# closing full stop.  The QEbreak title is broken across two lines of that list ("pre-" and
+# "registered"), so the PDF cannot tell "preregistered" from "pre-registered"; it is spelt
+# "preregistered", as the text extraction of the PDF gives it.  The two RefQuality sets have no
+# published title of their own, so their `full_name` is a plainly descriptive name.
+#
+# Each entry has exactly the text columns of the `challenge_sets` config.  The columns `lps`,
+# `n_items` and `n_pairs` are computed from `pairs`, so they are not written here.
+
+- name: AGGREE
+  full_name: >-
+    AGGREE: An aggregation-grounded challenge set for segment-level MT metric evaluation
+  authors: Lena Griesbeck and Michaela Geierhos
+  citation: Griesbeck and Geierhos, 2026
+  what_it_tests: >-
+    The local reliability of segment-level metrics: naturally occurring system outputs from WMT23
+    and WMT24 on which automatic metrics disagree with one another or diverge from the available
+    human judgements, although metrics may agree closely at system level.
+  hyp_semantics: >-
+    One hypothesis per item, named `AGGREE_hyp1`: a naturally occurring system output taken from
+    WMT23 or WMT24. Which system produced it is not stated in the paper.
+  ref_semantics: >-
+    A reference translation is included in this release, but the source data does not record
+    its type (`ref_type` is `unknown`), and the findings paper does not say how it was produced.
+
+- name: FECE
+  full_name: >-
+    FECE: A challenge set for evaluating fine-grained translation error correction
+  authors: Jie Ding and Xiangyu Duan
+  citation: Ding and Duan, 2026
+  what_it_tests: >-
+    Whether metrics credit the correction of a fine-grained translation error itself, by
+    comparing a candidate that corrects the annotated error with a merely polished candidate that
+    keeps the error.
+  hyp_semantics: >-
+    Two hypotheses per item, named `FECE_hyp1` and `FECE_hyp2`: an error-correcting candidate and
+    a polished candidate that preserves the error. Which of the two is which is not stated in
+    the paper.
+  ref_semantics: >-
+    A reference translation is included in this release, but the source data does not record
+    its type (`ref_type` is `unknown`), and the findings paper does not say how it was produced.
+
+- name: GAMBITP
+  full_name: >-
+    Benchmarking gender bias in machine translation evaluation metrics across occupations
+  authors: >-
+    Orfeas Menis Mastromichalakis, Giorgos Filandrianos, Wafaa Mohammed, Giuseppe Attanasio and
+    Chrysoula Zerva
+  citation: Menis Mastromichalakis et al., 2026
+  what_it_tests: >-
+    Gender bias in translation evaluation: English sources with gender-ambiguous occupational
+    terms are paired with matched masculine and feminine translations, which an unbiased
+    evaluator should score comparably. The 2026 edition is an occupation-balanced subset of
+    GAMBIT+, introduced at WMT25, with seven target languages.
+  hyp_semantics: >-
+    Two hypotheses per item, named `GAMBITP_hyp1` and `GAMBITP_hyp2`: the masculine and the
+    feminine translation of the same source. Which of the two is the masculine one is not stated
+    in the paper.
+  ref_semantics: >-
+    No reference translation is included in this release (`ref_type` is `none`).
+
+- name: LIGATUR
+  full_name: >-
+    Translation metrics cannot judge what their tokeniser deletes: LIGATUR and AEGIS
+    submissions to the WMT26 shared task on automated translation quality evaluation
+  authors: Animesh Mishra, Krishang Sharma and Sonia Khetarpaul
+  citation: Mishra et al., 2026
+  what_it_tests: >-
+    The sensitivity of metrics to Unicode format and control characters, separating perturbations
+    that should be invisible to human readers from perturbations that change the rendered text or
+    its legibility, including control characters that affect Devanagari conjuncts in English to
+    Hindi.
+  hyp_semantics: >-
+    Two hypotheses per item, named `LIGATUR_hyp1` and `LIGATUR_hyp2`: a clean string and its
+    counterpart perturbed with Unicode format or control characters. Which of the two is the
+    clean one is not stated in the paper.
+  ref_semantics: >-
+    A reference translation is included in this release, but the source data does not record
+    its type (`ref_type` is `unknown`), and the findings paper does not say how it was produced.
+
+- name: QEbreak
+  full_name: >-
+    QEbreak at WMT26: A preregistered audit of omission and addition asymmetry in machine
+    translation quality metrics
+  authors: Maksim Silchenko
+  citation: Silchenko, 2026
+  what_it_tests: >-
+    Systematic failure modes of quality metrics, chiefly whether silently omitted source content
+    is penalised differently from added content, through matched base, omission and addition
+    triples, a fluent but fact-free verbosity ladder that probes sensitivity to length inflation,
+    and minimal pairs with numeric contradictions as a positive control.
+  hyp_semantics: >-
+    One hypothesis per item, named `QEbreak_hyp1`. Which role an item plays (base, omission,
+    addition, verbosity ladder or numeric contradiction) is not stated in the paper.
+  ref_semantics: >-
+    A reference translation is included in this release, but the source data does not record
+    its type (`ref_type` is `unknown`), and the findings paper does not say how it was produced.
+    What reference the reference-based metrics received in the authors' analysis is not stated
+    in the paper.
+
+- name: RefQuality-PD
+  full_name: >-
+    Organisers' reference-swap set with pseudo-references (descriptive name, not a published
+    title)
+  authors: The WMT26 shared-task organisers (authors of the findings paper)
+  citation: Lavie et al., 2026 (findings paper, §5.2.1)
+  what_it_tests: >-
+    How the type and quality of the reference affect reference-based evaluation (findings paper,
+    Section 5.2.1 and Figure 2): items whose reference is a machine-generated pseudo-reference,
+    to be compared with native and post-edited references.
+  hyp_semantics: >-
+    Ordinary system translations under their own system names, as in the main test set: mostly
+    machine translation outputs (`system_type` is `mt`) with some human translations
+    (`human_scratch` or `human_postedit`).
+  ref_semantics: >-
+    A machine-generated pseudo-reference (`ref_type` is `pseudo`). Items whose `doc_id` starts
+    with `RefQuality-PD_RefQuality-PE_` are the pseudo-reference variants of items whose
+    alternative reference is a post-edit.
+
+- name: RefQuality-PE
+  full_name: >-
+    Organisers' reference-swap set with post-edited references (descriptive name, not a
+    published title)
+  authors: The WMT26 shared-task organisers (authors of the findings paper)
+  citation: Lavie et al., 2026 (findings paper, §5.2.1)
+  what_it_tests: >-
+    How the type and quality of the reference affect reference-based evaluation (findings paper,
+    Section 5.2.1 and Figure 2): items whose reference is a post-edited machine translation, to
+    be compared with native and pseudo-references.
+  hyp_semantics: >-
+    Ordinary system translations under their own system names, as in the main test set: mostly
+    machine translation outputs (`system_type` is `mt`) with some human translations from scratch
+    (`human_scratch`).
+  ref_semantics: >-
+    A post-edited machine translation (`ref_type` is `postedit`).

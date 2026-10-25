@@ -40,9 +40,10 @@ Codes are normalised to an ISO 639-3 language code and an ISO 15924 script, plus
 | `native` | `human` | A human translation from scratch. |
 | `postedit` | `postedit` | A post-edited machine translation. |
 | `pseudo` | `pseudo` | A machine-generated pseudo-reference. |
-| `none` | absent, null or `undefined` | The item has no reference, and `ref_text` is null. |
+| `unknown` | `undefined` | A reference text is present, but the source data does not record its type. |
+| `none` | absent, or null text and type | The item has no reference text, and `ref_text` is null. |
 
-`items.ref_type_orig` keeps the spelling of the source data, which tells an absent type (null) from an explicit `undefined`.
+`items.ref_type_orig` keeps the type exactly as the source data spells it (`human`, `postedit`, `pseudo`, `undefined`, or null where none is recorded).
 
 ### System types
 
@@ -102,7 +103,7 @@ One row per test item.
 | `para_idx` | `int32` | Zero-based index of the paragraph within its document, taken from the last field of `item_id`, and null for FECE and QEbreak, whose item ids end in a segment hash. |
 | `src` | `string` | Source text of the item, exactly as in the test set. |
 | `ref_text` | `string` | Reference translation, exactly as in the test set, or null when the item has no reference. |
-| `ref_type` | `string` | How the reference was produced: `native` (human translation from scratch), `postedit` (post-edited machine translation), `pseudo` (machine-generated pseudo-reference) or `none` (no reference). |
+| `ref_type` | `string` | How the reference was produced: `native` (human translation from scratch), `postedit` (post-edited machine translation), `pseudo` (machine-generated pseudo-reference), `unknown` (a reference text is present but its type is not recorded) or `none` (no reference text). |
 | `ref_type_orig` | `string` | Reference type exactly as recorded in the source data (`human`, `postedit`, `pseudo` or `undefined`), or null when the data records no type. |
 | `asr` | `string` | Automatic speech recognition transcript of the source audio, present for speech items only. |
 | `video_path` | `string` | Relative path of the source video file as recorded in the test set, present for speech items only. |
@@ -132,7 +133,7 @@ One row per item and MT system.
 | `src` | `string` | Source text of the item, exactly as in the test set. |
 | `hyp` | `string` | Hypothesis translation, exactly as in the source data, including empty and whitespace-only outputs. |
 | `ref_text` | `string` | Reference translation, exactly as in the test set, or null when the item has no reference. |
-| `ref_type` | `string` | How the reference was produced: `native` (human translation from scratch), `postedit` (post-edited machine translation), `pseudo` (machine-generated pseudo-reference) or `none` (no reference). |
+| `ref_type` | `string` | How the reference was produced: `native` (human translation from scratch), `postedit` (post-edited machine translation), `pseudo` (machine-generated pseudo-reference), `unknown` (a reference text is present but its type is not recorded) or `none` (no reference text). |
 | `is_reference_candidate` | `bool` | True when the hypothesis equals the reference apart from surrounding whitespace, so that it may be a copy of the reference. |
 | `hyp_is_empty` | `bool` | True when the hypothesis is empty or contains only whitespace. |
 

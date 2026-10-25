@@ -11,9 +11,10 @@ This repository holds the test set, the instructions that participants received,
 of the data and the tools that build and check the release. The data themselves are on Hugging
 Face, as typed Parquet tables.
 
-**Status: v0.9, not yet published.** It contains the typed data configs and the documentation.
+**Version: v0.9, a pre-release.** It contains the typed data configs and the documentation.
 Human-annotation gold, converted predictions, results tables and the scoring code are planned for
-v1.0. Nothing has been uploaded or pushed; the steps are in [`docs/RELEASE.md`](docs/RELEASE.md).
+v1.0. The release date is in [`docs/CHANGELOG.md`](docs/CHANGELOG.md) and the release steps are in
+[`docs/RELEASE.md`](docs/RELEASE.md).
 
 ## Data on Hugging Face
 

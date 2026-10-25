@@ -162,12 +162,14 @@ grand = load_dataset("wmt/wmt26-mteval-data", "grand", split="test")
 
 ## Warnings
 
-- **References are among the candidate translations.** Every available reference is also a
-  hypothesis (`system_type` is `human_scratch`, `human_postedit` or `pseudo_ref`).
-  {{n_reference_candidates}} pairs have a hypothesis that equals the item's reference, up to
-  surrounding whitespace, and carry `is_reference_candidate = true`. A reference-based evaluator
-  is given the reference as well, so it sees a copy of it on those rows: exclude them, or analyse
-  them apart, if that matters to you.
+- **References are among the candidate translations of official items.** In the official set,
+  every available reference is also a hypothesis (`system_type` is `human_scratch`,
+  `human_postedit` or `pseudo_ref`). Challenge hypotheses can equal the reference too:
+  `challenge_hyp` rows can be `is_reference_candidate = true`. In all, {{n_reference_candidates}}
+  pairs have a hypothesis that equals the item's reference, up to surrounding whitespace, and
+  carry `is_reference_candidate = true`. A reference-based evaluator is given the reference as
+  well, so it sees a copy of it on those rows: exclude them, or analyse them apart, if that
+  matters to you.
 - **Some hypotheses are empty.** There are {{n_hyp_empty}} empty or whitespace-only
   hypotheses ({{n_hyp_empty_exact}} exactly empty and {{n_hyp_whitespace_only}}
   whitespace-only); `hyp_is_empty` is true for all of them. They are kept, and so are the
@@ -189,10 +191,13 @@ grand = load_dataset("wmt/wmt26-mteval-data", "grand", split="test")
   predictions, `run_id` names the evaluator and `system` the translation it judged.
 - **Task 2 scores can fall outside 0-100.** Some runs predict below 0 or above 100, and some
   wrote integers; every score is stored unchanged as `float64`.
-- **Challenge sets are not scored like the official set.** They have no references here, and
-  their authors analysed the results with their own code. Which of the two hypotheses of a
-  challenge item is which is not stated in the findings paper for several sets; see
-  `challenge_sets.hyp_semantics`.
+- **The challenge sets differ in their references.** GAMBITP has no reference. AGGREE, FECE,
+  LIGATUR and QEbreak have a reference translation, but the source data does not record its type
+  (`ref_type` is `unknown`) and the findings paper does not say how it was produced. The
+  RefQuality sets have pseudo-references or post-edits.
+- **Challenge sets are not scored like the official set.** Their authors analysed the results
+  with their own code. Which of the two hypotheses of a challenge item is which is not stated in
+  the findings paper for several sets; see `challenge_sets.hyp_semantics`.
 - **`t1_instruction_fault` is null in every row**, and `para_idx` is null for FECE and QEbreak
   items.
 

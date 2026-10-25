@@ -32,7 +32,10 @@ def test_parse_official():
         "official_###_ces_Latn_###_deu_Latn_###_speech_###_id_rtWATtjAFUM_29.58-58.15_###_0"
     )
     assert (i.collection, i.field4, i.doc_id, i.para_idx) == (
-        "official", "speech", "id_rtWATtjAFUM_29.58-58.15", 0,
+        "official",
+        "speech",
+        "id_rtWATtjAFUM_29.58-58.15",
+        0,
     )
 
 
@@ -79,10 +82,14 @@ def test_parse_segment_hash_has_no_paragraph_index(item_id):
     assert i.field4 in {"FECE", "QEbreak"} and i.para_idx is None
 
 
-@pytest.mark.parametrize("doc,field4,expected", [
-    ("RefQuality-PE_id_x", "speech", "RefQuality-PE"),
-    ("RefQuality-PD_RefQuality-PE_edu01691", "edu", "RefQuality-PD"),
-    ("8111|24041", "GAMBITP", "GAMBITP")])
+@pytest.mark.parametrize(
+    "doc,field4,expected",
+    [
+        ("RefQuality-PE_id_x", "speech", "RefQuality-PE"),
+        ("RefQuality-PD_RefQuality-PE_edu01691", "edu", "RefQuality-PD"),
+        ("8111|24041", "GAMBITP", "GAMBITP"),
+    ],
+)
 def test_challenge_set(doc, field4, expected):
     assert challenge_set(ItemId("challenge", "en", "de", field4, doc, 0)) == expected
 
@@ -115,13 +122,19 @@ def test_domain_official_and_other_challenge_sets():
     assert domain(ItemId("challenge", "en", "ko", "QEbreak", "QEbreak_00c9", None)) is None
 
 
-@pytest.mark.parametrize("ref,out", [
-    (None, ("none", None)),
-    ({"text": None, "type": None}, ("none", None)),
-    ({"text": "x", "type": "undefined"}, ("none", "undefined")),
-    ({"text": "x", "type": "human"}, ("native", "human")),
-    ({"text": "x", "type": "postedit"}, ("postedit", "postedit")),
-    ({"text": "x", "type": "pseudo"}, ("pseudo", "pseudo"))])
+@pytest.mark.parametrize(
+    "ref,out",
+    [
+        (None, ("none", None)),
+        ({"text": None, "type": None}, ("none", None)),
+        ({"text": "x", "type": "undefined"}, ("unknown", "undefined")),
+        ({"text": None, "type": "undefined"}, ("none", "undefined")),
+        ({"text": "x", "type": None}, ("unknown", None)),
+        ({"text": "x", "type": "human"}, ("native", "human")),
+        ({"text": "x", "type": "postedit"}, ("postedit", "postedit")),
+        ({"text": "x", "type": "pseudo"}, ("pseudo", "pseudo")),
+    ],
+)
 def test_map_ref_type(ref, out):
     assert map_ref_type(ref) == out
 
@@ -131,12 +144,16 @@ def test_map_ref_type_rejects_unknown_type():
         map_ref_type({"text": "x", "type": "gold"})
 
 
-@pytest.mark.parametrize("name,t", [
-    ("Human (from scratch)", "human_scratch"),
-    ("Human (postediting)", "human_postedit"),
-    ("PseudoRef", "pseudo_ref"),
-    ("FECE_hyp2", "challenge_hyp"),
-    ("Cohere CAT+", "mt")])
+@pytest.mark.parametrize(
+    "name,t",
+    [
+        ("Human (from scratch)", "human_scratch"),
+        ("Human (postediting)", "human_postedit"),
+        ("PseudoRef", "pseudo_ref"),
+        ("FECE_hyp2", "challenge_hyp"),
+        ("Cohere CAT+", "mt"),
+    ],
+)
 def test_classify(name, t):
     assert classify_mt_system(name) == t
 
@@ -154,7 +171,7 @@ def test_classify_other_names_are_mt(name):
     assert classify_mt_system(name) == "mt"
 
 
-def test_reference_candidate_ignores_outer_whitespace():          # Review Focus 2
+def test_reference_candidate_ignores_outer_whitespace():  # Review Focus 2
     assert is_reference_candidate("Hallo Welt\n ", "Hallo Welt")
     assert not is_reference_candidate("Hallo  Welt", "Hallo Welt")
     assert not is_reference_candidate("x", None)
@@ -201,15 +218,30 @@ def test_priority_covers_the_eight_official_directions(ctx):
 def test_describe_exact_keys_and_values(ctx):
     d = ctx.describe("challenge_###_en_###_de_DE_###_FECE_###_test-en-news_1|2|3|X_###_28e183a775")
     assert list(d) == [
-        "collection", "challenge_set", "domain", "src_lang", "tgt_lang",
-        "src_lang_orig", "tgt_lang_orig", "lp", "is_priority", "doc_id", "para_idx",
+        "collection",
+        "challenge_set",
+        "domain",
+        "src_lang",
+        "tgt_lang",
+        "src_lang_orig",
+        "tgt_lang_orig",
+        "lp",
+        "is_priority",
+        "doc_id",
+        "para_idx",
     ]
     assert d == {
-        "collection": "challenge", "challenge_set": "FECE", "domain": None,
-        "src_lang": "eng_Latn", "tgt_lang": "deu_Latn",
-        "src_lang_orig": "en", "tgt_lang_orig": "de_DE",
-        "lp": "eng-deu", "is_priority": False,
-        "doc_id": "test-en-news_1|2|3|X", "para_idx": None,
+        "collection": "challenge",
+        "challenge_set": "FECE",
+        "domain": None,
+        "src_lang": "eng_Latn",
+        "tgt_lang": "deu_Latn",
+        "src_lang_orig": "en",
+        "tgt_lang_orig": "de_DE",
+        "lp": "eng-deu",
+        "is_priority": False,
+        "doc_id": "test-en-news_1|2|3|X",
+        "para_idx": None,
     }
 
 
@@ -229,11 +261,23 @@ def test_describe_unknown_language_code_fails_loudly(ctx):
 def test_lang_codes_normalise_and_short(repo_root):
     lang = LangCodes.load(repo_root / "data" / "metadata" / "lang_codes.tsv")
     mapping = {
-        "en": "eng_Latn", "de": "deu_Latn", "de_DE": "deu_Latn", "cs": "ces_Latn", "uk": "ukr_Cyrl",
-        "ar": "arb_Arab", "el": "ell_Grek", "is": "isl_Latn", "ru": "rus_Cyrl", "hi": "hin_Deva",
-        "ja": "jpn_Jpan", "ja_JP": "jpn_Jpan", "ko": "kor_Hang", "zh": "zho_Hans",
+        "en": "eng_Latn",
+        "de": "deu_Latn",
+        "de_DE": "deu_Latn",
+        "cs": "ces_Latn",
+        "uk": "ukr_Cyrl",
+        "ar": "arb_Arab",
+        "el": "ell_Grek",
+        "is": "isl_Latn",
+        "ru": "rus_Cyrl",
+        "hi": "hin_Deva",
+        "ja": "jpn_Jpan",
+        "ja_JP": "jpn_Jpan",
+        "ko": "kor_Hang",
+        "zh": "zho_Hans",
         "zh_CN": "zho_Hans",
-        "arz_Arab": "arz_Arab", "zho_Hant_TW": "zho_Hant_TW",
+        "arz_Arab": "arz_Arab",
+        "zho_Hant_TW": "zho_Hant_TW",
     }
     for orig, norm in mapping.items():
         assert lang.normalise(orig) == norm, orig
@@ -281,6 +325,13 @@ def test_every_real_item_id_is_described(ctx, real_item_ids):
         assert (d["challenge_set"] is None) == (d["collection"] == "official")
         assert d["para_idx"] is None or 0 <= d["para_idx"] < 2**31
     assert {d["challenge_set"] for d in described} == {
-        None, "AGGREE", "FECE", "GAMBITP", "LIGATUR", "QEbreak", "RefQuality-PD", "RefQuality-PE",
+        None,
+        "AGGREE",
+        "FECE",
+        "GAMBITP",
+        "LIGATUR",
+        "QEbreak",
+        "RefQuality-PD",
+        "RefQuality-PE",
     }
     assert sum(d["para_idx"] is None for d in described) == 5886  # FECE 3000 + QEbreak 2886

@@ -219,6 +219,70 @@ def test_card_states_the_facts_a_user_must_know(card):
         assert fragment in text, fragment
 
 
+def test_card_documents_the_five_reference_types(card):
+    text = squash(card)
+    for fragment in (
+        "| `unknown` | `undefined` | A reference text is present, but the source data does not "
+        "record its type. |",
+        "| `none` | absent, or null text and type | The item has no reference text, and "
+        "`ref_text` is null. |",
+    ):
+        assert fragment in text, fragment
+    description = SCHEMAS["items"].field("ref_type").metadata[b"description"].decode()
+    for value in ("native", "postedit", "pseudo", "unknown", "none"):
+        assert f"`{value}`" in description, value
+
+
+def test_card_scopes_the_reference_warnings_to_the_sets_that_have_them(card):
+    text = squash(card)
+    for fragment in (
+        "**References are among the candidate translations of official items.**",
+        "Challenge hypotheses can equal the reference too",
+        "`challenge_hyp` rows",
+        "GAMBITP has no reference",
+        "AGGREE, FECE, LIGATUR and QEbreak have a reference translation",
+        "`ref_type` is `unknown`",
+        "RefQuality sets have pseudo-references or post-edits",
+    ):
+        assert fragment in text, fragment
+    assert "They have no references here" not in text
+    assert "Every available reference is also a hypothesis" not in text
+
+
+def test_challenge_set_reference_semantics_follow_the_data(repo_root):
+    sets = yaml.safe_load((repo_root / "data/metadata/challenge_sets.yaml").read_text("utf-8"))
+    refs = {entry["name"]: squash(entry["ref_semantics"]) for entry in sets}
+    for name in ("AGGREE", "FECE", "LIGATUR", "QEbreak"):
+        assert "A reference translation is included" in refs[name], name
+        assert "does not record its type (`ref_type` is `unknown`)" in refs[name], name
+        assert "No reference translation is included" not in refs[name], name
+    assert refs["GAMBITP"].startswith("No reference translation is included")
+    assert "`pseudo`" in refs["RefQuality-PD"] and "`postedit`" in refs["RefQuality-PE"]
+
+
+def test_none_is_exactly_the_items_without_a_reference_text(built):
+    out, _ = built
+    items = pq.read_table(out / "data/items/test-00000.parquet").to_pylist()
+    assert {r["ref_type"] for r in items} >= {"none", "unknown"}  # the mini grand has both
+    for r in items:
+        assert (r["ref_type"] == "none") == (r["ref_text"] is None), r["item_id"]
+        if r["ref_type"] == "unknown":
+            assert r["ref_type_orig"] == "undefined"
+
+
+def test_every_official_reference_is_among_the_hypotheses(built):
+    out, _ = built
+    pairs = pa.concat_tables(
+        pq.read_table(p, columns=["item_id", "collection", "ref_text", "is_reference_candidate"])
+        for p in sorted((out / "data" / "pairs").glob("*.parquet"))
+    ).to_pylist()
+    with_reference = {
+        r["item_id"] for r in pairs if r["collection"] == "official" and r["ref_text"]
+    }
+    candidates = {r["item_id"] for r in pairs if r["is_reference_candidate"]}
+    assert with_reference and with_reference <= candidates
+
+
 def test_card_names_the_thin_language_pairs_with_the_papers_percentages(card):
     text = squash(card)
     for fragment in ("ces-vie", "10.6 %", "eng-zho_CN", "17.1 %", "eng-sme", "19.0 %"):
@@ -801,19 +865,32 @@ def test_the_release_guide_orders_the_steps_and_marks_the_remote_ones_not_run(re
     text = (repo_root / "docs/RELEASE.md").read_text(encoding="utf-8")
     steps = re.split(r"^## (?=\d+\. )", text, flags=re.M)[1:]
     titles = [step.splitlines()[0] for step in steps]
-    keywords = ["Build", "Validate", "Loading", "Stop", "Upload", "GitHub"]
+    keywords = ["Build", "Validate", "Loading", "Stop", "Set", "Upload", "GitHub"]
     assert [t.split(". ", 1)[1].split()[0] for t in titles] == keywords
     commands = ["scripts/build_hf.py", "scripts/validate_hf.py", "scripts/check_loading.py"]
     for step, command in zip(steps[:3], commands):
         assert command in step
-    assert "hf upload" not in "".join(steps[:4]) and "git push" not in "".join(steps[:4])
-    assert "hf upload" in steps[4] and "--create-pr" in steps[4]
-    assert "git push" in steps[5] and "gh pr create" in steps[5]
-    assert "Not run" in titles[4] and "Not run" in titles[5]
+    before_upload = "".join(steps[:5])
+    assert "hf upload" not in before_upload and "git push" not in before_upload
+    assert "hf upload" in steps[5] and "--create-pr" in steps[5]
+    assert "git push" in steps[6] and "gh pr create" in steps[6]
+    assert "Not run" in titles[5] and "Not run" in titles[6]
     matrix = steps[2]
     assert '--with "pyarrow<21" --with "numpy<2"' in matrix
     assert "--grand" in matrix and "TMPDIR" in matrix
     assert "Diptesh" in steps[3]
+    assert "YYYY-MM-DD" in steps[4] and "docs/CHANGELOG.md" in steps[4] and "README.md" in steps[4]
+
+
+def test_the_status_text_stays_true_after_publication(repo_root):
+    """README and CHANGELOG are published with the release, so they must not say it has not been."""
+    stale = ("not yet published", "unreleased", "nothing has been uploaded", "not been published")
+    for name in ("README.md", "docs/CHANGELOG.md", "docs/RELEASE.md"):
+        text = (repo_root / name).read_text(encoding="utf-8").lower()
+        assert [phrase for phrase in stale if phrase in text] == [], name
+    changelog = (repo_root / "docs/CHANGELOG.md").read_text(encoding="utf-8")
+    assert re.search(r"^## v0\.9: pre-release \(date: YYYY-MM-DD", changelog, flags=re.M)
+    assert "pre-release" in (repo_root / "README.md").read_text(encoding="utf-8")
 
 
 def test_the_errata_has_exactly_the_six_entries(repo_root):
@@ -885,3 +962,33 @@ def test_citation_cff_names_the_findings_paper(repo_root):
     assert (paper["start"], paper["end"], paper["year"]) == (931, 1030, 2026)
     assert paper["url"] == "https://www2.statmt.org/wmt26/pdf/2026.wmt-1.49.pdf"
     assert cff["repository-code"] == "https://github.com/wmt-conference/wmt26-mteval"
+
+
+@pytest.mark.fulldata
+def test_the_real_reference_types_follow_ruling_r23(full_out):
+    items = pq.read_table(
+        full_out / "data/items/test-00000.parquet",
+        columns=["challenge_set", "collection", "lp", "ref_type", "ref_type_orig", "ref_text"],
+    ).to_pylist()
+    for r in items:
+        assert (r["ref_type"] == "none") == (r["ref_text"] is None)
+        assert (r["ref_type"] == "unknown") == (r["ref_type_orig"] == "undefined")
+    unknown = {r["challenge_set"] for r in items if r["ref_type"] == "unknown"}
+    assert unknown == {"AGGREE", "FECE", "LIGATUR", "QEbreak"}
+    none = {(r["collection"], r["challenge_set"]) for r in items if r["ref_type"] == "none"}
+    assert none == {("official", None), ("challenge", "GAMBITP")}
+    official_none = {
+        r["lp"] for r in items if r["collection"] == "official" and r["ref_text"] is None
+    }
+    assert official_none == {"ces-ukr"}
+    sets = {r["challenge_set"]: r["ref_type"] for r in items if r["collection"] == "challenge"}
+    assert sets["RefQuality-PD"] == "pseudo" and sets["RefQuality-PE"] == "postedit"
+    pairs = pa.concat_tables(
+        pq.read_table(p, columns=["item_id", "collection", "ref_text", "is_reference_candidate"])
+        for p in sorted((full_out / "data" / "pairs").glob("*.parquet"))
+    ).to_pylist()
+    with_reference = {
+        r["item_id"] for r in pairs if r["collection"] == "official" and r["ref_text"]
+    }
+    candidates = {r["item_id"] for r in pairs if r["is_reference_candidate"]}
+    assert with_reference <= candidates  # every official reference is among the hypotheses

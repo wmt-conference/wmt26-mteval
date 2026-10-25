@@ -77,7 +77,13 @@ def test_items(mini_grand_path, ctx):
     # Review Focus 5
     assert (ukr["ref_type"], ukr["ref_text"], ukr["ref_type_orig"]) == ("none", None, None)
     fece = next(v for k, v in r.items() if "_###_FECE_###_" in k)
-    assert (fece["ref_type"], fece["ref_type_orig"], fece["domain"]) == ("none", "undefined", None)
+    # Ruling R23: a reference text of unrecorded type is "unknown"; "none" means no reference text
+    assert (fece["ref_type"], fece["ref_type_orig"], fece["domain"]) == (
+        "unknown",
+        "undefined",
+        None,
+    )
+    assert fece["ref_text"] is not None
     sp = next(
         v for k, v in r.items() if k.startswith("official_###_ces_Latn_###_deu_Latn_###_speech")
     )
@@ -242,7 +248,9 @@ def test_pairs_flags_and_verbatim_text(ctx):
     [
         (None, (None, "none", None)),
         ({"text": None, "type": None}, (None, "none", None)),
-        ({"text": "Ref", "type": "undefined"}, ("Ref", "none", "undefined")),
+        ({"text": "Ref", "type": "undefined"}, ("Ref", "unknown", "undefined")),
+        ({"text": None, "type": "undefined"}, (None, "none", "undefined")),
+        ({"text": "Ref", "type": None}, ("Ref", "unknown", None)),
         ({"text": "Ref", "type": "postedit"}, ("Ref", "postedit", "postedit")),
     ],
 )

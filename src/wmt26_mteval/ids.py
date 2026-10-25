@@ -22,7 +22,10 @@ _SEGMENT_HASH_SETS = frozenset({"FECE", "QEbreak"})
 _DIGITS = re.compile(r"[0-9]+")
 _CHALLENGE_HYP = re.compile(r"[A-Za-z]+_hyp[0-9]+")
 
-_REF_TYPES = {"human": "native", "postedit": "postedit", "pseudo": "pseudo", "undefined": "none"}
+# The source type "undefined" (and a missing type) is not in this table: it becomes ``unknown`` when
+# a reference text is present and ``none`` when there is none (see ``map_ref_type``).
+_REF_TYPES = {"human": "native", "postedit": "postedit", "pseudo": "pseudo"}
+UNDEFINED = "undefined"
 
 
 @dataclass(frozen=True)
@@ -81,14 +84,17 @@ def domain(i: ItemId) -> str | None:
 def map_ref_type(ref: dict | None) -> tuple[str, str | None]:
     """Return ``(ref_type, ref_type_orig)`` for a ``ref`` cell.
 
-    Three spellings of "no reference" all give ``ref_type == "none"``, but ``ref_type_orig`` keeps
-    them apart: ``None`` for an absent ref or a null type, ``"undefined"`` for the explicit marker.
+    ``ref_type`` is ``native``, ``postedit`` or ``pseudo`` for the three recorded types, and
+    ``none`` exactly when the item has no reference text: the ref is absent, or its text is null
+    and its type is null or ``"undefined"``.  A reference text whose type is not recorded (type
+    ``"undefined"`` or null) is ``unknown`` (Ruling R23).  ``ref_type_orig`` keeps the source
+    spelling: ``None`` for an absent ref or a null type, ``"undefined"`` for the explicit marker.
     """
     if ref is None:
         return "none", None
     orig = ref.get("type")
-    if orig is None:
-        return "none", None
+    if orig is None or orig == UNDEFINED:
+        return ("none" if ref.get("text") is None else "unknown"), orig
     try:
         return _REF_TYPES[orig], orig
     except KeyError:

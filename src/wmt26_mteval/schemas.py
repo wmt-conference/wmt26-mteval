@@ -102,8 +102,9 @@ REF_TYPE = _field(
     "ref_type",
     pa.string(),
     "How the reference was produced: `native` (human translation from scratch), `postedit` "
-    "(post-edited machine translation), `pseudo` (machine-generated pseudo-reference) or "
-    "`none` (no reference).",
+    "(post-edited machine translation), `pseudo` (machine-generated pseudo-reference), "
+    "`unknown` (a reference text is present but its type is not recorded) or `none` (no "
+    "reference text).",
 )
 
 SYSTEM = _field(

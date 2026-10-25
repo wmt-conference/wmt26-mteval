@@ -3,10 +3,10 @@
 All notable changes to the WMT26 MT-Eval data release. The version of the release is the version
 of `src/wmt26_mteval/__init__.py`.
 
-## v0.9 (unreleased)
+## v0.9: pre-release (date: YYYY-MM-DD, to be set at release)
 
-The first release: typed data configs and documentation. Nothing has been uploaded or published
-yet; the steps are in [`RELEASE.md`](RELEASE.md).
+The first release: typed data configs and documentation. The steps that make the release, among
+them setting the date above, are in [`RELEASE.md`](RELEASE.md).
 
 ### Added
 

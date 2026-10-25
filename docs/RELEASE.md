@@ -1,8 +1,8 @@
 # Release guide
 
-How to build, check and publish the release. **Nothing in this guide has been run against a
-remote.** The steps that upload, push or open a pull request are marked "Not run", and they wait
-for an explicit OK (step 4).
+How to build, check and publish the release. The steps that upload, push or open a pull request
+are marked "Not run": no tool or test in this repository runs them. They wait for an explicit OK
+(step 4), and whoever makes the release runs them by hand.
 
 Set these once. `GRAND` is only ever read; `OUT` must be missing or empty; `TMPDIR` is where
 `check_loading.py` stages its links and the `datasets` cache, so it should be on the volume that
@@ -84,7 +84,19 @@ writing. What to put in front of him:
 - that the unchanged `grand` config still carries the raw annotation records while the typed
   configs of v0.9 do not.
 
-## 5. Upload to Hugging Face as a pull request (Not run)
+## 5. Set the date and status
+
+Do this after the OK and before anything is uploaded or pushed, so that the published text is true.
+In `docs/CHANGELOG.md`, replace `YYYY-MM-DD` in the heading of the version with the release date
+and, if the release is no longer a pre-release, change "pre-release" in that heading and in the
+version line of `README.md`. Then check that no placeholder is left, and commit:
+
+```bash
+grep -rn "YYYY-MM-DD" README.md docs hf CITATION.cff    # must print nothing
+git commit -am "docs: set the release date"
+```
+
+## 6. Upload to Hugging Face as a pull request (Not run)
 
 ```bash
 uv run hf upload wmt/wmt26-mteval-data "$OUT" . --repo-type dataset --create-pr \
@@ -98,7 +110,7 @@ It uploads only what is in `OUT` and does not delete anything, so `wmt26-grand.p
 is. The pull request is opened on the Hub, where it is reviewed before it is merged. Making the
 dataset public is a separate decision.
 
-## 6. GitHub pull request (Not run)
+## 7. GitHub pull request (Not run)
 
 ```bash
 git push -u origin release/v0.9

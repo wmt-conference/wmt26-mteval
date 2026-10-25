@@ -137,11 +137,13 @@ CONVENTIONS: tuple[tuple[str, str], ...] = (
         "| `native` | `human` | A human translation from scratch. |\n"
         "| `postedit` | `postedit` | A post-edited machine translation. |\n"
         "| `pseudo` | `pseudo` | A machine-generated pseudo-reference. |\n"
-        "| `none` | absent, null or `undefined` | The item has no reference, and `ref_text` is "
-        "null. |\n"
+        "| `unknown` | `undefined` | A reference text is present, but the source data does not "
+        "record its type. |\n"
+        "| `none` | absent, or null text and type | The item has no reference text, and "
+        "`ref_text` is null. |\n"
         "\n"
-        "`items.ref_type_orig` keeps the spelling of the source data, which tells an absent "
-        "type (null) from an explicit `undefined`.",
+        "`items.ref_type_orig` keeps the type exactly as the source data spells it (`human`, "
+        "`postedit`, `pseudo`, `undefined`, or null where none is recorded).",
     ),
     (
         "System types",

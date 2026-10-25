@@ -62,7 +62,9 @@ this release.
 **Release.** `baselines.variant = 'official'` is the deduplicated snapshot of the LLM baselines
 (and the xCOMET files, which are identical) and `'alt'` is the original, not deduplicated
 snapshot, with Task 1 columns only. The baseline runs from before the deduplication fix are not
-in the typed configs.
+in the typed configs. The label is provisional: it follows decision A1, which makes the
+deduplicated snapshot the official one, and will be confirmed against the paper in v1.0, when the
+snapshot that reproduces Tables 4 and 9 becomes `official`.
 
 ### 5. Item counts of two challenge sets
 
@@ -70,8 +72,8 @@ in the typed configs.
 counts in the header of Table 15, which add up per language pair, give 1,749 for QEbreak and 159
 for LIGATUR.
 
-**Data.** The release holds 2,886 QEbreak and 171 LIGATUR items, as Table 14 does. The paper does not
-say why Table 15 lists fewer; it may show only the items that were scored.
+**Data.** The release holds 2,886 QEbreak and 171 LIGATUR items, as Table 14 does. The paper does
+not say why Table 15 lists fewer.
 
 | set | language pair | Table 15 | data |
 | --- | --- | ---: | ---: |

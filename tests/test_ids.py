@@ -6,6 +6,7 @@ import pytest
 
 from wmt26_mteval.context import Context, LangCodes
 from wmt26_mteval.ids import (
+    SYSTEM_TYPES,
     ItemId,
     challenge_set,
     classify_mt_system,
@@ -169,6 +170,12 @@ def test_classify_every_challenge_hypothesis_name(name):
 @pytest.mark.parametrize("name", ["Gemma 4 - 4B", "Yandex-8B", "VoxNexus_V1", "Humanoid", "HW-TSC"])
 def test_classify_other_names_are_mt(name):
     assert classify_mt_system(name) == "mt"
+
+
+def test_system_types_are_exactly_what_classify_returns():
+    assert SYSTEM_TYPES == ("mt", "human_scratch", "human_postedit", "pseudo_ref", "challenge_hyp")
+    names = ["Cohere CAT+", "Human (from scratch)", "Human (postediting)", "PseudoRef", "FECE_hyp1"]
+    assert [classify_mt_system(name) for name in names] == list(SYSTEM_TYPES)
 
 
 def test_reference_candidate_ignores_outer_whitespace():  # Review Focus 2

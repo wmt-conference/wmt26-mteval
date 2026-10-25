@@ -101,10 +101,16 @@ def map_ref_type(ref: dict | None) -> tuple[str, str | None]:
         raise ValueError(f"unknown reference type {orig!r}") from None
 
 
+# The values of ``system_type``: the reference systems are the three between ``mt`` and
+# ``challenge_hyp``.
+SYSTEM_TYPES = ("mt", "human_scratch", "human_postedit", "pseudo_ref", "challenge_hyp")
+
+
 def classify_mt_system(name: str) -> str:
     """Classify a hypothesis system name.
 
-    One of ``mt``, ``human_scratch``, ``human_postedit``, ``pseudo_ref`` or ``challenge_hyp``.
+    One of ``SYSTEM_TYPES``: ``mt``, ``human_scratch``, ``human_postedit``, ``pseudo_ref`` or
+    ``challenge_hyp``.
     """
     if name == "Human (from scratch)":
         return "human_scratch"

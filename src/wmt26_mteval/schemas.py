@@ -1,9 +1,9 @@
 """Arrow schemas and field descriptions for every config of the release.
 
 This module is the single source of truth for the columns of each config.  Each field carries a
-one-sentence ``description`` in its metadata, which the documentation renders as the field
-glossary.  A config is added by defining its fields below and registering the schema in
-``SCHEMAS``; fields that several configs share are defined once and reused.
+short ``description`` in its metadata, which the documentation renders as the field glossary.  A
+config is added by defining its fields below and registering the schema in ``SCHEMAS``; fields
+that several configs share are defined once and reused.
 """
 
 from __future__ import annotations
@@ -12,7 +12,7 @@ import pyarrow as pa
 
 
 def _field(name: str, type_: pa.DataType, description: str) -> pa.Field:
-    """A nullable field whose metadata carries its one-sentence description."""
+    """A nullable field whose metadata carries its short description."""
     return pa.field(name, type_, metadata={"description": description})
 
 
@@ -257,8 +257,8 @@ SYSTEMS_FIELDS: tuple[pa.Field, ...] = (
         "underlying_model",
         pa.string(),
         "Model or models behind the system as the findings paper reports them, curated by the "
-        "organisers (`—` for classic metrics, which use no model, and `not stated in the "
-        "paper` where the paper gives none).",
+        "organisers (`—` for the metrics that use no model, and `not stated in the paper` "
+        "where the paper gives none).",
     ),
     _field(
         "paper_citation",
@@ -314,14 +314,17 @@ SYSTEMS_FIELDS: tuple[pa.Field, ...] = (
     _field(
         "t3_threshold",
         pa.float64(),
-        "Task 2 score above which the team's Task 2 predictions are converted to error-free "
-        "judgements, or null where the model card gives no numeric threshold.",
+        "Task 2 score that separates the team's Task 2 predictions that are converted to "
+        "error-free judgements from those that are not: a higher score counts as error-free, and "
+        "a score equal to the threshold does so when `threshold_inclusive` is true. Null where "
+        "the model card gives no numeric threshold.",
     ),
     _field(
         "tasks",
         pa.list_(pa.string()),
         "Tasks the run has predictions for: the one task of a submission, `task1` and `task2` "
-        "for the organisers' Task 1 baselines, and `task2` for their classic metrics.",
+        "for the organisers' Task 1 baselines, and `task2` for the seven sentence-level metric "
+        "baselines.",
     ),
     _field(
         "lps",
@@ -385,8 +388,8 @@ CHALLENGE_SETS_FIELDS: tuple[pa.Field, ...] = (
     _field(
         "what_it_tests",
         pa.string(),
-        "One-sentence summary of the phenomenon that the challenge set probes, from the "
-        "findings paper.",
+        "Short description of the phenomenon that the challenge set probes, from the findings "
+        "paper.",
     ),
     _field(
         "hyp_semantics",
@@ -476,7 +479,10 @@ SCHEMAS: dict[str, pa.Schema] = {
                 "is_reference_candidate",
                 pa.bool_(),
                 "True when the hypothesis equals the reference apart from surrounding "
-                "whitespace, so that it may be a copy of the reference.",
+                "whitespace, so that it may be a copy of the reference; it marks the reference "
+                "itself (a `human_scratch`, `human_postedit` or `pseudo_ref` row) and also any MT "
+                "output or challenge hypothesis that equals it, so filter on `system_type` to "
+                "tell them apart.",
             ),
             _field(
                 "hyp_is_empty",
@@ -493,7 +499,9 @@ SCHEMAS: dict[str, pa.Schema] = {
                 "variant",
                 pa.string(),
                 "Snapshot of the baseline: `official` for the released predictions, or `alt` for "
-                "the original predictions from before deduplication, with Task 1 fields only.",
+                "the original predictions from before deduplication, with Task 1 fields only; the "
+                "label is provisional, as it follows decision A1 and will be confirmed against "
+                "the paper in v1.0.",
             ),
         ]
     ),

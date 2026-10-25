@@ -56,14 +56,15 @@ et al., 2026; see [Citation](#citation)).
 
 Participants built automatic evaluators of translation quality. The organisers gave them one test
 set, made of source texts and candidate translations taken from the WMT26 General Machine
-Translation task (General MT), and asked for predictions of four kinds:
+Translation task (General MT), and asked for contributions of four kinds. Tasks 1 to 3 asked for
+predictions; Task 4 asked for challenge sets:
 
 | task | what it asks for | columns |
 | --- | --- | --- |
 | Task 1 | error spans with a severity, and omissions | `t1_errors`, `t1_omission` |
 | Task 2 | a quality score for each translation, from 0 to 100 | `t2_score` |
 | Task 3 | whether a translation is free of errors | `t3_error_free` |
-| Task 4 | challenge sets, submitted by research teams, that probe the evaluators | `challenge_sets`, `challenge_set` |
+| Task 4 | challenge sets that probe the evaluators: five were submitted by research teams, and the two RefQuality sets are the organisers' own | `challenge_sets`, `challenge_set` |
 
 The test set covers {{n_official_lps}} official language pairs, {{n_priority_lps}} of them
 priority pairs that the organisers recommended to participants who could not run the whole set,
@@ -106,6 +107,10 @@ and {{n_baseline_rows}} rows), so you may prefer to stream them or to download o
 
 ```python
 subs = load_dataset("wmt/wmt26-mteval-data", "submissions", split="test", streaming=True)
+
+base = load_dataset("wmt/wmt26-mteval-data", "baselines", split="test", streaming=True)
+# `baselines` also holds the original, pre-deduplication snapshot (`alt`); see Warnings
+base = base.filter(lambda row: row["variant"] == "official")
 ```
 
 ```bash
@@ -140,14 +145,17 @@ grand = load_dataset("wmt/wmt26-mteval-data", "grand", split="test")
 
 {{config_table}}
 
-- Join the hypotheses to the predictions on `(item_id, system)`, and the predictions to
-  `systems` on `run_id`.
+- Join the hypotheses to the predictions on `(item_id, system)`, then join the predictions to
+  `systems` on `run_id`; for `baselines`, filter `variant == 'official'` first (see Warnings).
 - `baselines.variant` is `official` for the organisers' released predictions (the deduplicated
   LLM baselines; the xCOMET files are identical before and after deduplication) and `alt` for the
   original, not deduplicated LLM outputs, which keep their Task 1 columns only. The baseline runs
-  that predate the deduplication fix are not in the typed configs.
-- A run covers only some items, and has no rows for the others; `systems.n_items`, `lps` and
-  `covers_all_priority` say what it covers.
+  that predate the deduplication fix are not in the typed configs. The label is provisional: it
+  follows decision A1, which makes the deduplicated snapshot the official one, and will be
+  confirmed against the paper in v1.0, when the snapshot that reproduces Tables 4 and 9 of the
+  findings paper becomes `official`.
+- A run may cover only some items, and then has no rows for the others; `systems.n_items`, `lps`
+  and `covers_all_priority` say what it covers.
 - `systems` holds allow-listed model-card answers only: a fixed list of fields was copied, and
   nothing else was read. The links in `link` were volunteered by the teams for publication.
   `name` is the name the team gave its run (followed by the run id where several runs share one
@@ -162,14 +170,27 @@ grand = load_dataset("wmt/wmt26-mteval-data", "grand", split="test")
 
 ## Warnings
 
+- **`baselines` holds two snapshots of some runs.** {{n_alt_baseline_runs}} runs have an `alt`
+  snapshot next to their `official` one, and its {{n_alt_baseline_rows}} `alt` rows share their
+  `run_id` with the official rows. Counting or averaging `baselines` by `run_id`, or joining it to
+  `systems` on `run_id`, therefore counts those runs twice. Filter `variant == 'official'` unless
+  you want the pre-deduplication snapshot.
 - **References are among the candidate translations of official items.** In the official set,
   every available reference is also a hypothesis (`system_type` is `human_scratch`,
   `human_postedit` or `pseudo_ref`). Challenge hypotheses can equal the reference too:
   `challenge_hyp` rows can be `is_reference_candidate = true`. In all, {{n_reference_candidates}}
   pairs have a hypothesis that equals the item's reference, up to surrounding whitespace, and
   carry `is_reference_candidate = true`. A reference-based evaluator is given the reference as
-  well, so it sees a copy of it on those rows: exclude them, or analyse them apart, if that
-  matters to you.
+  well, so it sees a copy of it on those rows.
+
+  `is_reference_candidate` also flags MT outputs that are identical to the reference, so it does
+  not mark the reference systems only. By `system_type`, the flagged pairs are:
+
+{{reference_candidate_breakdown}}
+
+  To drop the reference itself, filter on `system_type`: remove the flagged rows of
+  `human_scratch`, `human_postedit` and `pseudo_ref`. Do not drop every `is_reference_candidate`
+  row: that removes real MT outputs and challenge hypotheses as well.
 - **Some hypotheses are empty.** There are {{n_hyp_empty}} empty or whitespace-only
   hypotheses ({{n_hyp_empty_exact}} exactly empty and {{n_hyp_whitespace_only}}
   whitespace-only); `hyp_is_empty` is true for all of them. They are kept, and so are the
@@ -231,11 +252,14 @@ The release process is in
 
 ## Personal data
 
-- The model cards of the participants ask for contact details and for consent. The names and
-  e-mail addresses of the submitters and their answers about data collection were never read
-  into this release: `systems` is built from a fixed allow-list of answers. The only e-mail
-  address in the metadata is the organisers' mailing list, below. A release check looks for any
-  other address in `systems`, `challenge_sets`, this card and the build manifest.
+- The model cards of the participants ask for contact details and for consent. `systems` is built
+  from a fixed allow-list of answers. The fields that hold the names and e-mail addresses of the
+  submitters and the answers about data collection are not on the list, and their answers were
+  never read. The allow-listed answers were screened too: an e-mail address inside an
+  allow-listed answer is replaced by `[email removed]`, and one allow-listed answer that named
+  individuals was replaced by the organisations they belong to. The only e-mail address in the
+  metadata is the organisers' mailing list, below. A release check looks for any other address
+  in `systems`, `challenge_sets`, this card and the build manifest.
 - The links in `systems.link` were volunteered by the teams, in the model card, for publication.
 - Source texts and translations are published as they are in the WMT26 General MT test set, and
   are not changed or scanned. They may contain personal details that occur in the original
@@ -266,8 +290,8 @@ multimodal assets, the archive `multimodal_inputs.zip` in the release linked abo
 The typed configs are derived only from `wmt26-grand.parquet` (sha256 `{{grand_sha256}}`), the
 scrubbed model cards, the list of priority pairs, and the curated tables of names, language codes
 and challenge sets that follow the findings paper. `build_manifest.json` lists the sha256 and the
-rows of every file, and the GitHub repository lists the source files in `data/MANIFEST.tsv`. The
-code that builds and checks this repository is at
+rows of every Parquet file, and the GitHub repository lists the source files in
+`data/MANIFEST.tsv`. The code that builds and checks this repository is at
 <https://github.com/wmt-conference/wmt26-mteval>.
 
 ## Licence

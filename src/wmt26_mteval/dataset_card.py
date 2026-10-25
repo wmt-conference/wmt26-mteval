@@ -17,9 +17,15 @@ Three renderers live here, so that what a reader sees is derived from what the b
 - ``hyp_empty_exact`` and ``hyp_whitespace_only``: the hypotheses that are exactly ``""`` and those
   that are non-empty but whitespace-only (``hyp_is_empty`` is true for both);
 - ``reference_candidates``: the pairs whose hypothesis equals the reference;
+- ``reference_candidates_by_system_type``: those pairs per ``system_type`` (all five types, in the
+  order of ``ids.SYSTEM_TYPES``), because MT outputs and challenge hypotheses can equal the
+  reference as well as the reference systems;
 - ``coverage``: for each official language pair (sorted by ``lp``) its source items, its pairs,
   its reference type (several types are joined with ``+``) and whether it is a priority pair;
 - ``languages``: the sorted three-letter language codes of the data.
+
+``build_all`` adds ``baseline_alt_rows`` and ``baseline_alt_runs``, the rows and the runs of the
+``alt`` snapshots of ``baselines``, which it counts from the run tables it writes.
 """
 
 from __future__ import annotations
@@ -27,12 +33,14 @@ from __future__ import annotations
 import csv
 import io
 import re
+from collections import Counter
 from pathlib import Path
 
 import pyarrow as pa
 import pyarrow.compute as pc
 
 from wmt26_mteval.grand import Grand
+from wmt26_mteval.ids import SYSTEM_TYPES
 from wmt26_mteval.schemas import SCHEMAS
 
 CARD_TEMPLATE_PATH = Path("hf") / "README.template.md"
@@ -277,6 +285,12 @@ def card_stats(items: pa.Table, pairs: pa.Table) -> dict:
         for lp in sorted(ids)
     ]
 
+    flagged = pc.fill_null(pairs.column("is_reference_candidate"), False)
+    candidate_types = Counter(pc.filter(pairs.column("system_type"), flagged).to_pylist())
+    if candidate_types.keys() - set(SYSTEM_TYPES):
+        unknown = sorted(candidate_types.keys() - set(SYSTEM_TYPES), key=str)
+        raise ValueError(f"reference candidates of an unknown system_type: {unknown}")
+
     codes = set()
     for column in ("src_lang", "tgt_lang"):
         codes.update(code[:3] for code in pc.unique(items.column(column)).to_pylist())
@@ -284,6 +298,9 @@ def card_stats(items: pa.Table, pairs: pa.Table) -> dict:
         "hyp_empty_exact": n_exact,
         "hyp_whitespace_only": n_empty - n_exact,
         "reference_candidates": _count(pairs.column("is_reference_candidate")),
+        "reference_candidates_by_system_type": {
+            system_type: candidate_types.get(system_type, 0) for system_type in SYSTEM_TYPES
+        },
         "coverage": coverage,
         "languages": sorted(codes),
     }
@@ -298,6 +315,24 @@ def _config_table(rows: dict[str, int]) -> str:
         n = rows["items"] if config == "grand" else rows[config]  # grand: one row per item
         lines.append(f"| `{config}` | {n:,} | {grain} | {_cell(contents)} |")
     return "\n".join(lines)
+
+
+# What the pairs flagged as reference candidates are, per ``system_type``, for the card.
+_CANDIDATE_MEANING = {
+    "mt": "MT outputs that equal the reference",
+    "human_scratch": "`Human (from scratch)`, a reference system",
+    "human_postedit": "`Human (postediting)`, a reference system",
+    "pseudo_ref": "`PseudoRef`, a reference system",
+    "challenge_hyp": "challenge hypotheses that equal the reference",
+}
+
+
+def _reference_candidate_breakdown(by_type: dict[str, int]) -> str:
+    """The flagged pairs per ``system_type`` as a nested list (indented to sit in a bullet)."""
+    return "\n".join(
+        f"    - `{system_type}`: {by_type[system_type]:,} ({_CANDIDATE_MEANING[system_type]})"
+        for system_type in SYSTEM_TYPES
+    )
 
 
 def _coverage_table(coverage: list[dict]) -> str:
@@ -339,6 +374,8 @@ def _card_values(manifest: dict) -> dict[str, str]:
         "n_hyp_empty_exact": n_exact,
         "n_hyp_whitespace_only": n_space,
         "n_reference_candidates": stats["reference_candidates"],
+        "n_alt_baseline_rows": stats["baseline_alt_rows"],
+        "n_alt_baseline_runs": stats["baseline_alt_runs"],
         "n_submission_rows": rows["submissions"],
         "n_baseline_rows": rows["baselines"],
         "n_systems": rows["systems"],
@@ -355,7 +392,7 @@ def _card_values(manifest: dict) -> dict[str, str]:
             f"- **Empty or whitespace-only hypotheses: {n_empty:,}** ({n_exact:,} exactly "
             f"empty, {n_space:,} whitespace-only).",
             f"- **{stats['reference_candidates']:,} pairs are reference candidates**: the "
-            "hypothesis equals the reference.",
+            "hypothesis equals the reference, up to surrounding whitespace.",
             f"- **{numbers['n_submission_rows']:,} rows** in `submissions` and "
             f"**{numbers['n_baseline_rows']:,} rows** in `baselines`.",
             f"- **{numbers['n_systems']:,} evaluator runs** in `systems`, "
@@ -370,6 +407,9 @@ def _card_values(manifest: dict) -> dict[str, str]:
             "size_category": size_category(max(rows.values())),
             "language_list": "\n".join(f"- {code}" for code in stats["languages"]),
             "counts": counts,
+            "reference_candidate_breakdown": _reference_candidate_breakdown(
+                stats["reference_candidates_by_system_type"]
+            ),
             "config_table": _config_table(rows),
             "coverage_table": _coverage_table(coverage),
             "conventions": _conventions(3),

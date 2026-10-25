@@ -132,7 +132,8 @@ def build_all(
     tables.  Each run table is written and released before the next one is built.
 
     ``stats`` holds the numbers the card states (see ``dataset_card.card_stats``), counted from
-    the tables just built, and the total rows of every config.
+    the tables just built, the total rows of every config and the rows and runs of the ``alt``
+    baseline snapshots.
     """
     out_dir = Path(out_dir)
     _check_empty(out_dir)
@@ -161,10 +162,13 @@ def build_all(
     runs = list_runs(grand)
     priority = priority_lps(ctx)
     coverage: dict[str, Coverage] = {}
+    alt_runs = alt_rows = 0
     for run in runs:
         table = build_run_table(grand, run, ctx)
         if run.variant == "official":
             coverage[run.run_id] = coverage_of(table, priority)
+        else:
+            alt_runs, alt_rows = alt_runs + 1, alt_rows + table.num_rows
         if run.kind == "submission":
             writer.write("submissions", f"test-{run.task}-{run.run_id}.parquet", table)
         else:
@@ -180,7 +184,12 @@ def build_all(
         "git_dirty": git_dirty,
         "pyarrow_version": pa.__version__,
         "configs": configs,
-        "stats": {"rows": {config: info["rows"] for config, info in configs.items()}, **stats},
+        "stats": {
+            "rows": {config: info["rows"] for config, info in configs.items()},
+            **stats,
+            "baseline_alt_rows": alt_rows,
+            "baseline_alt_runs": alt_runs,
+        },
     }
     card = render_card(template, manifest)
     (out_dir / README_NAME).write_text(card, encoding="utf-8")

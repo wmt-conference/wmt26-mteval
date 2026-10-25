@@ -6,6 +6,7 @@ import inspect
 import json
 import re
 import shutil
+from collections import Counter
 from pathlib import Path
 
 import pyarrow as pa
@@ -24,6 +25,7 @@ from wmt26_mteval.dataset_card import (
     size_category,
 )
 from wmt26_mteval.grand import Grand
+from wmt26_mteval.ids import SYSTEM_TYPES
 from wmt26_mteval.schemas import SCHEMAS
 from wmt26_mteval.validate import ALLOWED_EMAILS, find_pii, load_table2, validate
 
@@ -94,6 +96,15 @@ def fake_manifest() -> dict:
             "hyp_empty_exact": 7_391,
             "hyp_whitespace_only": 482,
             "reference_candidates": 6_173,
+            "reference_candidates_by_system_type": {
+                "mt": 3_401,
+                "human_scratch": 812,
+                "human_postedit": 700,
+                "pseudo_ref": 1_100,
+                "challenge_hyp": 160,
+            },
+            "baseline_alt_rows": 1_234_567,
+            "baseline_alt_runs": 9,
             "languages": ["eng", "zho"],
             "coverage": [
                 {
@@ -373,6 +384,9 @@ def test_card_numbers_come_from_the_manifest(repo_root):
     assert f"{stats['hyp_empty_exact']:,}" in text and f"{stats['hyp_whitespace_only']:,}" in text
     assert f"{stats['hyp_empty_exact'] + stats['hyp_whitespace_only']:,}" in text
     assert f"{stats['reference_candidates']:,}" in text
+    for n in stats["reference_candidates_by_system_type"].values():
+        assert f"{n:,}" in text
+    assert f"{stats['baseline_alt_rows']:,}" in text and f"{stats['baseline_alt_runs']}" in text
     for n in stats["rows"].values():
         assert f"{n:,}" in text
     assert manifest["grand_sha256"] in text
@@ -502,6 +516,16 @@ def test_the_real_card_statistics_are_table_2_of_the_paper(repo_root, full_out, 
     assert stats["rows"] == expected_full["rows"]
     # Ruling R10: 3,689 hypotheses are exactly empty and 96 more are whitespace-only
     assert (stats["hyp_empty_exact"], stats["hyp_whitespace_only"]) == (3689, 96)
+    # the final review: 18,021 flagged pairs, of which 9,792 are not reference systems
+    assert stats["reference_candidates"] == 18021
+    assert stats["reference_candidates_by_system_type"] == {
+        "mt": 8673,
+        "human_scratch": 2888,
+        "human_postedit": 1714,
+        "pseudo_ref": 3627,
+        "challenge_hyp": 1119,
+    }
+    assert (stats["baseline_alt_rows"], stats["baseline_alt_runs"]) == (3469756, 12)
     card = (full_out / "README.md").read_text(encoding="utf-8")
     assert "3,785 empty or whitespace-only hypotheses (3,689 exactly empty" in squash(card)
     assert find_pii(full_out) == []
@@ -527,9 +551,11 @@ def stat_tables():
         {
             "collection": ["official"] * 7 + ["challenge"],
             "lp": ["ces-deu"] * 4 + ["eng-ekk"] * 3 + ["eng-deu"],
+            "system_type": ["mt", "mt", "mt", "human_scratch", "mt", "pseudo_ref", "mt"]
+            + ["challenge_hyp"],
             "hyp": hyps,
             "hyp_is_empty": [not h.strip() for h in hyps],
-            "is_reference_candidate": [False, False, False, True, False, True, False, True],
+            "is_reference_candidate": [False, False, False, True, False, True, True, True],
         }
     )
     return items, pairs
@@ -539,7 +565,31 @@ def test_card_stats_counts_empty_whitespace_only_and_candidates():
     stats = card_stats(*stat_tables())
     assert stats["hyp_empty_exact"] == 2  # "" twice
     assert stats["hyp_whitespace_only"] == 2  # " \n " and "\t"
-    assert stats["reference_candidates"] == 3
+    assert stats["reference_candidates"] == 4
+
+
+def test_card_stats_counts_the_reference_candidates_by_system_type():
+    stats = card_stats(*stat_tables())
+    by_type = stats["reference_candidates_by_system_type"]
+    assert by_type == {
+        "mt": 1,
+        "human_scratch": 1,
+        "human_postedit": 0,
+        "pseudo_ref": 1,
+        "challenge_hyp": 1,
+    }
+    assert list(by_type) == list(SYSTEM_TYPES)  # the five system types, always in this order
+    assert sum(by_type.values()) == stats["reference_candidates"]
+
+
+def test_card_stats_refuses_a_reference_candidate_of_an_unknown_system_type():
+    items, pairs = stat_tables()
+    index = pairs.schema.get_field_index("system_type")
+    types = pairs.column("system_type").to_pylist()
+    types[3] = "oracle"
+    pairs = pairs.set_column(index, "system_type", pa.array(types))
+    with pytest.raises(ValueError, match="oracle"):
+        card_stats(items, pairs)
 
 
 def test_card_stats_coverage_counts_official_items_and_pairs_per_language_pair():
@@ -601,6 +651,23 @@ def test_the_manifest_stats_match_a_recount_from_the_parquet_files(built):
             ]
         )
     assert stats["reference_candidates"] == candidates
+    by_type = Counter()
+    for path in (out / "data" / "pairs").glob("*.parquet"):
+        flagged = pq.read_table(path, columns=["system_type", "is_reference_candidate"])
+        by_type.update(
+            system_type
+            for system_type, flag in zip(
+                flagged.column("system_type").to_pylist(),
+                flagged.column("is_reference_candidate").to_pylist(),
+            )
+            if flag
+        )
+    assert stats["reference_candidates_by_system_type"] == {
+        system_type: by_type.get(system_type, 0) for system_type in SYSTEM_TYPES
+    }
+    alt_files = sorted((out / "data" / "baselines").glob("*-alt.parquet"))
+    assert stats["baseline_alt_runs"] == len(alt_files) > 0
+    assert stats["baseline_alt_rows"] == sum(pq.ParquetFile(p).metadata.num_rows for p in alt_files)
     official = [
         lp
         for c, lp in zip(pairs["collection"].to_pylist(), pairs["lp"].to_pylist())
@@ -611,6 +678,106 @@ def test_the_manifest_stats_match_a_recount_from_the_parquet_files(built):
     }
     assert [row["lp"] for row in stats["coverage"]] == sorted(set(official))
     assert stats["rows"] == {c: info["rows"] for c, info in manifest["configs"].items()}
+
+
+# --- advice that the final review corrected -------------------------------------------------------
+
+
+def fake_card(repo_root) -> str:
+    return render_card(repo_root / "hf" / "README.template.md", fake_manifest())
+
+
+def test_the_card_does_not_tell_users_to_drop_every_reference_candidate(repo_root):
+    text = squash(fake_card(repo_root))
+    assert "exclude them" not in text
+    for fragment in (
+        "To drop the reference itself, filter on `system_type`",
+        "`is_reference_candidate` also flags MT outputs that are identical to the reference",
+        "Do not drop every `is_reference_candidate` row",
+    ):
+        assert fragment in text, fragment
+
+
+def test_the_card_breaks_the_reference_candidates_down_by_system_type(repo_root):
+    card = fake_card(repo_root)
+    shown = re.findall(r"^ +- `(\w+)`: ([\d,]+) ", card, flags=re.M)
+    by_type = fake_manifest()["stats"]["reference_candidates_by_system_type"]
+    assert shown == [(system_type, f"{n:,}") for system_type, n in by_type.items()]
+
+
+def test_the_card_warns_that_baselines_double_count_without_a_variant_filter(repo_root):
+    text = squash(fake_card(repo_root))
+    stats = fake_manifest()["stats"]
+    for fragment in (
+        "**`baselines` holds two snapshots of some runs.**",
+        f"{stats['baseline_alt_rows']:,} `alt` rows",
+        "Filter `variant == 'official'` unless you want the pre-deduplication snapshot.",
+        "join the predictions to `systems` on `run_id`; for `baselines`, filter "
+        "`variant == 'official'` first",
+        'base = base.filter(lambda row: row["variant"] == "official")',
+    ):
+        assert fragment in text, fragment
+
+
+def test_the_official_label_is_called_provisional_where_it_is_defined(repo_root):
+    sentence = "follows decision A1"
+    confirm = "confirmed against the paper in v1.0"
+    card = squash(fake_card(repo_root))
+    assert sentence in card and confirm in card
+    errata = squash((repo_root / "docs" / "ERRATA.md").read_text(encoding="utf-8"))
+    assert sentence in errata and confirm in errata
+    variant = SCHEMAS["baselines"].field("variant").metadata[b"description"].decode()
+    assert sentence in variant and confirm in variant
+
+
+def test_the_card_wording_the_final_review_asked_for(repo_root):
+    text = squash(fake_card(repo_root))
+    for fragment in (
+        "the sha256 and the rows of every Parquet file",
+        "asked for contributions of four kinds",
+        "Task 4 asked for challenge sets",
+        "five were submitted by research teams",
+        "the two RefQuality sets are the organisers' own",
+        "A run may cover only some items",
+        "the hypothesis equals the reference, up to surrounding whitespace",
+    ):
+        assert fragment in text, fragment
+    for gone in ("predictions of four kinds", "of every file", "covers only some items"):
+        assert gone not in text, gone
+
+
+def test_the_personal_data_section_says_what_was_replaced_without_naming_anyone(repo_root):
+    text = squash(fake_card(repo_root))
+    section = text.split("## Personal data")[1].split("## Human annotations")[0]
+    assert "were never read into this release" not in section
+    for fragment in (
+        "are not on the list, and their answers were never read",
+        "an e-mail address inside an allow-listed answer is replaced by `[email removed]`",
+        "one allow-listed answer that named individuals was replaced by the organisations",
+    ):
+        assert fragment in section, fragment
+    assert "IIT" not in section and "Patna" not in section and "871298" not in section
+
+
+def test_the_errata_make_no_guess_about_table_15(repo_root):
+    text = squash((repo_root / "docs" / "ERRATA.md").read_text(encoding="utf-8"))
+    assert "it may show only the items that were scored" not in text
+    assert "The paper does not say why Table 15 lists fewer." in text
+
+
+def test_the_schema_descriptions_the_final_review_corrected():
+    def describe(config, name):
+        return SCHEMAS[config].field(name).metadata[b"description"].decode()
+
+    threshold = describe("systems", "t3_threshold")
+    assert "above which" not in threshold and "`threshold_inclusive`" in threshold
+    tasks = describe("systems", "tasks")
+    assert "classic metrics" not in tasks and "seven sentence-level metric baselines" in tasks
+    assert "classic metrics" not in describe("systems", "underlying_model")
+    what = describe("challenge_sets", "what_it_tests")
+    assert "One-sentence" not in what and what.startswith("Short description")
+    reference = describe("pairs", "is_reference_candidate")
+    assert "`system_type`" in reference
 
 
 # --- generated documents -------------------------------------------------------------------------

@@ -786,6 +786,20 @@ def test_the_card_and_errata_warn_about_the_incomplete_xhigh_baseline(repo_root)
     assert "### 7. GPT-5.6 Sol xHigh baseline" in errata and "6 of the 8 pairs" in errata
 
 
+def test_the_card_keeps_its_facts_and_points_to_no_missing_errata_detail(repo_root):
+    # The errata are brief hints, so the card carries these facts itself.
+    card = squash(fake_card(repo_root))
+    assert "(see the errata)" not in card and "the errata give the counts" not in card
+    assert (
+        "Table 6, which needs no human annotation, already fits the deduplicated snapshot" in card
+    )
+    assert "completed only 6 of the 8 priority pairs" in card
+    assert "placeholder value, 50.0, in every row" in card
+    errata = squash((repo_root / "docs" / "ERRATA.md").read_text(encoding="utf-8"))
+    assert "47 distinct candidates across the official set" in errata
+    assert "The per-pair counts in Table 15 add up to 1,749 QEbreak and 159 LIGATUR items" in errata
+
+
 def test_the_card_wording_the_final_review_asked_for(repo_root):
     text = squash(fake_card(repo_root))
     for fragment in (

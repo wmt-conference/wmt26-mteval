@@ -16,6 +16,6 @@ jobs:
       - uses: astral-sh/setup-uv@v6
         with:
           python-version: ${{ matrix.python-version }}
-      - run: uv sync --dev
+      - run: uv sync --dev --locked
       - run: uv run ruff check
       - run: uv run pytest -q -m "not fulldata"

@@ -86,7 +86,7 @@ The tools use [uv](https://docs.astral.sh/uv/). `GRAND` is the organisers' `wmt2
 (read only; the scripts check its sha256), and `OUT` a missing or empty folder.
 
 ```bash
-uv sync --dev
+uv sync --dev --locked
 uv run python scripts/build_hf.py --grand "$GRAND" --out "$OUT"
 uv run python scripts/validate_hf.py --out "$OUT" --grand "$GRAND" --expected tests/data/expected_full.json
 uv run --no-project --python 3.11 --with "datasets==5.1.0" --with "numpy>=2" \
@@ -96,11 +96,12 @@ uv run pytest -q -m "not fulldata"
 ```
 
 `build_hf.py` writes the Parquet files, the dataset card and a manifest of checksums;
-`validate_hf.py` runs the gates (row counts, Table 2, personal data, schemas, a round trip of every
-run against the grand file); `check_loading.py` loads every config with the installed `datasets`;
-`render_docs.py` regenerates `docs/FORMAT.md` and `data/MANIFEST.tsv`. The full procedure, with
-the loading matrix for `datasets` 2.18.0, 4.0.0 and 5.1.0, is in
-[`docs/RELEASE.md`](docs/RELEASE.md).
+`validate_hf.py` runs the gates (the card and the manifest, row counts, Table 2, personal data,
+schemas, the keys that link the configs, the texts of `items` and `pairs`, the Task 2 scores of the
+`alt` baselines, and a round trip of every run against the grand file); `check_loading.py` loads
+every config with the installed `datasets`; `render_docs.py` regenerates `docs/FORMAT.md` and
+`data/MANIFEST.tsv`. The full procedure, with the loading matrix for `datasets` 2.18.0, 4.0.0 and
+5.1.0, is in [`docs/RELEASE.md`](docs/RELEASE.md).
 
 ## Citation
 

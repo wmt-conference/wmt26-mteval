@@ -31,9 +31,11 @@ them setting the date above, are in [`RELEASE.md`](RELEASE.md).
   paper).
 - `README.md`, `CITATION.cff` and `scripts/download.py`.
 - The tooling behind them: `scripts/build_hf.py` (a deterministic build with `build_manifest.json`),
-  `scripts/validate_hf.py` (row counts, Table 2, personal data, schemas and a round trip of every
-  run against the grand file), `scripts/check_loading.py` (every config loads with `datasets`
-  2.18.0, 4.0.0 and 5.1.0) and `scripts/scrub_model_cards.py` (allow-list scrubbing of model cards).
+  `scripts/validate_hf.py` (the card and the manifest, row counts, Table 2, personal data, schemas,
+  the keys that link the configs, the texts of `items` and `pairs`, the Task 2 scores of the `alt`
+  baselines, and a round trip of every run against the grand file), `scripts/check_loading.py`
+  (every config loads with `datasets` 2.18.0, 4.0.0 and 5.1.0) and `scripts/scrub_model_cards.py`
+  (allow-list scrubbing of model cards).
 
 ### Not in v0.9
 

@@ -5,7 +5,9 @@ import importlib.util
 import inspect
 import json
 import re
+import shlex
 import shutil
+import subprocess
 from collections import Counter
 from pathlib import Path
 
@@ -1028,25 +1030,90 @@ def test_every_file_a_document_points_to_exists(repo_root, name):
         assert (repo_root / path).exists(), (name, path)
 
 
-def test_the_release_guide_orders_the_steps_and_marks_the_remote_ones_not_run(repo_root):
+def release_steps(repo_root) -> list[str]:
     text = (repo_root / "docs/RELEASE.md").read_text(encoding="utf-8")
-    steps = re.split(r"^## (?=\d+\. )", text, flags=re.M)[1:]
+    return re.split(r"^## (?=\d+\. )", text, flags=re.M)[1:]
+
+
+def test_the_release_guide_orders_the_steps_and_marks_the_remote_ones_not_run(repo_root):
+    steps = release_steps(repo_root)
     titles = [step.splitlines()[0] for step in steps]
-    keywords = ["Build", "Validate", "Loading", "Stop", "Set", "Upload", "GitHub"]
+    keywords = ["Build", "Validate", "Loading", "Stop", "Set", "Look", "Upload", "GitHub"]
     assert [t.split(". ", 1)[1].split()[0] for t in titles] == keywords
     commands = ["scripts/build_hf.py", "scripts/validate_hf.py", "scripts/check_loading.py"]
     for step, command in zip(steps[:3], commands):
         assert command in step
-    before_upload = "".join(steps[:5])
+    before_upload = "".join(steps[:6])
     assert "hf upload" not in before_upload and "git push" not in before_upload
-    assert "hf upload" in steps[5] and "--create-pr" in steps[5]
-    assert "git push" in steps[6] and "gh pr create" in steps[6]
-    assert "Not run" in titles[5] and "Not run" in titles[6]
+    assert "hf upload" in steps[6] and "--create-pr" in steps[6]
+    assert "git push" in steps[7] and "gh pr create" in steps[7]
+    assert all("Not run" in titles[i] for i in (5, 6, 7))
     matrix = steps[2]
     assert '--with "pyarrow<21" --with "numpy<2"' in matrix
     assert "--grand" in matrix and "TMPDIR" in matrix
     assert "Diptesh" in steps[3]
     assert "YYYY-MM-DD" in steps[4] and "docs/CHANGELOG.md" in steps[4] and "README.md" in steps[4]
+
+
+def test_the_release_guide_looks_at_the_hub_repository_before_it_uploads(repo_root):
+    look = squash(release_steps(repo_root)[5])
+    for fragment in (
+        "never seen",
+        "hf datasets ls wmt/wmt26-mteval-data",
+        "hf download wmt/wmt26-mteval-data README.md",
+        'diff "$TMPDIR/hub-card/README.md" "$OUT/README.md"',
+        "`wmt26-grand.parquet` is at the root of the repository",
+        "Carry over",
+        "rebuild",
+    ):
+        assert fragment in look, fragment
+    assert "hf upload" not in look and "--create-pr" not in look
+
+
+def test_the_release_guide_puts_the_new_open_decisions_in_the_stop_step(repo_root):
+    stop = squash(release_steps(repo_root)[3])
+    for fragment in (
+        "`ref_type` `unknown`",
+        "6,407",
+        "decision A3",
+        "the Hub card",
+        "never seen",
+    ):
+        assert fragment in stop, fragment
+
+
+def test_the_release_guide_checks_for_placeholders_without_matching_itself(repo_root):
+    step = release_steps(repo_root)[4]
+    (command,) = [line for line in step.splitlines() if line.startswith("grep ")]
+    assert "--exclude=RELEASE.md" in command and "README.md" in command and "docs" in command
+    # run as written (without the comment), the check may find the date placeholder in the
+    # changelog (until the date is set), but never in the guide that describes the check
+    result = subprocess.run(
+        shlex.split(command.split("#")[0]), cwd=repo_root, capture_output=True, text=True
+    )
+    assert result.returncode in (0, 1), result.stderr
+    assert {line.split(":")[0] for line in result.stdout.splitlines()} <= {"docs/CHANGELOG.md"}
+
+
+def test_the_build_and_ci_install_from_the_lock_and_the_guide_keeps_the_build_commit(repo_root):
+    guide = squash((repo_root / "docs/RELEASE.md").read_text(encoding="utf-8"))
+    ci = (repo_root / ".github/workflows/ci.yml").read_text(encoding="utf-8")
+    assert "uv sync --dev --locked" in guide and "uv sync --dev --locked" in ci
+    assert "uv sync --dev\n" not in ci and "uv sync --dev`" not in guide
+    for fragment in ("merge commit, not a squash", "`git_commit`", "stays resolvable"):
+        assert fragment in guide, fragment
+
+
+def test_the_quick_start_download_folder_is_git_ignored(repo_root):
+    ignored = (repo_root / ".gitignore").read_text(encoding="utf-8").splitlines()
+    assert "data/hf/" in ignored
+
+
+def test_the_gates_are_listed_alike_in_the_guide_the_readme_and_the_changelog(repo_root):
+    for name in ("README.md", "docs/CHANGELOG.md", "docs/RELEASE.md"):
+        text = squash((repo_root / name).read_text(encoding="utf-8"))
+        for fragment in ("Table 2", "the keys", "the texts of `items` and `pairs`", "alt"):
+            assert fragment in text, (name, fragment)
 
 
 def test_the_status_text_stays_true_after_publication(repo_root):

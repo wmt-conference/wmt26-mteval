@@ -13,6 +13,7 @@ validation can prove the table loses nothing.
 
 from __future__ import annotations
 
+from collections.abc import KeysView
 from typing import Any
 
 import pyarrow as pa
@@ -26,12 +27,33 @@ T1, T2, T3 = "task1_pred", "task2_pred", "task3_pred"
 PREDICTION_KEYS = (T1, T2, T3)
 CHUNK_ITEMS = 1000  # items per Arrow chunk while a table is being built
 
+# Top-level keys that are not predictions and are deliberately left out of the tidy configs (the
+# grand file keeps them).  Any other key that is not a prediction dict is an error.
+KNOWN_DIAGNOSTIC_KEYS = frozenset({"stage1_finish_reason"})
 
-def _normalise_task1(prediction: dict) -> dict:
+_RECORD_KEYS = frozenset(PREDICTION_KEYS) | KNOWN_DIAGNOSTIC_KEYS
+_SYSTEM_KEYS = frozenset({"errors", "omission", "instruction_fault"})
+_ERROR_KEYS = frozenset({"start", "end", "severity", "category"})
+
+
+def _unexpected(keys: KeysView[str], allowed: frozenset[str], where: str) -> ValueError:
+    """The error for keys that are not in ``allowed``, naming them and where they were found."""
+    return ValueError(f"{where}: unexpected key(s) {sorted(keys - allowed)}")
+
+
+def _normalise_task1(system: str, prediction: dict) -> dict:
     """A copy of one system's Task 1 prediction with ``instruction_fault`` and ``category`` set."""
+    if not prediction.keys() <= _SYSTEM_KEYS:
+        raise _unexpected(prediction.keys(), _SYSTEM_KEYS, f"{T1}[{system!r}]")
+    errors = []
+    for position, error in enumerate(prediction["errors"]):
+        if not error.keys() <= _ERROR_KEYS:
+            where = f"{T1}[{system!r}].errors[{position}]"
+            raise _unexpected(error.keys(), _ERROR_KEYS, where)
+        errors.append({"category": None, **error})
     out = dict(prediction)
     out.setdefault("instruction_fault", None)
-    out["errors"] = [{"category": None, **error} for error in prediction["errors"]]
+    out["errors"] = errors
     return out
 
 
@@ -40,12 +62,17 @@ def normalise_raw_record(rec: dict) -> dict:
 
     Missing ``instruction_fault`` and ``category`` keys become ``None``, so that "missing" and
     null are one thing, and Task 2 scores become ``float`` (some are ints).  Only the prediction
-    dicts that the record has are kept: other keys, such as the ``stage1_finish_reason``
-    diagnostic that a few baselines carry, are not part of the tables.
+    dicts that the record has are kept.  The known diagnostic keys (``KNOWN_DIAGNOSTIC_KEYS``,
+    the ``stage1_finish_reason`` that a few baselines carry) are dropped on purpose; any other
+    key that is neither a prediction dict nor a known diagnostic, and any key a system's Task 1
+    prediction or an error does not expect, raises ``ValueError`` instead of vanishing, so that
+    the round trip stays a real check that the tables lose nothing.
     """
+    if not rec.keys() <= _RECORD_KEYS:
+        raise _unexpected(rec.keys(), _RECORD_KEYS, "record")
     out: dict[str, Any] = {}
     if T1 in rec:
-        out[T1] = {system: _normalise_task1(p) for system, p in rec[T1].items()}
+        out[T1] = {system: _normalise_task1(system, p) for system, p in rec[T1].items()}
     if T2 in rec:
         out[T2] = {system: float(score) for system, score in rec[T2].items()}
     if T3 in rec:

@@ -9,6 +9,7 @@ from wmt26_mteval.runs import RunSpec, list_runs
 from wmt26_mteval.schemas import SCHEMAS
 from wmt26_mteval.tables import predictions
 from wmt26_mteval.tables.predictions import (
+    KNOWN_DIAGNOSTIC_KEYS,
     build_run_table,
     normalise_raw_record,
     roundtrip_record,
@@ -398,6 +399,48 @@ def test_normalise_fills_keys_casts_scores_and_keeps_only_predictions():
     assert out["task2_pred"] == {"A": 5.0, "B": 7.5}
     assert type(out["task2_pred"]["A"]) is float
     assert out["task3_pred"] == {"A": True}
+
+
+def test_known_diagnostic_keys_are_dropped_and_nothing_else():
+    assert KNOWN_DIAGNOSTIC_KEYS == frozenset({"stage1_finish_reason"})
+    raw = raw_record()
+    assert "stage1_finish_reason" in raw
+    without = {k: v for k, v in raw.items() if k != "stage1_finish_reason"}
+    out = normalise_raw_record(raw)
+    assert "stage1_finish_reason" not in out
+    assert out == normalise_raw_record(without)
+    assert normalise_raw_record({"stage1_finish_reason": {"A": "stop"}}) == {}
+
+
+def test_unknown_top_level_key_raises():
+    raw = raw_record()
+    raw["mystery"] = {"A": 1}
+    with pytest.raises(ValueError, match=r"record.*mystery"):
+        normalise_raw_record(raw)
+
+
+def test_unknown_system_key_raises():
+    raw = raw_record()
+    raw["task1_pred"]["B"]["mystery"] = 1
+    with pytest.raises(ValueError, match=r"task1_pred\['B'\].*mystery"):
+        normalise_raw_record(raw)
+
+
+def test_unknown_error_key_raises():
+    raw = raw_record()
+    raw["task1_pred"]["B"]["errors"] = [err(0, 1), err(2, 3, mystery="x")]
+    with pytest.raises(ValueError, match=r"task1_pred\['B'\]\.errors\[1\].*mystery"):
+        normalise_raw_record(raw)
+
+
+def test_building_a_table_fails_on_unknown_keys_too(ctx):
+    for bad in (
+        {"task2_pred": {"A": 1}, "mystery": 1},
+        {"task1_pred": {"A": t1(mystery=1)}},
+        {"task1_pred": {"A": t1([err(0, 1, mystery=1)])}},
+    ):
+        with pytest.raises(ValueError, match="mystery"):
+            build_run_table(FakeGrand([(item_id(0), bad)]), spec(), ctx)
 
 
 def test_normalise_keeps_only_the_tasks_present():

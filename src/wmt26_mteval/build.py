@@ -1,10 +1,10 @@
 """Build the staged contents of the Hugging Face dataset repository from the grand file.
 
-``build_all`` writes one Parquet shard layout per config under ``out_dir/data`` and, last of all,
-``build_manifest.json``, which records the checksum of the grand file, the code version and the
-checksum and row count of every shard.  The output is deterministic: the same inputs and the same
-pyarrow give byte-identical files.  The grand file itself is never copied, and no dataset card is
-written here.
+``build_all`` writes one Parquet shard layout per config under ``out_dir/data``, the dataset card
+``README.md`` and, last of all, ``build_manifest.json``, which records the checksum of the grand
+file, the code version, the checksum and row count of every shard and the statistics that the card
+states.  The output is deterministic: the same inputs and the same pyarrow give byte-identical
+files.  The grand file itself is never copied.
 """
 
 from __future__ import annotations
@@ -19,6 +19,7 @@ import pyarrow.compute as pc
 import pyarrow.parquet as pq
 
 from wmt26_mteval.context import Context
+from wmt26_mteval.dataset_card import CARD_TEMPLATE_PATH, card_stats, render_card
 from wmt26_mteval.grand import GRAND_SHA256, Grand, sha256_of
 from wmt26_mteval.runs import list_runs
 from wmt26_mteval.schemas import SCHEMAS
@@ -35,6 +36,7 @@ from wmt26_mteval.tables.metadata import (
 from wmt26_mteval.tables.predictions import build_run_table
 
 MANIFEST_NAME = "build_manifest.json"
+README_NAME = "README.md"
 ROW_GROUP_ROWS = 50_000
 
 logger = logging.getLogger(__name__)
@@ -119,6 +121,8 @@ def build_all(
     - ``data/pairs/test-<lp>.parquet``, one per language pair, holding that pair's rows;
     - ``data/submissions/test-<task>-<run_id>.parquet``, one per submission;
     - ``data/baselines/test-<run_id>-<variant>.parquet``, one per baseline snapshot;
+    - ``README.md``, the dataset card rendered from ``hf/README.template.md`` under ``repo`` and
+      the manifest (it is not a shard, so no config lists it);
     - ``build_manifest.json``, written last: a directory without it is an unfinished build.
 
     ``expected_sha256`` is checked by ``Grand`` (``None`` skips the check).  The manifest's
@@ -126,9 +130,15 @@ def build_all(
     computed one when the check was skipped.  ``git_commit`` and ``git_dirty`` describe ``repo``
     and are null when git cannot tell.  The ``systems`` coverage comes from the ``official`` run
     tables.  Each run table is written and released before the next one is built.
+
+    ``stats`` holds the numbers the card states (see ``dataset_card.card_stats``), counted from
+    the tables just built, and the total rows of every config.
     """
     out_dir = Path(out_dir)
     _check_empty(out_dir)
+    template = Path(repo) / CARD_TEMPLATE_PATH
+    if not template.is_file():  # fail now, not after the shards are written
+        raise FileNotFoundError(f"{template}: the dataset card template does not exist")
     grand = Grand(grand_path, expected_sha256)
     grand_sha256 = expected_sha256 if expected_sha256 is not None else sha256_of(grand.path)
     git_commit, git_dirty = _git_state(repo)
@@ -136,15 +146,17 @@ def build_all(
     writer = _Writer(out_dir)
     ctx = Context.from_repo(repo)
 
-    writer.write("items", "test-00000.parquet", build_items(grand, ctx))
+    items = build_items(grand, ctx)
+    writer.write("items", "test-00000.parquet", items)
 
     pairs = build_pairs(grand, ctx)
+    stats = card_stats(items, pairs)
     for lp in sorted(pc.unique(pairs.column("lp")).to_pylist()):
         writer.write("pairs", f"test-{lp}.parquet", pairs.filter(pc.equal(pairs.column("lp"), lp)))
     writer.write("mt_systems", "test-00000.parquet", build_mt_systems(pairs))
     challenge_sets = build_challenge_sets(Path(repo) / CHALLENGE_SETS_PATH, pairs)
     writer.write("challenge_sets", "test-00000.parquet", challenge_sets)
-    del pairs, challenge_sets
+    del items, pairs, challenge_sets
 
     runs = list_runs(grand)
     priority = priority_lps(ctx)
@@ -161,13 +173,17 @@ def build_all(
 
     writer.write("systems", "test-00000.parquet", build_systems(repo, runs, coverage))
 
+    configs = writer.configs()
     manifest = {
         "grand_sha256": grand_sha256,
         "git_commit": git_commit,
         "git_dirty": git_dirty,
         "pyarrow_version": pa.__version__,
-        "configs": writer.configs(),
+        "configs": configs,
+        "stats": {"rows": {config: info["rows"] for config, info in configs.items()}, **stats},
     }
+    card = render_card(template, manifest)
+    (out_dir / README_NAME).write_text(card, encoding="utf-8")
     (out_dir / MANIFEST_NAME).write_text(
         json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )

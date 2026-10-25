@@ -86,7 +86,8 @@ def test_layout_follows_the_naming_scheme(built, mini_grand_path, mini_pairs):
     assert _paths(manifest) == expected
     on_disk = {p.relative_to(out).as_posix() for p in out.rglob("*") if p.is_file()}
     listed = {path for paths in expected.values() for path in paths}
-    assert on_disk == listed | {"build_manifest.json"}  # no README, no copy of the grand file
+    # the card sits next to the manifest; there is no copy of the grand file
+    assert on_disk == listed | {"README.md", "build_manifest.json"}
 
 
 @pytest.mark.parametrize("config", sorted(SCHEMAS))
@@ -154,6 +155,7 @@ def test_manifest_records_provenance(built, mini_grand_path):
         "git_dirty",
         "pyarrow_version",
         "configs",
+        "stats",
     }
     assert manifest["grand_sha256"] == _sha256(mini_grand_path)  # computed, not assumed
     assert manifest["pyarrow_version"] == pa.__version__
@@ -265,6 +267,7 @@ def test_cli_builds_identically_across_processes(tmp_path, mini_grand_path, repo
         )
         assert done.returncode == 0, done.stderr
         assert all(config in done.stdout for config in CONFIGS)
+        assert (out / "README.md").is_file()
         manifests.append(json.loads((out / "build_manifest.json").read_text(encoding="utf-8")))
     assert manifests[0] == manifests[1]
     assert manifests[0]["configs"]["items"]["rows"] == 16

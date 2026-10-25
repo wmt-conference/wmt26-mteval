@@ -2,9 +2,9 @@
 
     uv run python scripts/build_hf.py --grand GRAND --out OUT [--no-checksum]
 
-Writes the Parquet shards and ``build_manifest.json`` under OUT, which must be missing or empty.
-The grand file is read only, and checked against its known sha256 unless ``--no-checksum`` is
-given (for subsets of it, such as a test fixture).
+Writes the Parquet shards, the dataset card ``README.md`` and ``build_manifest.json`` under OUT,
+which must be missing or empty.  The grand file is read only, and checked against its known sha256
+unless ``--no-checksum`` is given (for subsets of it, such as a test fixture).
 """
 
 from __future__ import annotations
@@ -33,7 +33,7 @@ def main(argv: list[str] | None = None) -> int:
     expected = None if args.no_checksum else GRAND_SHA256
     try:
         manifest = build_all(args.grand, REPO, args.out, expected_sha256=expected)
-    except (ChecksumError, FileExistsError) as error:
+    except (ChecksumError, FileExistsError, FileNotFoundError) as error:
         print(f"error: {error}", file=sys.stderr)
         return 1
 

@@ -76,7 +76,8 @@ SHARED_FIELDS: tuple[pa.Field, ...] = (
     _field(
         "is_priority",
         pa.bool_(),
-        "True for official items whose language pair is one of the eight priority directions.",
+        "True for official items whose language pair is one of the eight priority directions, and "
+        "false for every other item, challenge items included.",
     ),
     _field(
         "doc_id",
@@ -150,8 +151,8 @@ PREDICTION_FIELDS: tuple[pa.Field, ...] = (
         "t1_errors",
         pa.list_(T1_ERROR_TYPE),
         "Task 1 error spans the run predicts for the translation, each with `start` and `end` "
-        "offsets into the hypothesis, a `severity` and a `category`, or null where the run makes "
-        "no Task 1 prediction for the row.",
+        "offsets into the hypothesis, a `severity` and a `category` (which may be null), or null "
+        "where the run makes no Task 1 prediction for the row.",
     ),
     _field(
         "t1_omission",

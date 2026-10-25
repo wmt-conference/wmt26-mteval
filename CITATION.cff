@@ -1,0 +1,57 @@
+cff-version: 1.2.0
+message: >-
+  If you use this data or code, please cite the findings paper of the WMT26 shared task on
+  automated translation quality evaluation systems.
+title: WMT26 MT-Eval data release
+type: dataset
+authors:
+  - name: Organisers of the WMT26 Shared Task on Automated Translation Quality Evaluation Systems
+repository-code: https://github.com/wmt-conference/wmt26-mteval
+url: https://www2.statmt.org/wmt26/mteval-task.html
+preferred-citation:
+  type: conference-paper
+  title: >-
+    Findings of the WMT26 Shared Task on Automated Translation Quality Evaluation Systems:
+    Compact Open Models are Competitive Quality Evaluators
+  authors:
+    - family-names: Lavie
+      given-names: Alon
+    - family-names: Hanneman
+      given-names: Greg
+    - family-names: Perrella
+      given-names: Stefano
+    - family-names: Ding
+      given-names: Shuoyang
+    - family-names: Avramidis
+      given-names: Eleftherios
+    - family-names: Proietti
+      given-names: Lorenzo
+    - family-names: Lo
+      given-names: Chi-kiu
+    - family-names: Shurtz
+      given-names: Ammon
+    - family-names: Zerva
+      given-names: Chrysoula
+    - family-names: Sindhujan
+      given-names: Archchana
+    - family-names: Zouhar
+      given-names: Vilém
+    - family-names: Kanojia
+      given-names: Diptesh
+    - family-names: Blain
+      given-names: Frédéric
+    - family-names: Thompson
+      given-names: Brian
+    - family-names: Filandrianos
+      given-names: Giorgos
+    - family-names: Menis Mastromichalakis
+      given-names: Orfeas
+    - family-names: Kocmi
+      given-names: Tom
+    - family-names: Gupta
+      given-names: Pranav
+  collection-title: Proceedings of the Eleventh Conference on Machine Translation (WMT)
+  start: 931
+  end: 1030
+  year: 2026
+  url: https://www2.statmt.org/wmt26/pdf/2026.wmt-1.49.pdf

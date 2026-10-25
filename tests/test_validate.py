@@ -804,6 +804,7 @@ def test_check_loading_refuses_a_version_label_that_is_not_the_installed_one(
 
 
 def test_check_loading_needs_a_readme(out, mini_grand_path, repo_root, monkeypatch, capsys):
+    (out / "README.md").unlink()  # the build writes the card; the check must not run without one
     check_loading = load_script(repo_root, "check_loading")
     monkeypatch.setitem(sys.modules, "datasets", FakeDatasets())
     assert check_loading.main([str(out), "5.1.0", "--grand", str(mini_grand_path)]) == 2

@@ -155,8 +155,8 @@ grand = load_dataset("wmt/wmt26-mteval-data", "grand", split="evaluation")
   deduplication as part of how the baselines were made, so the deduplicated snapshot is `official`
   for now. It will be checked against the paper in v1.0. Only the results computed from the
   error spans can tell the two snapshots apart (Tables 4-7 and 16-36 of the findings paper), and
-  Table 6, which needs no human annotation, already fits the deduplicated snapshot (see the
-  errata).
+  Table 6, which needs no human annotation, already fits the deduplicated snapshot: its errors per
+  prediction for the Qwen 3.6 baselines match the deduplicated predictions, not the original ones.
 - A run may cover only some items, and then has no rows for the others; `systems.n_items`, `lps`
   and `covers_all_priority` say what it covers.
 - `systems` holds allow-listed model-card answers only: a fixed list of fields was copied, and
@@ -195,10 +195,10 @@ grand = load_dataset("wmt/wmt26-mteval-data", "grand", split="evaluation")
   `human_scratch`, `human_postedit` and `pseudo_ref`. Do not drop every `is_reference_candidate`
   row: that removes real MT outputs and challenge hypotheses as well.
 - **The GPT-5.6 Sol baseline at xHigh reasoning is incomplete.** The findings paper says this
-  run completed only part of the priority pairs. In the data, its `t2_score` is the same
-  placeholder value in every row, and its Task 1 predictions are empty for almost all of `eng-sme`
-  (no row has an error span) and for most of `eng-ind`. Do not use its `t2_score`, and treat those two pairs as incomplete; the errata give
-  the counts.
+  run completed only 6 of the 8 priority pairs. In the data, its `t2_score` is the same
+  placeholder value, 50.0, in every row, and its Task 1 predictions are empty for almost all of
+  `eng-sme` (no row has an error span) and for most of `eng-ind`. Do not use its `t2_score`, and
+  treat its `eng-sme` and `eng-ind` predictions as incomplete.
 - **Some hypotheses are empty.** There are {{n_hyp_empty}} empty or whitespace-only
   hypotheses ({{n_hyp_empty_exact}} exactly empty and {{n_hyp_whitespace_only}}
   whitespace-only); `hyp_is_empty` is true for all of them. They are kept, and so are the

@@ -140,7 +140,7 @@ def card_source(raw_root: Path, run: RunSpec) -> Path:
     """The raw ``model_card.json`` of ``run`` under ``raw_root``.
 
     A submission's card is ``submissions/<task>/<id>``.  A numeric baseline (one of the
-    sentence-level metrics) has its card in ``baselines/task2/<id>``.  An LLM or xCOMET baseline
+    segment-level metrics) has its card in ``baselines/task2/<id>``.  An LLM or xCOMET baseline
     has one in ``baselines/task2/<run_id>_task2`` (it carries the threshold answers) and, failing
     that, in ``baselines/task1/<run_id>_task1``.  ``FileNotFoundError`` if there is none.
     """

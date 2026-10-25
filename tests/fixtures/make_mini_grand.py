@@ -7,8 +7,11 @@ Usage::
 ``GRAND`` is the read-only ``wmt26-grand.parquet``; ``OUT`` is the fixture to write. Each of the
 cases in ``CASES`` selects the first item (in ``item_id`` order) that matches it and has not
 already been taken by an earlier case, so the fixture has exactly one row per case. The rows are
-copied verbatim: ``pq.write_table(table.take(idx), OUT)`` keeps all 107 columns, their Arrow
-types (``arrow.json`` extension columns included) and the schema-level metadata.
+copied verbatim, apart from the gold: ``pq.write_table(drop_gold(table.take(idx)), OUT)`` keeps
+all 107 columns, their Arrow types (``arrow.json`` extension columns included) and the
+schema-level metadata. The one exception is ``ground_truth__record``, the raw human-annotation
+records, every cell of which is set to null (Ruling R24), so that the committed fixture holds no
+gold. The column stays in the schema, because the fixture must have the schema of the real file.
 
 Item ids have six ``_###_``-separated parts::
 
@@ -25,6 +28,7 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 SEP = "_###_"
+GOLD_COLUMN = "ground_truth__record"
 SUBMISSION_875921 = "submission__task1__875921__predictions"
 PD = "RefQuality-PD_"
 PE = "RefQuality-PE_"
@@ -118,6 +122,13 @@ CASES: list[tuple[str, Predicate]] = [
 ]
 
 
+def drop_gold(table: pa.Table) -> pa.Table:
+    """``table`` with every cell of the gold column null; schema and metadata are unchanged."""
+    index = table.schema.get_field_index(GOLD_COLUMN)
+    field = table.schema.field(index)
+    return table.set_column(index, field, pa.nulls(table.num_rows, field.type))
+
+
 def select(table: pa.Table) -> list[tuple[str, int]]:
     """Return ``(case label, row index)`` per case, first unused match in ``item_id`` order."""
     ids = table.column("item_id").to_pylist()
@@ -153,7 +164,7 @@ def main(argv: list[str] | None = None) -> int:
     assert len(idx) == len(CASES) == 16 and len(set(idx)) == 16
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    pq.write_table(table.take(idx), args.out)
+    pq.write_table(drop_gold(table.take(idx)), args.out)
 
     out_schema = pq.read_schema(args.out)
     if not out_schema.equals(table.schema, check_metadata=True):
@@ -164,7 +175,7 @@ def main(argv: list[str] | None = None) -> int:
     size = args.out.stat().st_size
     print(
         f"wrote {args.out}: {len(idx)} rows, {len(out_schema.names)} columns, {size:,} bytes; "
-        "schema and metadata match the grand file"
+        f"schema and metadata match the grand file; {GOLD_COLUMN} is null in every row"
     )
     return 0
 

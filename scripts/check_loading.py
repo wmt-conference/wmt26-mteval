@@ -15,9 +15,11 @@ directory on the file system of OUT and GRAND to avoid copies.
 
 Then it loads the ``test`` split of every config listed in the README, the ``grand`` config
 included, and prints one line each: ``OK VERSION CONFIG ROWS`` or ``FAIL VERSION CONFIG
-ExceptionType: message``.  It exits 0 if every config except ``grand`` loads (the grand file keeps
-its JSON columns, which older versions of ``datasets`` cannot read), 1 if one does not, and 2 if
-the check could not be set up.  The ``datasets`` cache lives in the temporary directory too, and
+ExceptionType: message``.  The seven data configs must all be listed in the README: one that is
+not gets ``FAIL VERSION CONFIG missing from README``.  The script exits 0 if every config except
+``grand`` loads (the grand file keeps its JSON columns, which older versions of ``datasets``
+cannot read) and none is missing, 1 if one does not load or is missing, and 2 if the check could
+not be set up.  The ``datasets`` cache lives in the temporary directory too, and
 goes with it.  The script needs only ``datasets`` and PyYAML, not ``wmt26_mteval``.
 """
 
@@ -33,6 +35,17 @@ from pathlib import Path
 import yaml
 
 GRAND_NAME = "wmt26-grand.parquet"
+# The data configs that the README must list (``grand`` is optional).  This script does not import
+# wmt26_mteval, so the names are repeated here; a test checks them against ``schemas.SCHEMAS``.
+REQUIRED_CONFIGS = (
+    "items",
+    "pairs",
+    "submissions",
+    "baselines",
+    "systems",
+    "mt_systems",
+    "challenge_sets",
+)
 README_NAME = "README.md"
 MAX_MESSAGE_CHARS = 200
 
@@ -122,6 +135,10 @@ def main(argv: list[str] | None = None) -> int:
                     flush=True,
                 )
                 required_ok = required_ok and name == "grand"
+    for name in REQUIRED_CONFIGS:
+        if name not in names:
+            print(f"FAIL {args.version} {name} missing from README", flush=True)
+            required_ok = False
     return 0 if required_ok else 1
 
 

@@ -620,20 +620,18 @@ def test_the_expected_full_file_has_every_config(repo_root, expected_full):
 
 # --- check_loading.py (the datasets calls themselves run in Task 12's matrix) ---------------------
 
-README = """---
-configs:
-- config_name: items
-  data_files:
-  - split: test
-    path: data/items/*.parquet
-- config_name: grand
-  data_files:
-  - split: test
-    path: wmt26-grand.parquet
----
 
-# WMT26 MT evaluation
-"""
+def readme_with(configs: list[str]) -> str:
+    """A README whose YAML front matter lists ``configs``, each loading its Parquet files."""
+    entries = []
+    for config in configs:
+        path = "wmt26-grand.parquet" if config == "grand" else f"data/{config}/*.parquet"
+        entries.append(f"- config_name: {config}\n  data_files:\n  - split: test\n    path: {path}")
+    return "---\nconfigs:\n" + "\n".join(entries) + "\n---\n\n# WMT26 MT evaluation\n"
+
+
+DATA_CONFIGS = list(SCHEMAS)
+README = readme_with([*DATA_CONFIGS, "grand"])
 
 
 class FakeDatasets:
@@ -669,7 +667,7 @@ def staged_out(out) -> Path:
 
 def test_config_names_come_from_the_yaml_front_matter(repo_root):
     check_loading = load_script(repo_root, "check_loading")
-    assert check_loading.config_names(README) == ["items", "grand"]
+    assert check_loading.config_names(README) == [*DATA_CONFIGS, "grand"]
     with pytest.raises(ValueError, match="front matter"):
         check_loading.config_names("# no front matter\n")
     with pytest.raises(ValueError, match="configs"):
@@ -724,10 +722,10 @@ def test_check_loading_prints_one_line_per_config(
     monkeypatch.setitem(sys.modules, "datasets", fake)
     argv = [str(staged_out), "5.1.0", "--grand", str(mini_grand_path)]
     assert check_loading.main(argv) == 0
-    assert capsys.readouterr().out.splitlines() == ["OK 5.1.0 items 7", "OK 5.1.0 grand 7"]
+    names = [*DATA_CONFIGS, "grand"]
+    assert capsys.readouterr().out.splitlines() == [f"OK 5.1.0 {name} 7" for name in names]
     assert [(c["name"], c["split"], c["readme"], c["grand"]) for c in fake.calls] == [
-        ("items", "test", True, True),
-        ("grand", "test", True, True),
+        (name, "test", True, True) for name in names
     ]
     for call in fake.calls:  # a scratch cache beside the staging directory, both gone afterwards
         assert Path(call["cache_dir"]).parent == call["path"].parent
@@ -744,16 +742,54 @@ def test_check_loading_fails_on_any_config_but_grand(
     monkeypatch.setitem(sys.modules, "datasets", grand_only)
     assert check_loading.main(argv) == 0
     assert capsys.readouterr().out.splitlines() == [
-        "OK 2.18.0 items 7",
+        *(f"OK 2.18.0 {name} 7" for name in DATA_CONFIGS),
         "FAIL 2.18.0 grand ValueError: Feature type 'Json' not found",
     ]
 
     items_broken = FakeDatasets("2.18.0", {"items": ValueError("boom\nsecond line")})
     monkeypatch.setitem(sys.modules, "datasets", items_broken)
     assert check_loading.main(argv) == 1
+    assert (
+        capsys.readouterr().out.splitlines()
+        == [
+            "FAIL 2.18.0 items ValueError: boom",  # the first line of the message only
+            *(f"OK 2.18.0 {name} 7" for name in [*DATA_CONFIGS[1:], "grand"]),
+        ]
+    )
+
+
+def test_the_required_configs_are_the_schema_configs(repo_root):
+    check_loading = load_script(repo_root, "check_loading")
+    assert sorted(check_loading.REQUIRED_CONFIGS) == sorted(SCHEMAS)
+
+
+@pytest.mark.parametrize("omitted", DATA_CONFIGS)
+def test_check_loading_fails_when_the_readme_omits_a_data_config(
+    out, mini_grand_path, repo_root, monkeypatch, capsys, omitted
+):
+    check_loading = load_script(repo_root, "check_loading")
+    listed = [name for name in [*DATA_CONFIGS, "grand"] if name != omitted]
+    (out / "README.md").write_text(readme_with(listed), encoding="utf-8")
+    fake = FakeDatasets()
+    monkeypatch.setitem(sys.modules, "datasets", fake)
+    assert check_loading.main([str(out), "5.1.0", "--grand", str(mini_grand_path)]) == 1
     assert capsys.readouterr().out.splitlines() == [
-        "FAIL 2.18.0 items ValueError: boom",  # the first line of the message only
-        "OK 2.18.0 grand 7",
+        *(f"OK 5.1.0 {name} 7" for name in listed),
+        f"FAIL 5.1.0 {omitted} missing from README",
+    ]
+    assert omitted not in [call["name"] for call in fake.calls]
+
+
+def test_a_readme_that_lists_only_grand_does_not_pass(
+    out, mini_grand_path, repo_root, monkeypatch, capsys
+):
+    check_loading = load_script(repo_root, "check_loading")
+    (out / "README.md").write_text(readme_with(["grand"]), encoding="utf-8")
+    monkeypatch.setitem(sys.modules, "datasets", FakeDatasets())
+    assert check_loading.main([str(out), "5.1.0", "--grand", str(mini_grand_path)]) == 1
+    assert capsys.readouterr().out.splitlines() == [
+        "OK 5.1.0 grand 7",
+        *(f"FAIL 5.1.0 {name} missing from README" for name in DATA_CONFIGS),
     ]
 
 

@@ -122,6 +122,3 @@ the challenge sets are on the dataset card.
 
 The organisers: `wmt-qe-metrics-organizers@googlegroups.com`.
 
-## Licence
-
-No licence is attached to this repository or to the data it builds, and none is granted.

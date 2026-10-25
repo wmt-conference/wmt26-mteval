@@ -88,7 +88,6 @@ This is **v0.9**: typed data configs and documentation.
   and the scoring code.
   The unchanged `grand` config still carries the organisers' raw annotation records in its
   `ground_truth__record` column; see [Human annotations](#human-annotations).
-- No licence is attached to this dataset; see [Licence](#licence).
 
 ## Quick start
 
@@ -292,12 +291,6 @@ and challenge sets that follow the findings paper. `build_manifest.json` lists t
 rows of every Parquet file, and the GitHub repository lists the source files in
 `data/MANIFEST.tsv`. The code that builds and checks this repository is at
 <https://github.com/wmt-conference/wmt26-mteval>.
-
-## Licence
-
-No licence is attached to this dataset, and this card grants none. The source texts and the
-translations come from the WMT26 General MT task, so read what its release says about their use as
-well.
 
 ## Citation
 

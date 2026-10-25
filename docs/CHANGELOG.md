@@ -6,8 +6,7 @@ of `src/wmt26_mteval/__init__.py`.
 ## v0.9: pre-release (date: YYYY-MM-DD, to be set at release)
 
 The first release: typed data configs and documentation. The steps that make the release, among
-them setting the date above, are in [`RELEASE.md`](RELEASE.md). No licence is attached to the data
-or to the code.
+them setting the date above, are in [`RELEASE.md`](RELEASE.md).
 
 ### Added
 

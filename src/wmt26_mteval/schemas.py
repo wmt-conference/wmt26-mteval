@@ -23,6 +23,12 @@ ITEM_ID = _field(
     "language, domain or challenge-set name, document, paragraph or segment) joined by `_###_`.",
 )
 
+LP = _field(
+    "lp",
+    pa.string(),
+    "Language pair as a short `src-tgt` code, such as `ces-deu` or `eng-zho_CN`.",
+)
+
 # The columns parsed from ``item_id`` that every per-item config repeats, in this order.
 SHARED_FIELDS: tuple[pa.Field, ...] = (
     _field(
@@ -66,11 +72,7 @@ SHARED_FIELDS: tuple[pa.Field, ...] = (
         "Target language code exactly as it is written in `item_id` (for example `de_DE` or "
         "`deu_Latn`).",
     ),
-    _field(
-        "lp",
-        pa.string(),
-        "Language pair as a short `src-tgt` code, such as `ces-deu` or `eng-zho_CN`.",
-    ),
+    LP,
     _field(
         "is_priority",
         pa.bool_(),
@@ -101,6 +103,73 @@ REF_TYPE = _field(
     "How the reference was produced: `native` (human translation from scratch), `postedit` "
     "(post-edited machine translation), `pseudo` (machine-generated pseudo-reference) or "
     "`none` (no reference).",
+)
+
+SYSTEM = _field(
+    "system",
+    pa.string(),
+    "Name of the system that produced the hypothesis, exactly as in the source data.",
+)
+
+# The columns of the ``submissions`` and ``baselines`` configs: one row per run, item and system.
+T1_ERROR_TYPE = pa.struct(
+    [
+        pa.field("start", pa.int32()),
+        pa.field("end", pa.int32()),
+        pa.field("severity", pa.string()),
+        pa.field("category", pa.string()),
+    ]
+)
+
+PREDICTION_FIELDS: tuple[pa.Field, ...] = (
+    _field(
+        "run_id",
+        pa.string(),
+        "Identifier of the evaluator run: the numeric submission id, or the name of the "
+        "organisers' baseline (for example `gemma_ref` or `872013`).",
+    ),
+    _field(
+        "task",
+        pa.string(),
+        "Task the run was entered for: `task1` (error spans, with Task 2 scores as well for the "
+        "organisers' Task 1 baselines), `task2` (segment scores) or `task3` (error-free "
+        "judgements).",
+    ),
+    ITEM_ID,
+    LP,
+    SYSTEM,
+    _field(
+        "t1_errors",
+        pa.list_(T1_ERROR_TYPE),
+        "Task 1 error spans the run predicts for the translation, each with `start` and `end` "
+        "offsets into the hypothesis, a `severity` and a `category`, or null where the run makes "
+        "no Task 1 prediction for the row.",
+    ),
+    _field(
+        "t1_omission",
+        pa.string(),
+        "Omission severity (`minor` or `major`) that the run predicts for the translation, or "
+        "null when it predicts no omission or makes no Task 1 prediction.",
+    ),
+    _field(
+        "t1_instruction_fault",
+        pa.string(),
+        "Instruction fault that the run reports for the translation, or null when it reports "
+        "none or makes no Task 1 prediction (null in every row of this release).",
+    ),
+    _field(
+        "t2_score",
+        pa.float64(),
+        "Task 2 quality score the run predicts for the translation, copied unchanged from the "
+        "source (some runs score below 0 or above 100), or null where the run makes no Task 2 "
+        "prediction.",
+    ),
+    _field(
+        "t3_error_free",
+        pa.bool_(),
+        "Task 3 judgement that the translation is free of errors, or null where the run makes "
+        "no Task 3 prediction.",
+    ),
 )
 
 SCHEMAS: dict[str, pa.Schema] = {
@@ -147,11 +216,7 @@ SCHEMAS: dict[str, pa.Schema] = {
         [
             ITEM_ID,
             *SHARED_FIELDS,
-            _field(
-                "system",
-                pa.string(),
-                "Name of the system that produced the hypothesis, exactly as in the source data.",
-            ),
+            SYSTEM,
             _field(
                 "system_type",
                 pa.string(),
@@ -177,6 +242,18 @@ SCHEMAS: dict[str, pa.Schema] = {
                 "hyp_is_empty",
                 pa.bool_(),
                 "True when the hypothesis is empty or contains only whitespace.",
+            ),
+        ]
+    ),
+    "submissions": pa.schema(PREDICTION_FIELDS),
+    "baselines": pa.schema(
+        [
+            *PREDICTION_FIELDS,
+            _field(
+                "variant",
+                pa.string(),
+                "Snapshot of the baseline: `official` for the released predictions, or `alt` for "
+                "the original predictions from before deduplication, with Task 1 fields only.",
             ),
         ]
     ),

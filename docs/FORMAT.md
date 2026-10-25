@@ -170,7 +170,7 @@ One row per organiser baseline run, item and system.
 | `t1_instruction_fault` | `string` | Instruction fault that the run reports for the translation, or null when it reports none or makes no Task 1 prediction (null in every row of this release). |
 | `t2_score` | `float64` | Task 2 quality score the run predicts for the translation, copied unchanged from the source (some runs score below 0 or above 100), or null where the run makes no Task 2 prediction. |
 | `t3_error_free` | `bool` | Task 3 judgement that the translation is free of errors, or null where the run makes no Task 3 prediction. |
-| `variant` | `string` | Snapshot of the baseline: `official` for the released predictions, or `alt` for the original predictions from before deduplication, with Task 1 fields only; the label is provisional, as it follows decision A1 and will be confirmed against the paper in v1.0. |
+| `variant` | `string` | Snapshot of the baseline: `official` for the released predictions, or `alt` for the original predictions from before deduplication, with Task 1 fields only; the label is provisional and will be checked against the paper in v1.0. |
 
 ## `systems`
 
@@ -202,7 +202,7 @@ One row per official evaluator run.
 | `allow_t2_to_t3` | `bool` | True when the team allows the organisers to convert its Task 2 output into a Task 3 prediction automatically, false when it does not, and null when the model card gives no readable answer. |
 | `covers_all_priority` | `bool` | True when the run has at least one row for every one of the eight priority language pairs among the official items. |
 | `t3_threshold` | `float64` | Task 2 score that separates the team's Task 2 predictions that are converted to error-free judgements from those that are not: a higher score counts as error-free, and a score equal to the threshold does so when `threshold_inclusive` is true. Null where the model card gives no numeric threshold. |
-| `tasks` | `list<string>` | Tasks the run has predictions for: the one task of a submission, `task1` and `task2` for the organisers' Task 1 baselines, and `task2` for the seven sentence-level metric baselines. |
+| `tasks` | `list<string>` | Tasks the run has predictions for: the one task of a submission, `task1` and `task2` for the organisers' Task 1 baselines, and `task2` for the seven segment-level metric baselines. |
 | `lps` | `list<string>` | Language pairs, as short codes sorted alphabetically, in which the run has at least one row, challenge sets included. |
 | `n_items` | `int64` | Number of distinct test items for which the run has at least one row. |
 | `n_pairs` | `int64` | Number of rows (one per item and system) that the run has in its prediction table. |

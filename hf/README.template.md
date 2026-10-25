@@ -146,13 +146,17 @@ grand = load_dataset("wmt/wmt26-mteval-data", "grand", split="evaluation")
 
 - Join the hypotheses to the predictions on `(item_id, system)`, then join the predictions to
   `systems` on `run_id`; for `baselines`, filter `variant == 'official'` first (see Warnings).
-- `baselines.variant` is `official` for the organisers' released predictions (the deduplicated
-  LLM baselines; the xCOMET files are identical before and after deduplication) and `alt` for the
-  original, not deduplicated LLM outputs, which keep their Task 1 columns only. The baseline runs
-  that predate the deduplication fix are not in the typed configs. The label is provisional: it
-  follows decision A1, which makes the deduplicated snapshot the official one, and will be
-  confirmed against the paper in v1.0, when the snapshot that reproduces Tables 4 and 9 of the
-  findings paper becomes `official`.
+- `baselines.variant` is `official` for the released predictions: the deduplicated snapshot of
+  the LLM baselines, the xCOMET baselines (whose files are identical before and after
+  deduplication) and the segment-level metric baselines, which have a single snapshot. `alt` is
+  the original, not deduplicated snapshot of the LLM baselines, with Task 1 columns only. An
+  earlier snapshot, which the organisers label `pre_dedup_pre_enhy_fix`, is in the `grand` config
+  only. The `official` label is provisional: Section 4.2 of the findings paper describes
+  deduplication as part of how the baselines were made, so the deduplicated snapshot is `official`
+  for now. It will be checked against the paper in v1.0. Only the results computed from the
+  error spans can tell the two snapshots apart (Tables 4-7 and 16-36 of the findings paper), and
+  Table 6, which needs no human annotation, already fits the deduplicated snapshot (see the
+  errata).
 - A run may cover only some items, and then has no rows for the others; `systems.n_items`, `lps`
   and `covers_all_priority` say what it covers.
 - `systems` holds allow-listed model-card answers only: a fixed list of fields was copied, and
@@ -190,6 +194,11 @@ grand = load_dataset("wmt/wmt26-mteval-data", "grand", split="evaluation")
   To drop the reference itself, filter on `system_type`: remove the flagged rows of
   `human_scratch`, `human_postedit` and `pseudo_ref`. Do not drop every `is_reference_candidate`
   row: that removes real MT outputs and challenge hypotheses as well.
+- **The GPT-5.6 Sol baseline at xHigh reasoning is incomplete.** The findings paper says this
+  run completed only part of the priority pairs. In the data, its `t2_score` is the same
+  placeholder value in every row, and its Task 1 predictions are empty for almost all of `eng-sme`
+  (no row has an error span) and for most of `eng-ind`. Do not use its `t2_score`, and treat those two pairs as incomplete; the errata give
+  the counts.
 - **Some hypotheses are empty.** There are {{n_hyp_empty}} empty or whitespace-only
   hypotheses ({{n_hyp_empty_exact}} exactly empty and {{n_hyp_whitespace_only}}
   whitespace-only); `hyp_is_empty` is true for all of them. They are kept, and so are the

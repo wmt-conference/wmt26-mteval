@@ -323,7 +323,7 @@ SYSTEMS_FIELDS: tuple[pa.Field, ...] = (
         "tasks",
         pa.list_(pa.string()),
         "Tasks the run has predictions for: the one task of a submission, `task1` and `task2` "
-        "for the organisers' Task 1 baselines, and `task2` for the seven sentence-level metric "
+        "for the organisers' Task 1 baselines, and `task2` for the seven segment-level metric "
         "baselines.",
     ),
     _field(
@@ -500,8 +500,7 @@ SCHEMAS: dict[str, pa.Schema] = {
                 pa.string(),
                 "Snapshot of the baseline: `official` for the released predictions, or `alt` for "
                 "the original predictions from before deduplication, with Task 1 fields only; the "
-                "label is provisional, as it follows decision A1 and will be confirmed against "
-                "the paper in v1.0.",
+                "label is provisional and will be checked against the paper in v1.0.",
             ),
         ]
     ),

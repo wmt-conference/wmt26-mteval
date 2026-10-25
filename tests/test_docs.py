@@ -759,14 +759,37 @@ def test_the_card_warns_that_baselines_double_count_without_a_variant_filter(rep
 
 
 def test_the_official_label_is_called_provisional_where_it_is_defined(repo_root):
-    sentence = "follows decision A1"
-    confirm = "confirmed against the paper in v1.0"
+    provisional = "provisional"
+    check = "checked against the paper in v1.0"
     card = squash(fake_card(repo_root))
-    assert sentence in card and confirm in card
+    assert provisional in card and check in card
     errata = squash((repo_root / "docs" / "ERRATA.md").read_text(encoding="utf-8"))
-    assert sentence in errata and confirm in errata
+    assert provisional in errata and check in errata
     variant = SCHEMAS["baselines"].field("variant").metadata[b"description"].decode()
-    assert sentence in variant and confirm in variant
+    assert provisional in variant and check in variant
+    for text in (card, errata, variant):  # an internal decision label means nothing to readers
+        assert "decision A1" not in text
+
+
+def test_the_errata_and_card_name_the_tables_that_can_decide_the_snapshot(repo_root):
+    errata = squash((repo_root / "docs" / "ERRATA.md").read_text(encoding="utf-8"))
+    assert "Tables 4-7, Tables 16-36 and Figures 1-3" in errata
+    assert (
+        "3.21 errors per prediction in `official` and 5.16 in `alt`, against 3.11 in Table 6"
+        in errata
+    )
+    assert "Tables 4 and 9" not in errata
+    card = squash(fake_card(repo_root))
+    assert "Tables 4-7 and 16-36 of the findings paper" in card
+    assert "pre_dedup_pre_enhy_fix" in card and "pre_dedup_pre_enhy_fix" in errata
+
+
+def test_the_card_and_errata_warn_about_the_incomplete_xhigh_baseline(repo_root):
+    card = squash(fake_card(repo_root))
+    assert "The GPT-5.6 Sol baseline at xHigh reasoning is incomplete." in card
+    errata = squash((repo_root / "docs" / "ERRATA.md").read_text(encoding="utf-8"))
+    assert "### 7. The GPT-5.6 Sol baseline at xHigh reasoning" in errata
+    assert "able to complete 6 of the 8 pairs within timing constraints" in errata
 
 
 def test_the_card_wording_the_final_review_asked_for(repo_root):
@@ -811,7 +834,7 @@ def test_the_schema_descriptions_the_final_review_corrected():
     threshold = describe("systems", "t3_threshold")
     assert "above which" not in threshold and "`threshold_inclusive`" in threshold
     tasks = describe("systems", "tasks")
-    assert "classic metrics" not in tasks and "seven sentence-level metric baselines" in tasks
+    assert "classic metrics" not in tasks and "seven segment-level metric baselines" in tasks
     assert "classic metrics" not in describe("systems", "underlying_model")
     what = describe("challenge_sets", "what_it_tests")
     assert "One-sentence" not in what and what.startswith("Short description")
@@ -1163,14 +1186,16 @@ def test_the_status_text_stays_true_after_publication(repo_root):
     assert "pre-release" in (repo_root / "README.md").read_text(encoding="utf-8")
 
 
-def test_the_errata_has_exactly_the_six_entries(repo_root):
+def test_the_errata_has_exactly_the_seven_entries(repo_root):
     text = (repo_root / "docs/ERRATA.md").read_text(encoding="utf-8")
     headings = re.findall(r"^### (\d+)\. (.+)$", text, flags=re.M)
-    assert [n for n, _ in headings] == ["1", "2", "3", "4", "5", "6"]
+    assert [n for n, _ in headings] == ["1", "2", "3", "4", "5", "6", "7"]
     flat = squash(text)
     for fragment in (
         "252,919",
         "252,923",
+        "95,323",
+        "13,087 of the 13,311",
         "47",
         "23",
         "9 direct",

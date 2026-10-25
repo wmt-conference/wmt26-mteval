@@ -28,6 +28,25 @@ CHALLENGE_SETS = [
 PRIORITY = {"ces-deu", "ces-vie", "eng-arz", "eng-ekk", "eng-ind", "eng-isl", "eng-sme", "zho-jpn"}
 RUN_NAMES_HEADER = "run_id\tcanonical_name\tunderlying_model\tpaper_citation"
 
+# Titles exactly as the reference list of the findings paper (2026.wmt-1.49) prints them.
+PAPER_TITLES = {
+    "AGGREE": (
+        "AGGREE: An aggregation-grounded challenge set for segment-level MT metric evaluation"
+    ),
+    "FECE": "FECE: A challenge set for evaluating fine-grained translation error correction",
+    "GAMBITP": (
+        "Benchmarking gender bias in machine translation evaluation metrics across occupations"
+    ),
+    "LIGATUR": (
+        "Translation metrics cannot judge what their tokeniser deletes: LIGATUR and AEGIS "
+        "submissions to the WMT26 shared task on automated translation quality evaluation"
+    ),
+    "QEbreak": (
+        "QEbreak at WMT26: A preregistered audit of omission and addition asymmetry in machine "
+        "translation quality metrics"
+    ),
+}
+
 
 def official(lp_src, lp_tgt, n):
     return f"official_###_{lp_src}_###_{lp_tgt}_###_news_###_doc_###_{n}"
@@ -409,6 +428,23 @@ def test_challenge_sets_yaml_text(repo_root):
     assert by_name["QEbreak"]["citation"] == "Silchenko, 2026"
     for name in ("RefQuality-PD", "RefQuality-PE"):
         assert by_name[name]["citation"] == "Lavie et al., 2026 (findings paper, §5.2.1)"
+
+
+def test_challenge_set_full_names_are_paper_titles_or_plainly_descriptive(repo_root):
+    entries = yaml.safe_load((repo_root / "data/metadata/challenge_sets.yaml").read_text("utf-8"))
+    by_name = {e["name"]: e["full_name"] for e in entries}
+    for name, title in PAPER_TITLES.items():
+        assert by_name[name] == title
+    # The two reference-swap sets have no published title, and must not look as if they had one.
+    for name in ("RefQuality-PD", "RefQuality-PE"):
+        assert by_name[name].startswith("Organisers' reference-swap set")
+        assert by_name[name].endswith("(descriptive name, not a published title)")
+
+
+def test_full_name_description_is_true_for_every_row():
+    description = SCHEMAS["challenge_sets"].field("full_name").metadata[b"description"].decode()
+    assert "reference list of the findings paper" in description
+    assert "descriptive name" in description and "no published title" in description
 
 
 def pairs_of(rows):

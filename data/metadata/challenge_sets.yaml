@@ -6,12 +6,19 @@
 # statements that the sets carry no reference, and which `system` names their hypotheses use, are
 # read from the released data rather than from the paper.
 #
+# `full_name` is the title of the paper that introduces the set, copied from the reference list of
+# the findings paper (the 2026 paper for GAMBIT+, which also has a WMT25 predecessor) without the
+# closing full stop.  The QEbreak title is broken across two lines of that list ("pre-" and
+# "registered"), so the PDF cannot tell "preregistered" from "pre-registered"; it is spelt
+# "preregistered", as the text extraction of the PDF gives it.  The two RefQuality sets have no
+# published title of their own, so their `full_name` is a plainly descriptive name.
+#
 # Each entry has exactly the text columns of the `challenge_sets` config.  The columns `lps`,
 # `n_items` and `n_pairs` are computed from `pairs`, so they are not written here.
 
 - name: AGGREE
   full_name: >-
-    AGGREE: an aggregation-grounded challenge set for segment-level MT metric evaluation
+    AGGREE: An aggregation-grounded challenge set for segment-level MT metric evaluation
   authors: Lena Griesbeck and Michaela Geierhos
   citation: Griesbeck and Geierhos, 2026
   what_it_tests: >-
@@ -26,7 +33,7 @@
 
 - name: FECE
   full_name: >-
-    FECE: a challenge set for evaluating fine-grained translation error correction
+    FECE: A challenge set for evaluating fine-grained translation error correction
   authors: Jie Ding and Xiangyu Duan
   citation: Ding and Duan, 2026
   what_it_tests: >-
@@ -42,8 +49,7 @@
 
 - name: GAMBITP
   full_name: >-
-    GAMBIT+: benchmarking gender bias in machine translation evaluation metrics across
-    occupations
+    Benchmarking gender bias in machine translation evaluation metrics across occupations
   authors: >-
     Orfeas Menis Mastromichalakis, Giorgos Filandrianos, Wafaa Mohammed, Giuseppe Attanasio and
     Chrysoula Zerva
@@ -62,8 +68,8 @@
 
 - name: LIGATUR
   full_name: >-
-    LIGATUR: a contrastive challenge set for Unicode format and control characters in MT
-    evaluation
+    Translation metrics cannot judge what their tokeniser deletes: LIGATUR and AEGIS
+    submissions to the WMT26 shared task on automated translation quality evaluation
   authors: Animesh Mishra, Krishang Sharma and Sonia Khetarpaul
   citation: Mishra et al., 2026
   what_it_tests: >-
@@ -80,8 +86,8 @@
 
 - name: QEbreak
   full_name: >-
-    QEbreak: a pre-registered audit of omission and addition asymmetry in machine translation
-    quality metrics
+    QEbreak at WMT26: A preregistered audit of omission and addition asymmetry in machine
+    translation quality metrics
   authors: Maksim Silchenko
   citation: Silchenko, 2026
   what_it_tests: >-
@@ -98,7 +104,8 @@
 
 - name: RefQuality-PD
   full_name: >-
-    RefQuality-PD: the reference-quality set with a pseudo-reference
+    Organisers' reference-swap set with pseudo-references (descriptive name, not a published
+    title)
   authors: The WMT26 shared-task organisers (authors of the findings paper)
   citation: Lavie et al., 2026 (findings paper, §5.2.1)
   what_it_tests: >-
@@ -116,7 +123,8 @@
 
 - name: RefQuality-PE
   full_name: >-
-    RefQuality-PE: the reference-quality set with a post-edited reference
+    Organisers' reference-swap set with post-edited references (descriptive name, not a
+    published title)
   authors: The WMT26 shared-task organisers (authors of the findings paper)
   citation: Lavie et al., 2026 (findings paper, §5.2.1)
   what_it_tests: >-

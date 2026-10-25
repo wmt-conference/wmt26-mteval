@@ -365,8 +365,9 @@ CHALLENGE_SETS_FIELDS: tuple[pa.Field, ...] = (
     _field(
         "full_name",
         pa.string(),
-        "Full title of the challenge set, as in the findings paper or the paper that "
-        "introduced it.",
+        "Title of the paper that introduced the challenge set, copied from the reference list "
+        "of the findings paper, or a descriptive name for the organisers' reference-swap sets, "
+        "which have no published title.",
     ),
     _field(
         "authors",

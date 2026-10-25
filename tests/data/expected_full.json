@@ -1,0 +1,3 @@
+{"check_table2": true, "rows": {"items": 26885, "pairs": 363242, "submissions": 11297384,
+ "baselines": 10753092, "systems": 73, "mt_systems": 55, "challenge_sets": 7},
+ "pairs_by_collection": {"official": 252923, "challenge": 110319}}

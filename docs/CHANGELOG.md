@@ -11,7 +11,7 @@ them setting the date above, are in [`RELEASE.md`](RELEASE.md).
 ### Added
 
 - Hugging Face dataset `wmt/wmt26-mteval-data`, with seven typed configs, each with a single split
-  named `test` that loads with `datasets>=2.18`:
+  named `evaluation` that loads with `datasets>=2.18`:
   - `items`: the test items with source, reference, reference type and the columns parsed from
     `item_id`;
   - `pairs`: the candidate translations of every item, with `is_reference_candidate` and

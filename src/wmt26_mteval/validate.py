@@ -27,9 +27,9 @@ like) are checked by Table 2, the row counts and the schemas.  ``systems``, ``mt
 and are covered by the row counts, the schemas, the personal-data scan and the key check.
 
 The gates read the Parquet files on disk, never the build manifest, and know the file naming of
-the build only from the documented layout (``data/<config>/test-*.parquet``), so a mistake in the
-builder cannot also hide itself here.  A failure message names the file and column concerned and
-never quotes personal data or the text of a source, reference or hypothesis.
+the build only from the documented layout (``data/<config>/evaluation-*.parquet``), so a mistake
+in the builder cannot also hide itself here.  A failure message names the file and column
+concerned and never quotes personal data or the text of a source, reference or hypothesis.
 """
 
 from __future__ import annotations
@@ -46,7 +46,7 @@ import pyarrow as pa
 import pyarrow.compute as pc
 import pyarrow.parquet as pq
 
-from wmt26_mteval.build import MANIFEST_NAME, README_NAME
+from wmt26_mteval.build import MANIFEST_NAME, README_NAME, SPLIT
 from wmt26_mteval.cards import EMAIL_RE
 from wmt26_mteval.grand import Grand
 from wmt26_mteval.runs import RunSpec, list_runs
@@ -567,8 +567,8 @@ def check_alt_task2(grand: Grand) -> list[str]:
 def run_file(run: RunSpec) -> str:
     """The path, relative to the build, at which the table of ``run`` is expected."""
     if run.kind == "submission":
-        return f"data/submissions/test-{run.task}-{run.run_id}.parquet"
-    return f"data/baselines/test-{run.run_id}-{run.variant}.parquet"
+        return f"data/submissions/{SPLIT}-{run.task}-{run.run_id}.parquet"
+    return f"data/baselines/{SPLIT}-{run.run_id}-{run.variant}.parquet"
 
 
 def _label_problems(table: pa.Table, run: RunSpec) -> list[str]:

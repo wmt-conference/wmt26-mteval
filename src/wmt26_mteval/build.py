@@ -35,6 +35,9 @@ from wmt26_mteval.tables.metadata import (
 )
 from wmt26_mteval.tables.predictions import build_run_table
 
+# The one split of every config.  The organisers' grand file names it "evaluation"
+# (wmt26_intended_split), and so does the first card on the Hub; shards are named after it.
+SPLIT = "evaluation"
 MANIFEST_NAME = "build_manifest.json"
 README_NAME = "README.md"
 ROW_GROUP_ROWS = 50_000
@@ -116,11 +119,11 @@ def build_all(
     ``out_dir`` must be missing or empty (``FileExistsError`` otherwise, before anything is read),
     so that no shard of an earlier build can survive in it.  The files are
 
-    - ``data/items/test-00000.parquet``, and likewise ``systems``, ``mt_systems`` and
+    - ``data/items/evaluation-00000.parquet``, and likewise ``systems``, ``mt_systems`` and
       ``challenge_sets``;
-    - ``data/pairs/test-<lp>.parquet``, one per language pair, holding that pair's rows;
-    - ``data/submissions/test-<task>-<run_id>.parquet``, one per submission;
-    - ``data/baselines/test-<run_id>-<variant>.parquet``, one per baseline snapshot;
+    - ``data/pairs/evaluation-<lp>.parquet``, one per language pair, holding that pair's rows;
+    - ``data/submissions/evaluation-<task>-<run_id>.parquet``, one per submission;
+    - ``data/baselines/evaluation-<run_id>-<variant>.parquet``, one per baseline snapshot;
     - ``README.md``, the dataset card rendered from ``hf/README.template.md`` under ``repo`` and
       the manifest (it is not a shard, so no config lists it);
     - ``build_manifest.json``, written last: a directory without it is an unfinished build.
@@ -148,15 +151,17 @@ def build_all(
     ctx = Context.from_repo(repo)
 
     items = build_items(grand, ctx)
-    writer.write("items", "test-00000.parquet", items)
+    writer.write("items", f"{SPLIT}-00000.parquet", items)
 
     pairs = build_pairs(grand, ctx)
     stats = card_stats(items, pairs)
     for lp in sorted(pc.unique(pairs.column("lp")).to_pylist()):
-        writer.write("pairs", f"test-{lp}.parquet", pairs.filter(pc.equal(pairs.column("lp"), lp)))
-    writer.write("mt_systems", "test-00000.parquet", build_mt_systems(pairs))
+        writer.write(
+            "pairs", f"{SPLIT}-{lp}.parquet", pairs.filter(pc.equal(pairs.column("lp"), lp))
+        )
+    writer.write("mt_systems", f"{SPLIT}-00000.parquet", build_mt_systems(pairs))
     challenge_sets = build_challenge_sets(Path(repo) / CHALLENGE_SETS_PATH, pairs)
-    writer.write("challenge_sets", "test-00000.parquet", challenge_sets)
+    writer.write("challenge_sets", f"{SPLIT}-00000.parquet", challenge_sets)
     del items, pairs, challenge_sets
 
     runs = list_runs(grand)
@@ -170,12 +175,12 @@ def build_all(
         else:
             alt_runs, alt_rows = alt_runs + 1, alt_rows + table.num_rows
         if run.kind == "submission":
-            writer.write("submissions", f"test-{run.task}-{run.run_id}.parquet", table)
+            writer.write("submissions", f"{SPLIT}-{run.task}-{run.run_id}.parquet", table)
         else:
-            writer.write("baselines", f"test-{run.run_id}-{run.variant}.parquet", table)
+            writer.write("baselines", f"{SPLIT}-{run.run_id}-{run.variant}.parquet", table)
         del table
 
-    writer.write("systems", "test-00000.parquet", build_systems(repo, runs, coverage))
+    writer.write("systems", f"{SPLIT}-00000.parquet", build_systems(repo, runs, coverage))
 
     configs = writer.configs()
     manifest = {

@@ -13,7 +13,7 @@ import pyarrow.parquet as pq
 import pytest
 
 from wmt26_mteval import validate as gates
-from wmt26_mteval.build import build_all
+from wmt26_mteval.build import SPLIT, build_all
 from wmt26_mteval.grand import Grand
 from wmt26_mteval.runs import list_runs
 from wmt26_mteval.schemas import SCHEMAS
@@ -25,8 +25,8 @@ from wmt26_mteval.validate import (
     validate,
 )
 
-SYSTEMS = "data/systems/test-00000.parquet"
-CHALLENGE_SETS = "data/challenge_sets/test-00000.parquet"
+SYSTEMS = "data/systems/evaluation-00000.parquet"
+CHALLENGE_SETS = "data/challenge_sets/evaluation-00000.parquet"
 LABELS = ["Participant name", "Email", "Data Collection Consent"]
 
 
@@ -78,11 +78,11 @@ def out(built_mini, tmp_path) -> Path:
 
 def test_pii_gate_ignores_test_text(tmp_path, mini_grand_path, repo_root):  # Review Focus 1
     build_all(mini_grand_path, repo_root, tmp_path, expected_sha256=None)
-    t = pq.read_table(tmp_path / "data/items/test-00000.parquet")
+    t = pq.read_table(tmp_path / "data/items/evaluation-00000.parquet")
     t = t.set_column(
         t.schema.get_field_index("src"), "src", pa.array(["mail me: a.b@example.com"] * t.num_rows)
     )
-    pq.write_table(t, tmp_path / "data/items/test-00000.parquet")
+    pq.write_table(t, tmp_path / "data/items/evaluation-00000.parquet")
     assert find_pii(tmp_path) == []
 
 
@@ -225,7 +225,7 @@ def test_a_config_without_files_is_reported(out, mini_grand, expected_mini):
 
 
 def test_an_unreadable_file_is_a_failure_not_a_crash(out, mini_grand, expected_mini):
-    (out / "data/items/test-00000.parquet").write_bytes(b"not parquet")
+    (out / "data/items/evaluation-00000.parquet").write_bytes(b"not parquet")
     failures = validate(out, mini_grand, expected_mini)
     assert failures and any("items" in f for f in failures)
 
@@ -390,7 +390,7 @@ def make_columns_reordered(table: pa.Table) -> pa.Table:
     ],
 )
 def test_schema_drift_is_reported(out, mini_grand, expected_mini, change, column):
-    path = first_file(out, "data/submissions/test-task2-*.parquet")
+    path = first_file(out, "data/submissions/evaluation-task2-*.parquet")
     rewrite(path, change)
     failures = validate(out, mini_grand, expected_mini)
     assert failures
@@ -398,14 +398,14 @@ def test_schema_drift_is_reported(out, mini_grand, expected_mini, change, column
 
 
 def test_reordered_columns_are_reported(out, mini_grand, expected_mini):
-    path = first_file(out, "data/submissions/test-task2-*.parquet")
+    path = first_file(out, "data/submissions/evaluation-task2-*.parquet")
     rewrite(path, make_columns_reordered)
     failures = validate(out, mini_grand, expected_mini)
     assert any(path.name in f and "order" in f for f in failures), failures
 
 
 def test_list_child_names_do_not_matter(out, mini_grand, expected_mini):
-    path = first_file(out, "data/submissions/test-task1-*.parquet")
+    path = first_file(out, "data/submissions/evaluation-task1-*.parquet")
     assert pq.read_schema(path).field("t1_errors").type.value_field.name == "element"
     rewrite(path, lambda t: t.cast(SCHEMAS["submissions"]), use_compliant_nested_type=False)
     assert pq.read_schema(path).field("t1_errors").type.value_field.name == "item"
@@ -423,7 +423,7 @@ def test_schema_gate_checks_every_file_of_a_config(out, mini_grand, expected_min
 
 
 def test_round_trip_catches_a_changed_score(out, mini_grand, expected_mini):
-    path = first_file(out, "data/submissions/test-task2-*.parquet")
+    path = first_file(out, "data/submissions/evaluation-task2-*.parquet")
     table = pq.read_table(path)
     item_id = table.column("item_id")[0].as_py()
     set_cell(path, "t2_score", 0, table.column("t2_score")[0].as_py() + 1.0)
@@ -433,7 +433,7 @@ def test_round_trip_catches_a_changed_score(out, mini_grand, expected_mini):
 
 
 def test_round_trip_catches_a_changed_error_span(out, mini_grand, expected_mini):
-    path = first_file(out, "data/submissions/test-task1-*.parquet")
+    path = first_file(out, "data/submissions/evaluation-task1-*.parquet")
     table = pq.read_table(path)
     row = next(i for i, errors in enumerate(table.column("t1_errors").to_pylist()) if errors)
 
@@ -448,7 +448,7 @@ def test_round_trip_catches_a_changed_error_span(out, mini_grand, expected_mini)
 
 
 def test_round_trip_catches_an_error_span_turned_into_none(out, mini_grand, expected_mini):
-    path = first_file(out, "data/submissions/test-task1-*.parquet")
+    path = first_file(out, "data/submissions/evaluation-task1-*.parquet")
     table = pq.read_table(path)
     row = next(i for i, errors in enumerate(table.column("t1_errors").to_pylist()) if errors)
     set_cell(path, "t1_errors", row, None)  # "no Task 1 prediction" instead of a prediction
@@ -457,14 +457,14 @@ def test_round_trip_catches_an_error_span_turned_into_none(out, mini_grand, expe
 
 
 def test_the_order_of_rows_does_not_matter(out, mini_grand, expected_mini):
-    for pattern in ("data/submissions/test-task1-*.parquet", "data/baselines/*-alt.parquet"):
+    for pattern in ("data/submissions/evaluation-task1-*.parquet", "data/baselines/*-alt.parquet"):
         path = first_file(out, pattern)
         rewrite(path, lambda t: t.take(list(reversed(range(t.num_rows)))))
     assert validate(out, mini_grand, expected_mini) == []
 
 
 def test_a_dropped_row_is_reported_as_a_count_and_as_a_lost_system(out, mini_grand, expected_mini):
-    path = first_file(out, "data/submissions/test-task2-*.parquet")
+    path = first_file(out, "data/submissions/evaluation-task2-*.parquet")
     rewrite(path, lambda t: t.slice(1))
     failures = validate(out, mini_grand, expected_mini)
     assert any(f.startswith("submissions") for f in failures)
@@ -472,14 +472,14 @@ def test_a_dropped_row_is_reported_as_a_count_and_as_a_lost_system(out, mini_gra
 
 
 def test_a_duplicated_row_is_reported(out, mini_grand, expected_mini):
-    path = first_file(out, "data/submissions/test-task2-*.parquet")
+    path = first_file(out, "data/submissions/evaluation-task2-*.parquet")
     rewrite(path, lambda t: pa.concat_tables([t, t.slice(0, 1)]))
     failures = validate(out, mini_grand, expected_mini)
     assert any(path.name in f for f in failures), failures
 
 
 def test_rows_for_an_item_the_run_does_not_cover_are_reported(out, mini_grand, expected_mini):
-    path = first_file(out, "data/submissions/test-task2-*.parquet")
+    path = first_file(out, "data/submissions/evaluation-task2-*.parquet")
 
     def change(table):
         extra = set_values(table.slice(0, 1), "item_id", ["not_an_item"])
@@ -491,7 +491,7 @@ def test_rows_for_an_item_the_run_does_not_cover_are_reported(out, mini_grand, e
 
 
 def test_an_item_without_rows_is_reported(out, mini_grand, expected_mini):
-    path = first_file(out, "data/submissions/test-task2-*.parquet")
+    path = first_file(out, "data/submissions/evaluation-task2-*.parquet")
     table = pq.read_table(path)
     item_id = table.column("item_id")[0].as_py()
     rewrite(path, lambda t: t.filter(pc.not_equal(t.column("item_id"), item_id)))
@@ -507,8 +507,8 @@ def test_a_missing_run_file_is_reported(out, mini_grand, expected_mini):
 
 
 def test_a_file_that_belongs_to_no_run_is_reported(out, mini_grand, expected_mini):
-    source = first_file(out, "data/submissions/test-task2-*.parquet")
-    stray = source.with_name("test-task2-999999.parquet")
+    source = first_file(out, "data/submissions/evaluation-task2-*.parquet")
+    stray = source.with_name("evaluation-task2-999999.parquet")
     shutil.copy(source, stray)
     failures = validate(out, mini_grand, expected_mini)
     assert any(stray.name in f for f in failures), failures
@@ -517,8 +517,8 @@ def test_a_file_that_belongs_to_no_run_is_reported(out, mini_grand, expected_min
 @pytest.mark.parametrize(
     ("pattern", "column"),
     [
-        ("data/submissions/test-task2-*.parquet", "run_id"),
-        ("data/submissions/test-task2-*.parquet", "task"),
+        ("data/submissions/evaluation-task2-*.parquet", "run_id"),
+        ("data/submissions/evaluation-task2-*.parquet", "task"),
         ("data/baselines/*-official.parquet", "variant"),
         ("data/baselines/*-alt.parquet", "variant"),
     ],
@@ -541,7 +541,7 @@ def test_an_alt_run_holds_task_1_only(out, mini_grand, expected_mini):
 def test_failures_per_run_are_capped(out, mini_grand, expected_mini):
     path = next(
         p
-        for p in sorted(out.glob("data/submissions/test-task2-*.parquet"))
+        for p in sorted(out.glob("data/submissions/evaluation-task2-*.parquet"))
         if len(set(pq.read_table(p, columns=["item_id"]).column(0).to_pylist()))
         > MAX_ITEM_FAILURES + 1
     )
@@ -581,7 +581,7 @@ def test_a_directory_in_place_of_the_card_is_missing_too(out):
 
 # --- the text round trip of items and pairs ------------------------------------------------------
 
-ITEMS = "data/items/test-00000.parquet"
+ITEMS = "data/items/evaluation-00000.parquet"
 ITEM_TEXT_COLUMNS = ["src", "ref_text", "asr", "video_path", "screenshot_path", "n_systems"]
 PAIR_TEXT_COLUMNS = ["src", "hyp", "ref_text"]
 
@@ -747,7 +747,7 @@ def test_the_keys_of_a_clean_build_are_all_present(out):
 @pytest.mark.parametrize(
     "pattern",
     [
-        "data/submissions/test-task2-*.parquet",
+        "data/submissions/evaluation-task2-*.parquet",
         "data/baselines/*-official.parquet",
         "data/baselines/*-alt.parquet",
     ],
@@ -764,14 +764,14 @@ def test_a_prediction_for_a_pair_that_does_not_exist_is_reported(out, pattern):
 
 
 def test_a_prediction_for_an_item_that_does_not_exist_is_reported(out):
-    path = first_file(out, "data/submissions/test-task1-*.parquet")
+    path = first_file(out, "data/submissions/evaluation-task1-*.parquet")
     set_cell(path, "item_id", 0, "not_an_item")
     failures = gates.check_keys(out)
     assert len(failures) == 1 and "not_an_item" in failures[0], failures
 
 
 @pytest.mark.parametrize(
-    "pattern", ["data/submissions/test-task3-*.parquet", "data/baselines/*-alt.parquet"]
+    "pattern", ["data/submissions/evaluation-task3-*.parquet", "data/baselines/*-alt.parquet"]
 )
 def test_a_run_id_that_systems_does_not_have_is_reported(out, pattern):
     path = first_file(out, pattern)
@@ -782,14 +782,14 @@ def test_a_run_id_that_systems_does_not_have_is_reported(out, pattern):
 
 
 def test_the_key_failures_of_a_file_are_capped(out):
-    path = first_file(out, "data/submissions/test-task2-*.parquet")
+    path = first_file(out, "data/submissions/evaluation-task2-*.parquet")
     rewrite(path, lambda t: set_values(t, "system", ["No Such System"] * t.num_rows))
     failures = [f for f in gates.check_keys(out) if path.name in f]
     assert len(failures) == MAX_ITEM_FAILURES + 1 and "more" in failures[-1]
 
 
 def test_the_key_gate_skips_a_file_whose_columns_the_schema_gate_reports(out, mini_grand):
-    path = first_file(out, "data/submissions/test-task2-*.parquet")
+    path = first_file(out, "data/submissions/evaluation-task2-*.parquet")
     rewrite(path, lambda t: t.drop_columns(["system"]))
     assert gates.check_keys(out) == []
     assert any(path.name in f for f in validate(out, mini_grand, {"rows": {}}))
@@ -846,7 +846,7 @@ def test_a_changed_alt_score_is_reported(mini_grand, mini_grand_path, tmp_path):
     edit_grand(mini_grand_path, tmp_path / "g.parquet", alt.column, row, change)
     failures = gates.check_alt_task2(Grand(tmp_path / "g.parquet", expected_sha256=None))
     assert len(failures) == 1, failures
-    assert f"test-{alt.run_id}-alt.parquet" in failures[0] and "Task 2" in failures[0]
+    assert f"evaluation-{alt.run_id}-alt.parquet" in failures[0] and "Task 2" in failures[0]
     item_id = pq.read_table(mini_grand_path, columns=["item_id"]).column(0)[row].as_py()
     assert item_id in failures[0]
 
@@ -976,12 +976,19 @@ def test_the_expected_full_file_has_every_config(repo_root, expected_full):
 # --- check_loading.py (the datasets calls themselves run in Task 12's matrix) ---------------------
 
 
+def test_the_loading_check_uses_the_release_split(repo_root):
+    # The script runs outside the package (uv run --no-project), so it keeps its own copy.
+    assert load_script(repo_root, "check_loading").SPLIT == SPLIT
+
+
 def readme_with(configs: list[str]) -> str:
     """A README whose YAML front matter lists ``configs``, each loading its Parquet files."""
     entries = []
     for config in configs:
         path = "wmt26-grand.parquet" if config == "grand" else f"data/{config}/*.parquet"
-        entries.append(f"- config_name: {config}\n  data_files:\n  - split: test\n    path: {path}")
+        entries.append(
+            f"- config_name: {config}\n  data_files:\n  - split: evaluation\n    path: {path}"
+        )
     return "---\nconfigs:\n" + "\n".join(entries) + "\n---\n\n# WMT26 MT evaluation\n"
 
 
@@ -1080,7 +1087,7 @@ def test_check_loading_prints_one_line_per_config(
     names = [*DATA_CONFIGS, "grand"]
     assert capsys.readouterr().out.splitlines() == [f"OK 5.1.0 {name} 7" for name in names]
     assert [(c["name"], c["split"], c["readme"], c["grand"]) for c in fake.calls] == [
-        (name, "test", True, True) for name in names
+        (name, "evaluation", True, True) for name in names
     ]
     for call in fake.calls:  # a scratch cache beside the staging directory, both gone afterwards
         assert Path(call["cache_dir"]).parent == call["path"].parent

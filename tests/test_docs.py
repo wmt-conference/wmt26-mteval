@@ -16,7 +16,7 @@ import pyarrow.parquet as pq
 import pytest
 import yaml
 
-from wmt26_mteval.build import build_all
+from wmt26_mteval.build import SPLIT, build_all
 from wmt26_mteval.cards import EMAIL_RE
 from wmt26_mteval.dataset_card import (
     CONFIG_GUIDE,
@@ -146,9 +146,25 @@ def test_card_yaml(tmp_path, mini_grand_path, repo_root):
         "challenge_sets",
         "grand",
     }
-    assert all(c["data_files"][0]["split"] == "test" for c in cfg.values())
+    assert all(c["data_files"][0]["split"] == "evaluation" for c in cfg.values())
     assert cfg["grand"]["data_files"][0]["path"] == "wmt26-grand.parquet"
     assert cfg["pairs"].get("default") is True
+    for name, c in cfg.items():
+        if name != "grand":
+            assert c["data_files"][0]["path"] == f"data/{name}/{SPLIT}-*.parquet", name
+
+
+def test_the_split_is_the_organisers_evaluation_split(tmp_path, mini_grand_path, repo_root):
+    # The organisers' grand file names its split "evaluation" (wmt26_intended_split), and the
+    # first card on the Hub did too; every config and every shard uses that name.
+    assert SPLIT == "evaluation"
+    manifest = build_all(mini_grand_path, repo_root, tmp_path, expected_sha256=None)
+    for config, info in manifest["configs"].items():
+        for f in info["files"]:
+            assert Path(f["path"]).name.startswith(f"{SPLIT}-"), (config, f["path"])
+    card = (tmp_path / "README.md").read_text(encoding="utf-8")
+    assert "not partitioned into train/test sets" in " ".join(card.split())
+    assert 'split="test"' not in card and "split: test" not in card
 
 
 def test_card_mentions_datasets_floor_for_grand(tmp_path, mini_grand_path, repo_root):
@@ -181,7 +197,9 @@ def test_card_languages_cover_the_data_with_iso_639_3_codes(card, built):
     languages = front_matter(card)["language"]
     assert languages == sorted(set(languages)) == manifest["stats"]["languages"]
     assert all(re.fullmatch(r"[a-z]{3}", code) for code in languages)
-    items = pq.read_table(out / "data/items/test-00000.parquet", columns=["src_lang", "tgt_lang"])
+    items = pq.read_table(
+        out / "data/items/evaluation-00000.parquet", columns=["src_lang", "tgt_lang"]
+    )
     in_data = {
         code[:3] for column in items.column_names for code in items.column(column).to_pylist()
     }
@@ -225,7 +243,7 @@ def test_card_states_the_facts_a_user_must_know(card):
         "`Cohere CAT+`",
         "outside 0-100",
         "datasets>=4.7.0",
-        'load_dataset("wmt/wmt26-mteval-data", "pairs", split="test")',
+        'load_dataset("wmt/wmt26-mteval-data", "pairs", split="evaluation")',
         "duckdb",
     ):
         assert fragment in text, fragment
@@ -274,7 +292,7 @@ def test_challenge_set_reference_semantics_follow_the_data(repo_root):
 
 def test_none_is_exactly_the_items_without_a_reference_text(built):
     out, _ = built
-    items = pq.read_table(out / "data/items/test-00000.parquet").to_pylist()
+    items = pq.read_table(out / "data/items/evaluation-00000.parquet").to_pylist()
     assert {r["ref_type"] for r in items} >= {"none", "unknown"}  # the mini grand has both
     for r in items:
         assert (r["ref_type"] == "none") == (r["ref_text"] is None), r["item_id"]
@@ -1025,7 +1043,7 @@ def test_the_readme_gives_the_contact_the_commands_and_the_layout(repo_root):
     assert text.count(ORGANISERS) == 1
     for fragment in (
         "wmt/wmt26-mteval-data",
-        'load_dataset("wmt/wmt26-mteval-data", "pairs", split="test")',
+        'load_dataset("wmt/wmt26-mteval-data", "pairs", split="evaluation")',
         "scripts/build_hf.py",
         "scripts/validate_hf.py",
         "scripts/check_loading.py",
@@ -1219,7 +1237,7 @@ def test_citation_cff_names_the_findings_paper(repo_root):
 @pytest.mark.fulldata
 def test_the_real_reference_types_follow_ruling_r23(full_out):
     items = pq.read_table(
-        full_out / "data/items/test-00000.parquet",
+        full_out / "data/items/evaluation-00000.parquet",
         columns=["challenge_set", "collection", "lp", "ref_type", "ref_type_orig", "ref_text"],
     ).to_pylist()
     for r in items:

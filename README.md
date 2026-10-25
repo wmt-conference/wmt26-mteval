@@ -19,12 +19,13 @@ v1.0. The release date is in [`docs/CHANGELOG.md`](docs/CHANGELOG.md) and the re
 ## Data on Hugging Face
 
 The dataset is [`wmt/wmt26-mteval-data`](https://huggingface.co/datasets/wmt/wmt26-mteval-data).
-Every config has one split, named `test`, and the typed configs load with `datasets>=2.18`:
+Every config has one split, named `evaluation` (the data is one evaluation set, not partitioned
+into train/test sets), and the typed configs load with `datasets>=2.18`:
 
 ```python
 from datasets import load_dataset
 
-pairs = load_dataset("wmt/wmt26-mteval-data", "pairs", split="test")
+pairs = load_dataset("wmt/wmt26-mteval-data", "pairs", split="evaluation")
 ```
 
 | config | one row per |

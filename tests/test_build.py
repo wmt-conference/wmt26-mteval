@@ -65,23 +65,23 @@ def test_layout_follows_the_naming_scheme(built, mini_grand_path, mini_pairs):
     out, manifest = built
     runs = list_runs(Grand(mini_grand_path, expected_sha256=None))
     expected = {
-        "items": ["data/items/test-00000.parquet"],
+        "items": ["data/items/evaluation-00000.parquet"],
         "pairs": sorted(
-            f"data/pairs/test-{lp}.parquet" for lp in set(mini_pairs.column("lp").to_pylist())
+            f"data/pairs/evaluation-{lp}.parquet" for lp in set(mini_pairs.column("lp").to_pylist())
         ),
         "submissions": sorted(
-            f"data/submissions/test-{r.task}-{r.run_id}.parquet"
+            f"data/submissions/evaluation-{r.task}-{r.run_id}.parquet"
             for r in runs
             if r.kind == "submission"
         ),
         "baselines": sorted(
-            f"data/baselines/test-{r.run_id}-{r.variant}.parquet"
+            f"data/baselines/evaluation-{r.run_id}-{r.variant}.parquet"
             for r in runs
             if r.kind == "baseline"
         ),
-        "systems": ["data/systems/test-00000.parquet"],
-        "mt_systems": ["data/mt_systems/test-00000.parquet"],
-        "challenge_sets": ["data/challenge_sets/test-00000.parquet"],
+        "systems": ["data/systems/evaluation-00000.parquet"],
+        "mt_systems": ["data/mt_systems/evaluation-00000.parquet"],
+        "challenge_sets": ["data/challenge_sets/evaluation-00000.parquet"],
     }
     assert _paths(manifest) == expected
     on_disk = {p.relative_to(out).as_posix() for p in out.rglob("*") if p.is_file()}
@@ -121,7 +121,7 @@ def test_pairs_have_one_file_per_language_pair_in_order(built, mini_pairs):
     for entry in manifest["configs"]["pairs"]["files"]:
         table = pq.read_table(out / entry["path"])
         lps = set(table.column("lp").to_pylist())
-        assert [entry["path"]] == [f"data/pairs/test-{lp}.parquet" for lp in lps]
+        assert [entry["path"]] == [f"data/pairs/evaluation-{lp}.parquet" for lp in lps]
         keys = list(zip(table.column("item_id").to_pylist(), table.column("system").to_pylist()))
         assert keys == sorted(keys)
         parts.append(table)
@@ -132,11 +132,11 @@ def test_pairs_have_one_file_per_language_pair_in_order(built, mini_pairs):
 
 def test_metadata_configs_equal_their_builders(built, mini_pairs, mini_systems):
     out, manifest = built
-    systems = pq.read_table(out / "data/systems/test-00000.parquet")
+    systems = pq.read_table(out / "data/systems/evaluation-00000.parquet")
     assert systems.equals(mini_systems)
-    mt_systems = pq.read_table(out / "data/mt_systems/test-00000.parquet")
+    mt_systems = pq.read_table(out / "data/mt_systems/evaluation-00000.parquet")
     assert mt_systems.column("system").to_pylist() == sorted(set(mini_pairs["system"].to_pylist()))
-    challenge_sets = pq.read_table(out / "data/challenge_sets/test-00000.parquet")
+    challenge_sets = pq.read_table(out / "data/challenge_sets/evaluation-00000.parquet")
     assert challenge_sets.num_rows == 7
 
 
@@ -203,7 +203,7 @@ def test_an_empty_output_directory_is_accepted(tmp_path, mini_grand_path, repo_r
 
 
 def test_a_non_empty_output_directory_is_refused(tmp_path, mini_grand_path, repo_root):
-    stale = tmp_path / "data" / "pairs" / "test-old.parquet"
+    stale = tmp_path / "data" / "pairs" / "evaluation-old.parquet"
     stale.parent.mkdir(parents=True)
     stale.write_bytes(b"stale shard")
     with pytest.raises(FileExistsError, match=str(tmp_path)):

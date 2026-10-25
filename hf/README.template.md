@@ -14,36 +14,36 @@ tags:
 configs:
 - config_name: items
   data_files:
-  - split: test
-    path: data/items/test-*.parquet
+  - split: evaluation
+    path: data/items/evaluation-*.parquet
 - config_name: pairs
   default: true
   data_files:
-  - split: test
-    path: data/pairs/test-*.parquet
+  - split: evaluation
+    path: data/pairs/evaluation-*.parquet
 - config_name: submissions
   data_files:
-  - split: test
-    path: data/submissions/test-*.parquet
+  - split: evaluation
+    path: data/submissions/evaluation-*.parquet
 - config_name: baselines
   data_files:
-  - split: test
-    path: data/baselines/test-*.parquet
+  - split: evaluation
+    path: data/baselines/evaluation-*.parquet
 - config_name: systems
   data_files:
-  - split: test
-    path: data/systems/test-*.parquet
+  - split: evaluation
+    path: data/systems/evaluation-*.parquet
 - config_name: mt_systems
   data_files:
-  - split: test
-    path: data/mt_systems/test-*.parquet
+  - split: evaluation
+    path: data/mt_systems/evaluation-*.parquet
 - config_name: challenge_sets
   data_files:
-  - split: test
-    path: data/challenge_sets/test-*.parquet
+  - split: evaluation
+    path: data/challenge_sets/evaluation-*.parquet
 - config_name: grand
   data_files:
-  - split: test
+  - split: evaluation
     path: wmt26-grand.parquet
 ---
 
@@ -91,12 +91,13 @@ This is **v0.9**: typed data configs and documentation.
 
 ## Quick start
 
-Every typed config has one split, named `test`, and loads with `datasets>=2.18`:
+Every config has one split, named `evaluation`: this is one evaluation set, not partitioned into
+train/test sets. The typed configs load with `datasets>=2.18`:
 
 ```python
 from datasets import load_dataset
 
-pairs = load_dataset("wmt/wmt26-mteval-data", "pairs", split="test")
+pairs = load_dataset("wmt/wmt26-mteval-data", "pairs", split="evaluation")
 print(pairs[0]["lp"], pairs[0]["src"], pairs[0]["hyp"], sep="\n")
 ```
 
@@ -104,9 +105,9 @@ print(pairs[0]["lp"], pairs[0]["src"], pairs[0]["hyp"], sep="\n")
 and {{n_baseline_rows}} rows), so you may prefer to stream them or to download one config:
 
 ```python
-subs = load_dataset("wmt/wmt26-mteval-data", "submissions", split="test", streaming=True)
+subs = load_dataset("wmt/wmt26-mteval-data", "submissions", split="evaluation", streaming=True)
 
-base = load_dataset("wmt/wmt26-mteval-data", "baselines", split="test", streaming=True)
+base = load_dataset("wmt/wmt26-mteval-data", "baselines", split="evaluation", streaming=True)
 # `baselines` also holds the original, pre-deduplication snapshot (`alt`); see Warnings
 base = base.filter(lambda row: row["variant"] == "official")
 ```
@@ -136,7 +137,7 @@ those as dicts from version 4.7.0 on (`pip install "datasets>=4.7.0"`); older ve
 load this config, but they load the seven typed configs:
 
 ```python
-grand = load_dataset("wmt/wmt26-mteval-data", "grand", split="test")
+grand = load_dataset("wmt/wmt26-mteval-data", "grand", split="evaluation")
 ```
 
 ## Configs

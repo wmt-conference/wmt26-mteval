@@ -13,7 +13,7 @@ Hub.  The links are hard links, because ``datasets`` 2.18.0 does not see symlink
 hard link is impossible (another file system) the file is copied instead.  Set TMPDIR to a
 directory on the file system of OUT and GRAND to avoid copies.
 
-Then it loads the ``test`` split of every config listed in the README, the ``grand`` config
+Then it loads the ``evaluation`` split of every config listed in the README, the ``grand`` config
 included, and prints one line each: ``OK VERSION CONFIG ROWS`` or ``FAIL VERSION CONFIG
 ExceptionType: message``.  The seven data configs must all be listed in the README: one that is
 not gets ``FAIL VERSION CONFIG missing from README``.  The script exits 0 if every config except
@@ -35,6 +35,8 @@ from pathlib import Path
 import yaml
 
 GRAND_NAME = "wmt26-grand.parquet"
+# The one split of every config (``wmt26_mteval.build.SPLIT``; a test checks the copy).
+SPLIT = "evaluation"
 # The data configs that the README must list (``grand`` is optional).  This script does not import
 # wmt26_mteval, so the names are repeated here; a test checks them against ``schemas.SCHEMAS``.
 REQUIRED_CONFIGS = (
@@ -126,7 +128,7 @@ def main(argv: list[str] | None = None) -> int:
         for name in names:
             try:
                 dataset = datasets.load_dataset(
-                    str(staging), name=name, split="test", cache_dir=str(cache)
+                    str(staging), name=name, split=SPLIT, cache_dir=str(cache)
                 )
                 print(f"OK {args.version} {name} {len(dataset)}", flush=True)
             except Exception as error:  # any failure to load is a result to report

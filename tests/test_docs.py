@@ -391,6 +391,15 @@ def test_card_cites_the_findings_paper_and_each_related_work(card, repo_root):
     ]
 
 
+def test_the_card_links_the_pseudo_reference_paper_on_arxiv(card):
+    # The Hub links a dataset to the arXiv papers its card points to.
+    link = "The pipeline that built the pseudo-references (<https://arxiv.org/abs/2609.13611>):"
+    assert link in card
+    entry = card.split("@inproceedings{kanojia2026blind,")[1].split("\n}\n")[0]
+    assert "eprint = {2609.13611}" in entry
+    assert "archiveprefix = {arXiv}" in entry
+
+
 def test_card_is_deterministic(built, repo_root):
     _, manifest = built
     template = repo_root / "hf" / "README.template.md"

@@ -365,7 +365,7 @@ The contrastive error span annotation protocol (cESA) of the human evaluation:
 }
 ```
 
-The pipeline that built the pseudo-references:
+The pipeline that built the pseudo-references (<https://arxiv.org/abs/2609.13611>):
 
 ```bibtex
 @inproceedings{kanojia2026blind,
@@ -373,7 +373,9 @@ The pipeline that built the pseudo-references:
   author = {Kanojia, Diptesh and Lo, Chi-kiu and Sindhujan, Archchana and Larkin, Samuel and Hanneman, Greg and Lavie, Alon},
   booktitle = {Proceedings of the Eleventh Conference on Machine Translation},
   year = {2026},
-  publisher = {Association for Computational Linguistics}
+  publisher = {Association for Computational Linguistics},
+  eprint = {2609.13611},
+  archiveprefix = {arXiv}
 }
 ```
 

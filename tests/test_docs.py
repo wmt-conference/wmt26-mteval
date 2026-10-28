@@ -779,6 +779,14 @@ def test_the_errata_and_card_name_the_tables_that_can_decide_the_snapshot(repo_r
     assert "pre_dedup_pre_enhy_fix" in card
 
 
+def test_the_card_names_the_results_that_need_the_grand_only_snapshot(repo_root):
+    # Table 9's "[no dedup]" rows and Task 3's converted baselines use it, not `alt`.
+    card = squash(fake_card(repo_root))
+    assert 'the "[no dedup]" rows of Table 9' in card
+    assert "the organiser baselines converted for Task 3 (Tables 10-13 and 65-85)" in card
+    assert "read that snapshot from `grand`" in card
+
+
 def test_the_card_and_errata_warn_about_the_incomplete_xhigh_baseline(repo_root):
     card = squash(fake_card(repo_root))
     assert "The GPT-5.6 Sol baseline at xHigh reasoning is incomplete." in card

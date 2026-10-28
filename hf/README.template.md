@@ -157,6 +157,10 @@ grand = load_dataset("wmt/wmt26-mteval-data", "grand", split="evaluation")
   error spans can tell the two snapshots apart (Tables 4-7 and 16-36 of the findings paper), and
   Table 6, which needs no human annotation, already fits the deduplicated snapshot: its errors per
   prediction for the Qwen 3.6 baselines match the deduplicated predictions, not the original ones.
+  The organisers' code computes some results in the paper from the `pre_dedup_pre_enhy_fix`
+  snapshot instead: the "[no dedup]" rows of Table 9 and the organiser baselines converted for
+  Task 3 (Tables 10-13 and 65-85). To reproduce these, read that snapshot from `grand`; from `alt`,
+  six of the ten "[no dedup]" rows of Table 9 come out differently.
 - A run may cover only some items, and then has no rows for the others; `systems.n_items`, `lps`
   and `covers_all_priority` say what it covers.
 - `systems` holds allow-listed model-card answers only: a fixed list of fields was copied, and

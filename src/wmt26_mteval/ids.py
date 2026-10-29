@@ -87,7 +87,7 @@ def map_ref_type(ref: dict | None) -> tuple[str, str | None]:
     ``ref_type`` is ``native``, ``postedit`` or ``pseudo`` for the three recorded types, and
     ``none`` exactly when the item has no reference text: the ref is absent, or its text is null
     and its type is null or ``"undefined"``.  A reference text whose type is not recorded (type
-    ``"undefined"`` or null) is ``unknown`` (Ruling R23).  ``ref_type_orig`` keeps the source
+    ``"undefined"`` or null) is ``unknown``.  ``ref_type_orig`` keeps the source
     spelling: ``None`` for an absent ref or a null type, ``"undefined"`` for the explicit marker.
     """
     if ref is None:

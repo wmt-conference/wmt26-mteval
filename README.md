@@ -40,8 +40,7 @@ pairs = load_dataset("wmt/wmt26-mteval-data", "pairs", split="evaluation")
 | `grand` | test item: the organisers' single file, unchanged (needs `datasets>=4.7.0`) |
 
 [`docs/FORMAT.md`](docs/FORMAT.md) describes every column, and the dataset card explains how to
-read the data and what to watch for. The places where the findings paper and the data differ are
-listed in [`docs/ERRATA.md`](docs/ERRATA.md). To fetch one config only:
+read the data and what to watch for. To fetch one config only:
 
 ```bash
 uv run python scripts/download.py --config pairs --out data/hf
@@ -64,7 +63,6 @@ data/
   MANIFEST.tsv                  the source files recorded in the grand file (generated)
 docs/
   FORMAT.md                     columns and conventions of every config (generated)
-  ERRATA.md                     where the findings paper and the data differ
   CHANGELOG.md  RELEASE.md      what changed, and how to release
 hf/README.template.md           the template of the dataset card
 instructions/baseline-prompts.md  the prompts of the LLM baselines (Appendix E of the paper)

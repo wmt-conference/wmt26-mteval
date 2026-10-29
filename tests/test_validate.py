@@ -1033,7 +1033,7 @@ def test_config_names_come_from_the_yaml_front_matter(repo_root):
     with pytest.raises(ValueError, match="front matter"):
         check_loading.config_names("# no front matter\n")
     with pytest.raises(ValueError, match="configs"):
-        check_loading.config_names("---\nlicense: cc\n---\n")
+        check_loading.config_names("---\npretty_name: x\n---\n")
     with pytest.raises(ValueError, match="config_name"):
         check_loading.config_names("---\nconfigs:\n- data_files: x\n---\n")
 

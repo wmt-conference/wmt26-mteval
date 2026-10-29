@@ -84,7 +84,7 @@ uv run --no-project --python 3.11 --with "datasets==2.18.0" --with "pyarrow<21" 
 Stop here. Do not upload, push or post anything before Diptesh has read the result and said OK in
 writing. What to put in front of him:
 
-- the rendered card, `$OUT/README.md`, read from top to bottom, and `docs/ERRATA.md`;
+- the rendered card, `$OUT/README.md`, read from top to bottom;
 - the output of steps 2 and 3;
 - the open decisions: General MT's agreement to the use of their data and
   annotations, the agreement of whoever else has write access to the Hub repository, the links
@@ -156,7 +156,7 @@ dataset public is a separate decision.
 git push -u origin release/v0.9
 gh pr create --repo wmt-conference/wmt26-mteval --base main --head release/v0.9 \
   --title "Release v0.9: typed data configs and documentation" \
-  --body "Adds the build, validation and loading tools, the dataset card template, the generated format documents, the errata and the release guide. See docs/CHANGELOG.md."
+  --body "Adds the build, validation and loading tools, the dataset card template, the generated format documents and the release guide. See docs/CHANGELOG.md."
 ```
 
 Merge the two pull requests once both have been reviewed, then tag the merge commit `v0.9`.

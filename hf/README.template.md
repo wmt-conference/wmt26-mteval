@@ -151,16 +151,8 @@ grand = load_dataset("wmt/wmt26-mteval-data", "grand", split="evaluation")
   deduplication) and the segment-level metric baselines, which have a single snapshot. `alt` is
   the original, not deduplicated snapshot of the LLM baselines, with Task 1 columns only. An
   earlier snapshot, which the organisers label `pre_dedup_pre_enhy_fix`, is in the `grand` config
-  only. The `official` label is provisional: Section 4.2 of the findings paper describes
-  deduplication as part of how the baselines were made, so the deduplicated snapshot is `official`
-  for now. It will be checked against the paper in v1.0. Only the results computed from the
-  error spans can tell the two snapshots apart (Tables 4-7 and 16-36 of the findings paper), and
-  Table 6, which needs no human annotation, already fits the deduplicated snapshot: its errors per
-  prediction for the Qwen 3.6 baselines match the deduplicated predictions, not the original ones.
-  The organisers' code computes some results in the paper from the `pre_dedup_pre_enhy_fix`
-  snapshot instead: the "[no dedup]" rows of Table 9 and the organiser baselines converted for
-  Task 3 (Tables 10-13 and 65-85). To reproduce these, read that snapshot from `grand`; from `alt`,
-  six of the ten "[no dedup]" rows of Table 9 come out differently.
+  only. The organisers' code reads it from `grand` for the "[no dedup]" rows of Table 9 and the
+  organiser baselines converted for Task 3 (Tables 10-13 and 65-85).
 - A run may cover only some items, and then has no rows for the others; `systems.n_items`, `lps`
   and `covers_all_priority` say what it covers.
 - `systems` holds allow-listed model-card answers only: a fixed list of fields was copied, and
@@ -253,15 +245,6 @@ and the descriptions are stored in the schema of every Parquet file.
 
 {{field_tables}}
 
-## Known issues and errata
-
-The findings paper and the data differ in a few places, such as the number of official pairs, the
-number of translations per source, the deduplication rule of the baselines and the item counts of
-two challenge sets. They are listed, with the figures on both sides, in
-[`docs/ERRATA.md`](https://github.com/wmt-conference/wmt26-mteval/blob/main/docs/ERRATA.md).
-The release process is in
-[`docs/RELEASE.md`](https://github.com/wmt-conference/wmt26-mteval/blob/main/docs/RELEASE.md).
-
 ## Personal data
 
 - The model cards of the participants ask for contact details and for consent. `systems` is built
@@ -304,7 +287,8 @@ scrubbed model cards, the list of priority pairs, and the curated tables of name
 and challenge sets that follow the findings paper. `build_manifest.json` lists the sha256 and the
 rows of every Parquet file, and the GitHub repository lists the source files in
 `data/MANIFEST.tsv`. The code that builds and checks this repository is at
-<https://github.com/wmt-conference/wmt26-mteval>.
+<https://github.com/wmt-conference/wmt26-mteval>; the release process is in
+[`docs/RELEASE.md`](https://github.com/wmt-conference/wmt26-mteval/blob/main/docs/RELEASE.md).
 
 ## Citation
 

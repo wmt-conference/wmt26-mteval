@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "task2_participant": {
+    "869552": "Llama 3.3 70B",
+    "870257": "Gemma 3 1B IT",
+    "870554": "Gemma 3 1B IT",
+    "871298": "XLM-RoBERTa-large; mT5-large",
+    "871400": "Not specified (27B)",
+    "871401": "Not specified (27B)",
+    "872013": "XLM-RoBERTa-large",
+    "872030": "XLM-RoBERTa-large",
+    "872032": "Gemini 3.5 Flash; Gemma 4 12B",
+    "872033": "Gemini 3.5 Flash; Gemma 4 12B; Gemma 4 31B IT",
+    "873001": "XLM-RoBERTa-large",
+    "876039": "Gemma 4 31B IT",
+    "876059": "Gemma 4 31B IT",
+    "876271": "Command A+"
+  },
+  "task3_direct": {
+    "871721": "Qwen/Qwen3.6-27B",
+    "874374": "Tower-Babel/Babel-83B-Chat"
+  }
+}

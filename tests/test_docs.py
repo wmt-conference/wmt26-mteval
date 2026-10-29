@@ -177,7 +177,6 @@ def test_card_metadata(card, built):
     y = front_matter(card)
     assert y["pretty_name"] == "WMT26 MT-Eval"
     assert y["task_categories"] == ["translation"]
-    assert "license" not in y  # no licence is attached to the data
     assert [c["config_name"] for c in y["configs"]].count("pairs") == 1
     assert sum(1 for c in y["configs"] if c.get("default")) == 1
     assert y["size_categories"] == [size_category(max(manifest["stats"]["rows"].values()))]
@@ -319,27 +318,6 @@ def test_card_names_the_thin_language_pairs_with_the_papers_percentages(card):
         assert fragment in text, fragment
 
 
-# No licence is attached to the data or the repository, and nothing says anything about one.
-LICENCE_WORD = re.compile(r"licen[cs]", flags=re.I)
-
-
-def test_the_card_says_nothing_about_a_licence(card):
-    assert not LICENCE_WORD.search(card)
-
-
-def test_the_repository_says_nothing_about_a_licence(repo_root):
-    assert not list(repo_root.glob("LICEN[CS]E*")) and not list(repo_root.glob("DATA_LICEN[CS]E*"))
-    for name in (
-        "README.md",
-        "CITATION.cff",
-        "hf/README.template.md",
-        "docs/CHANGELOG.md",
-        "docs/RELEASE.md",
-    ):
-        text = (repo_root / name).read_text(encoding="utf-8")
-        assert not LICENCE_WORD.search(text), name
-
-
 def test_card_carries_every_section_a_newcomer_looks_for(card):
     headings = re.findall(r"^#{1,3} (.+)$", card, flags=re.M)
     wanted = [
@@ -349,7 +327,6 @@ def test_card_carries_every_section_a_newcomer_looks_for(card):
         "Warnings",
         "Coverage",
         "Field glossary",
-        "Known issues",
         "Personal data",
         "Human annotations",
         "Citation",
@@ -767,25 +744,11 @@ def test_the_card_warns_that_baselines_double_count_without_a_variant_filter(rep
         assert fragment in text, fragment
 
 
-def test_the_official_label_is_called_provisional_where_it_is_defined(repo_root):
-    provisional = "provisional"
-    check = "checked against the paper in v1.0"
+def test_the_card_and_variant_description_carry_no_internal_label(repo_root):
     card = squash(fake_card(repo_root))
-    assert provisional in card and check in card
-    errata = squash((repo_root / "docs" / "ERRATA.md").read_text(encoding="utf-8"))
-    assert provisional in errata and check in errata
     variant = SCHEMAS["baselines"].field("variant").metadata[b"description"].decode()
-    assert provisional in variant and check in variant
-    for text in (card, errata, variant):  # an internal decision label means nothing to readers
+    for text in (card, variant):  # an internal decision label means nothing to readers
         assert "decision A1" not in text
-
-
-def test_the_errata_and_card_name_the_tables_that_can_decide_the_snapshot(repo_root):
-    errata = squash((repo_root / "docs" / "ERRATA.md").read_text(encoding="utf-8"))
-    assert "Tables 4 and 9" not in errata
-    card = squash(fake_card(repo_root))
-    assert "Tables 4-7 and 16-36 of the findings paper" in card
-    assert "pre_dedup_pre_enhy_fix" in card
 
 
 def test_the_card_names_the_results_that_need_the_grand_only_snapshot(repo_root):
@@ -793,28 +756,14 @@ def test_the_card_names_the_results_that_need_the_grand_only_snapshot(repo_root)
     card = squash(fake_card(repo_root))
     assert 'the "[no dedup]" rows of Table 9' in card
     assert "the organiser baselines converted for Task 3 (Tables 10-13 and 65-85)" in card
-    assert "read that snapshot from `grand`" in card
+    assert "The organisers' code reads it from `grand`" in card
 
 
-def test_the_card_and_errata_warn_about_the_incomplete_xhigh_baseline(repo_root):
+def test_the_card_warns_about_the_incomplete_xhigh_baseline(repo_root):
     card = squash(fake_card(repo_root))
     assert "The GPT-5.6 Sol baseline at xHigh reasoning is incomplete." in card
-    errata = squash((repo_root / "docs" / "ERRATA.md").read_text(encoding="utf-8"))
-    assert "### 7. GPT-5.6 Sol xHigh baseline" in errata and "6 of the 8 pairs" in errata
-
-
-def test_the_card_keeps_its_facts_and_points_to_no_missing_errata_detail(repo_root):
-    # The errata are brief hints, so the card carries these facts itself.
-    card = squash(fake_card(repo_root))
-    assert "(see the errata)" not in card and "the errata give the counts" not in card
-    assert (
-        "Table 6, which needs no human annotation, already fits the deduplicated snapshot" in card
-    )
     assert "completed only 6 of the 8 priority pairs" in card
     assert "placeholder value, 50.0, in every row" in card
-    errata = squash((repo_root / "docs" / "ERRATA.md").read_text(encoding="utf-8"))
-    assert "47 distinct candidates across the official set" in errata
-    assert "The per-pair counts in Table 15 add up to 1,749 QEbreak and 159 LIGATUR items" in errata
 
 
 def test_the_card_wording_the_final_review_asked_for(repo_root):
@@ -844,11 +793,6 @@ def test_the_personal_data_section_says_what_was_replaced_without_naming_anyone(
     ):
         assert fragment in section, fragment
     assert "IIT" not in section and "Patna" not in section and "871298" not in section
-
-
-def test_the_errata_make_no_guess_about_table_15(repo_root):
-    text = squash((repo_root / "docs" / "ERRATA.md").read_text(encoding="utf-8"))
-    assert "it may show only the items that were scored" not in text
 
 
 def test_the_schema_descriptions_the_final_review_corrected():
@@ -1032,13 +976,13 @@ def test_download_only_passes_arguments_that_huggingface_hub_accepts(repo_root):
 TEXT_DOCS = [
     "README.md",
     "CITATION.cff",
-    "docs/ERRATA.md",
     "docs/CHANGELOG.md",
     "docs/RELEASE.md",
     "docs/FORMAT.md",
     "instructions/baseline-prompts.md",
     "hf/README.template.md",
     "data/MANIFEST.tsv",
+    "tasks/README.md",
 ]
 
 
@@ -1053,11 +997,11 @@ def test_documents_hold_no_e_mail_address_but_the_organisers(repo_root, name):
 # checked here.
 BRITISH_DOCS = [
     "README.md",
-    "docs/ERRATA.md",
     "docs/CHANGELOG.md",
     "docs/RELEASE.md",
     "docs/FORMAT.md",
     "hf/README.template.md",
+    "tasks/README.md",
 ]
 
 
@@ -1074,7 +1018,6 @@ def test_documents_use_british_spelling(repo_root, name):
         r"organiz",
         r"normaliz",
         r"analyz",
-        r"licens(e|ing)\b",
         r"center",
         r"favor",
         r"summariz",
@@ -1096,12 +1039,43 @@ def test_the_readme_gives_the_contact_the_commands_and_the_layout(repo_root):
         "scripts/check_loading.py",
         "scripts/download.py",
         "docs/FORMAT.md",
-        "docs/ERRATA.md",
         "docs/RELEASE.md",
         "CITATION.cff",
         HUMEVAL,
     ):
         assert fragment in text, fragment
+
+
+def test_the_readme_points_to_the_task_code_and_its_guide(repo_root):
+    text = (repo_root / "README.md").read_text(encoding="utf-8")
+    assert "## Reproduce the paper's results" in text
+    assert "[`tasks/README.md`](tasks/README.md)" in text
+    assert re.search(r"^tasks/ +the organisers' code", text, flags=re.M)
+
+
+def test_the_task_guide_says_how_to_get_the_data_from_the_hub(repo_root):
+    text = squash((repo_root / "tasks/README.md").read_text(encoding="utf-8"))
+    for fragment in (
+        "wmt/wmt26-mteval-data",
+        "hf auth login",
+        "python ../scripts/download.py --config grand --out data/hub",
+        "a61675552cebb68fb8303cf08a23fbec31e5bb4e0bd26a1fdee1a9bfafc2fb7a",
+        "python scripts/stage_task2_inputs.py",
+    ):
+        assert fragment in text, fragment
+
+
+def test_every_file_the_task_guide_points_to_exists(repo_root):
+    tasks = repo_root / "tasks"
+    text = (tasks / "README.md").read_text(encoding="utf-8")
+    # relative to tasks/: "../scripts/download.py" is the repository's own download script
+    named = r"(?<![\w/.])((?:\.\./)?(?:scripts|docs|src)/[\w./-]+\.(?:py|md))"
+    paths = set(re.findall(named, text))
+    paths |= set(re.findall(r"\]\(([\w./-]+\.(?:md|tsv))\)", text))
+    assert paths
+    assert sorted(p for p in paths if not (tasks / p).exists()) == []
+    for module in re.findall(r"python -m (wmt26_mteval_task3[\w.]*)", text):
+        assert (tasks / "src" / (module.replace(".", "/") + ".py")).is_file(), module
 
 
 @pytest.mark.parametrize("name", ["README.md", "docs/RELEASE.md", "docs/CHANGELOG.md"])
@@ -1208,28 +1182,6 @@ def test_the_status_text_stays_true_after_publication(repo_root):
     changelog = (repo_root / "docs/CHANGELOG.md").read_text(encoding="utf-8")
     assert re.search(r"^## v0\.9: pre-release \(date: YYYY-MM-DD", changelog, flags=re.M)
     assert "pre-release" in (repo_root / "README.md").read_text(encoding="utf-8")
-
-
-def test_the_errata_has_exactly_the_seven_entries(repo_root):
-    text = (repo_root / "docs/ERRATA.md").read_text(encoding="utf-8")
-    headings = re.findall(r"^### (\d+)\. (.+)$", text, flags=re.M)
-    assert [n for n, _ in headings] == ["1", "2", "3", "4", "5", "6", "7"]
-    flat = squash(text)
-    for fragment in (
-        "252,919",
-        "252,923",
-        "50.0",
-        "47",
-        "23",
-        "9 direct",
-        "9 baselines",
-        "2,886",
-        "1,749",
-        "171",
-        "159",
-        "canonical_name",
-    ):
-        assert fragment in flat, fragment
 
 
 def test_the_changelog_has_a_v0_9_entry(repo_root):

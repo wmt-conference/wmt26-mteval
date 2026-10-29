@@ -1,0 +1,38 @@
+% Import with \input{.../paper_threshold_figures.tex}.
+% Requires \usepackage{graphicx} and \usepackage{subcaption}.
+% Override this path before \input if needed.
+\providecommand{\taskThresholdFigureDir}{outputs/task3/threshold/paper_figures}
+
+\begin{figure*}[p]
+  \centering
+  \captionsetup{font=footnotesize}
+  \captionsetup[subfigure]{font=footnotesize,skip=1pt}
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=0.84\linewidth]{\taskThresholdFigureDir/paper_threshold_baselines.pdf}
+    \caption{Selected organizer baselines.}
+    \label{fig:task2-threshold-baselines}
+  \end{subfigure}
+
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=0.84\linewidth]{\taskThresholdFigureDir/paper_threshold_participants.pdf}
+    \caption{Selected participant submissions.}
+    \label{fig:task2-threshold-participants}
+  \end{subfigure}
+
+  \caption{Task~2 threshold sensitivity for selected organizer baselines (a)
+  and participant submissions (b). Rows show
+  \texttt{eng\_Latn--arz\_Arab}, \texttt{eng\_Latn--ekk\_Latn}, and
+  \texttt{zho\_Hans--jpn\_Jpan}; columns span contrasting submitted
+  precision/recall operating points. Curves give MCC
+  (blue), precision (green), and recall (orange). Curves omit only the
+  zero-true-positive high-threshold tail. Vertical red and blue dashed lines mark submitted and per-language optimal thresholds;
+  annotations give threshold and MCC changes. Dotted gray lines in (a) give matching
+  Task~1-to-Task~3 MCC. Scores use the submitted 0--100 scale and error-free is
+  positive. Annotations report numeric submitted and selected threshold values
+  without distinguishing inclusive and exclusive rules. Optima are selected
+  and evaluated on the same assessments, so improvements are post-hoc
+  optimistic upper bounds.}
+  \label{fig:task2-thresholds}
+\end{figure*}

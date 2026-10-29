@@ -1,0 +1,85 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,landscape,margin=1.25cm]{geometry}
+\usepackage{graphicx}
+\pagestyle{empty}
+
+\begin{document}
+
+\section*{Task 2 per-language threshold sensitivity}
+\begin{center}
+\includegraphics[width=0.94\textwidth,height=0.82\textheight,keepaspectratio]{macro_threshold_improvement.pdf}
+\end{center}
+\small
+Per-language thresholds optimize MCC independently for each language pair. The resulting
+per-language MCCs are averaged with equal language weight. These are same-data upper bounds.
+
+\newpage
+\section*{ces\_Latn---deu\_Latn: participant curves, 1/2}
+\begin{center}
+\includegraphics[width=0.96\textwidth,height=0.84\textheight,keepaspectratio]{plots/participant_curves__ces_Latn-to-deu_Latn__top.pdf}
+\end{center}
+\small
+MCC is blue, precision is green, and recall is orange. Red marks the submitted threshold;
+blue marks the independently selected per-language MCC optimum.
+
+\newpage
+\section*{ces\_Latn---deu\_Latn: participant curves, 2/2}
+\begin{center}
+\includegraphics[width=0.96\textwidth,height=0.84\textheight,keepaspectratio]{plots/participant_curves__ces_Latn-to-deu_Latn__bottom.pdf}
+\end{center}
+
+\newpage
+\section*{ces\_Latn---deu\_Latn: organizer baseline curves}
+\begin{center}
+\includegraphics[width=0.96\textwidth,height=0.84\textheight,keepaspectratio]{plots/baseline_curves__ces_Latn-to-deu_Latn.pdf}
+\end{center}
+\small
+The dashed gray line is the corresponding Task 1-converted MCC for the same language pair.
+
+\newpage
+\section*{eng\_Latn---arz\_Arab: participant curves, 1/2}
+\begin{center}
+\includegraphics[width=0.96\textwidth,height=0.84\textheight,keepaspectratio]{plots/participant_curves__eng_Latn-to-arz_Arab__top.pdf}
+\end{center}
+\small
+MCC is blue, precision is green, and recall is orange. Red marks the submitted threshold;
+blue marks the independently selected per-language MCC optimum.
+
+\newpage
+\section*{eng\_Latn---arz\_Arab: participant curves, 2/2}
+\begin{center}
+\includegraphics[width=0.96\textwidth,height=0.84\textheight,keepaspectratio]{plots/participant_curves__eng_Latn-to-arz_Arab__bottom.pdf}
+\end{center}
+
+\newpage
+\section*{eng\_Latn---arz\_Arab: organizer baseline curves}
+\begin{center}
+\includegraphics[width=0.96\textwidth,height=0.84\textheight,keepaspectratio]{plots/baseline_curves__eng_Latn-to-arz_Arab.pdf}
+\end{center}
+\small
+The dashed gray line is the corresponding Task 1-converted MCC for the same language pair.
+
+\newpage
+\section*{zho\_Hans---jpn\_Jpan: participant curves, 1/2}
+\begin{center}
+\includegraphics[width=0.96\textwidth,height=0.84\textheight,keepaspectratio]{plots/participant_curves__zho_Hans-to-jpn_Jpan__top.pdf}
+\end{center}
+\small
+MCC is blue, precision is green, and recall is orange. Red marks the submitted threshold;
+blue marks the independently selected per-language MCC optimum.
+
+\newpage
+\section*{zho\_Hans---jpn\_Jpan: participant curves, 2/2}
+\begin{center}
+\includegraphics[width=0.96\textwidth,height=0.84\textheight,keepaspectratio]{plots/participant_curves__zho_Hans-to-jpn_Jpan__bottom.pdf}
+\end{center}
+
+\newpage
+\section*{zho\_Hans---jpn\_Jpan: organizer baseline curves}
+\begin{center}
+\includegraphics[width=0.96\textwidth,height=0.84\textheight,keepaspectratio]{plots/baseline_curves__zho_Hans-to-jpn_Jpan.pdf}
+\end{center}
+\small
+The dashed gray line is the corresponding Task 1-converted MCC for the same language pair.
+
+\end{document}

@@ -1,0 +1,80 @@
+track	id	name	paper_name	model	reference_based	baseline	fine_tuned
+direct	867652	Pterodactyl	Pterodactyl	GPT-5.4	false	false	false
+direct	869543	FACET	FACET	GPT-4.1 Mini (2025-04-14)	false	false	false
+direct	869546	doc-FACET	doc-FACET	GPT-4.1 Mini (2025-04-14)	false	false	false
+direct	869552	gemba-poly	gemba-poly	Llama 3.3 70B	false	false	false
+direct	870257	Vertical_2	Vertical_2	Gemma 3 1B IT	true	false	true
+direct	870554	Vertical_1	Vertical_1	Gemma 3 1B IT	true	false	true
+direct	870859	Austriadactylus, a variant of Pterodactyl	Austriadactylus	GPT-5.4; GPT-5.6 Terra	false	false	false
+direct	871298	AEGIS	AEGIS	XLM-RoBERTa-large; mT5-large	true	false	false
+direct	871400	MQM-LLM	MQM-LLM	Not specified (27B)	false	false	true
+direct	871401	MQM-LLM Confidence Aware	MQM-LLM Confidence Aware	Not specified (27B)	false	false	true
+direct	872013	BERTScore	BERTScore	XLM-RoBERTa-large	true	true	false
+direct	872028	BLEU	BLEU	--	true	true	false
+direct	872029	chrF	chrF	--	true	true	false
+direct	872030	COMET22	COMET22	XLM-RoBERTa-large	true	true	false
+direct	872031	spBLEU	spBLEU	--	true	true	false
+direct	872032	PhraseT2-01	PhraseT2-01	Gemini 3.5 Flash; Gemma 4 12B	false	false	false
+direct	872033	PhraseT2-02	PhraseT2-02	Ensemble\textsuperscript{E1}	false	false	false
+direct	872328	fluency2-gemini35-esa	fluency2-gemini35-esa	Gemini 3.5 Flash	false	false	false
+direct	873001	YiSi-1	YiSi-1	multilingual BERT (mBERT)	true	true	false
+direct	873002	COMETKiwi22	COMETKiwi22	XLM-RoBERTa-large	false	true	false
+direct	875949	bytepop_pro9	bytepop_pro9	Ensemble\textsuperscript{E2}	true	false	false
+direct	876039	cuni-da-6d	cuni-da-6d	Gemma 4 31B IT	false	false	false
+direct	876059	cuni-v14-regression	cuni-v14-regression	Gemma 4 31B IT	false	false	false
+direct	876231	bytepop_pro10	bytepop_pro10	Ensemble\textsuperscript{E2}	true	false	false
+direct	876242	Lexicala-QE-Ensemble (Majority-Vote)	Lexicala-QE-Ensemble (Majority-Vote)	Ensemble\textsuperscript{E3}	false	false	false
+direct	876244	Lexicala-QE-Ensemble (STAPLE)	Lexicala-QE-Ensemble (STAPLE)	Ensemble\textsuperscript{E3}	false	false	false
+direct	876271	Cohere CAT+ ensemble	Cohere CAT+ ensemble	Command A+	false	false	false
+direct	gemini_task2	Gemini-3.6-Flash	Gemini-3.6-Flash	Gemini 3.6 Flash	false	true	false
+direct	gemma4_no_thinking_task2	Gemma 4 - No Reasoning Baseline	Gemma 4 - No Reasoning	Gemma 4 31B IT	false	true	false
+direct	gemma_ref_no_thinking_task2	Gemma 4 Reference-based - No Reasoning Baseline	Gemma 4 Reference-based - No Reasoning	Gemma 4 31B IT	true	true	false
+direct	gemma_ref_task2	Gemma 4 Reference-based - Reasoning Baseline	Gemma 4 Reference-based - Reasoning	Gemma 4 31B IT	true	true	false
+direct	gemma_task2	Gemma 4 - Reasoning Baseline	Gemma 4 - Reasoning	Gemma 4 31B IT	false	true	false
+direct	gpt56_sol_xhigh_no_ref_task2	GPT-5.6 Sol - Xhigh Reasoning	GPT-5.6 Sol - Xhigh Reasoning	Not specified in model card	false	true	false
+direct	gpt56_terra_no_ref_task2	GPT-5.6 Terra	GPT-5.6 Terra	GPT-5.6 Terra	false	true	false
+direct	gpt_56_sol_medium_no_ref_task2	GPT-5.6 Sol - Medium Reasoning	GPT-5.6 Sol - Medium Reasoning	GPT-5.6 Sol	false	true	false
+direct	qwen36_no_thinking_task2	Qwen 3.6 - No Reasoning Baseline	Qwen 3.6 - No Reasoning	Qwen3.6-35B-A3B	false	true	false
+direct	qwen_ref_no_thinking_task2	Qwen 3.6 Reference-based - No Reasoning Baseline	Qwen 3.6 Reference-based - No Reasoning	Qwen3.6-35B-A3B	true	true	false
+direct	qwen_ref_task2	Qwen 3.6 Reference-based - Reasoning Baseline	Qwen 3.6 Reference-based - Reasoning	Qwen3.6-35B-A3B	true	true	false
+direct	qwen_task2	Qwen 3.6 - Reasoning Baseline	Qwen 3.6 - Reasoning	Qwen3.6-35B-A3B	false	true	false
+direct	xcomet_xl_no_ref_task2	xCOMET XL Reference-free - Baseline	xCOMET XL	xCOMET-XL	false	true	true
+direct	xcomet_xl_ref_task2	xCOMET XL Reference-based - Baseline	xCOMET XL	xCOMET-XL	true	true	true
+direct	xcomet_xxl_no_ref_task2	xCOMET XXL Reference-free - Baseline	xCOMET XXL	xCOMET-XXL	false	true	true
+direct	xcomet_xxl_ref_task2	xCOMET XXL Reference-based - Baseline	xCOMET XXL	xCOMET-XXL	true	true	true
+conversion	871892	PhraseT1-01	PhraseT1-01	Gemini 3.5 Flash	false	false	false
+conversion	871898	fluencyscore-multispan-v2	fluencyscore-multispan-v2	Gemini 3.5 Flash	false	false	false
+conversion	872022	PhraseT1-02	PhraseT1-02	Ensemble\textsuperscript{E1}	false	false	false
+conversion	873483	fluencyscore-multispan-v2.1	fluencyscore-multispan-v2.1	Gemini 3.5 Flash	false	false	false
+conversion	875417	Qwen-based Omission	Qwen-based Omission	Qwen3-32B	false	false	true
+conversion	875796	Rule-based Omission	Rule-based Omission	Qwen3-32B	false	false	true
+conversion	875857	cuni-cat-v4	cuni-cat-v4	Gemma 4 31B IT	false	false	false
+conversion	875859	cuni-v14	cuni-v14	Gemma 4 31B IT	false	false	false
+conversion	876224	gemma4-31b-v4ref-struct-best	gemma4-31b-v4ref-struct-best	Gemma 4 31B IT	true	false	false
+conversion	876357	doc-FACET	doc-FACET	GPT-4.1 Mini (2025-04-14)	false	false	false
+conversion	876365	FACET	FACET	GPT-4.1 Mini (2025-04-14)	false	false	false
+conversion	876421	Cohere CAT+	Cohere CAT+	Command A+	false	false	false
+conversion	baseline_gemini_task1	Gemini-3.6-Flash [dedup]	Gemini-3.6-Flash [dedup]	Gemini 3.6 Flash	false	true	false
+conversion	baseline_gemma4_no_thinking_task1	Gemma 4 - No Reasoning [dedup]	Gemma 4 - No Reasoning [dedup]	Gemma 4 31B IT	false	true	false
+conversion	baseline_gemma_ref_no_thinking_task1	Gemma 4 Reference-based - No Reasoning [dedup]	Gemma 4 Reference-based - No Reasoning [dedup]	Gemma 4 31B IT	true	true	false
+conversion	baseline_gemma_ref_task1	Gemma 4 Reference-based - Reasoning [dedup]	Gemma 4 Reference-based - Reasoning [dedup]	Gemma 4 31B IT	true	true	false
+conversion	baseline_gemma_task1	Gemma 4 - Reasoning [dedup]	Gemma 4 - Reasoning [dedup]	Gemma 4 31B IT	false	true	false
+conversion	baseline_gpt56_terra_no_ref_task1	GPT-5.6 Terra [dedup]	GPT-5.6 Terra [dedup]	GPT-5.6 Terra	false	true	false
+conversion	baseline_nondedup_gemini_task1	Gemini-3.6-Flash [no dedup]	Gemini-3.6-Flash [no dedup]	Gemini 3.6 Flash	false	true	false
+conversion	baseline_nondedup_gemma4_no_thinking_task1	Gemma 4 - No Reasoning [no dedup]	Gemma 4 - No Reasoning [no dedup]	Gemma 4 31B IT	false	true	false
+conversion	baseline_nondedup_gemma_ref_no_thinking_task1	Gemma 4 Reference-based - No Reasoning [no dedup]	Gemma 4 Reference-based - No Reasoning [no dedup]	Gemma 4 31B IT	true	true	false
+conversion	baseline_nondedup_gemma_ref_task1	Gemma 4 Reference-based - Reasoning [no dedup]	Gemma 4 Reference-based - Reasoning [no dedup]	Gemma 4 31B IT	true	true	false
+conversion	baseline_nondedup_gemma_task1	Gemma 4 - Reasoning [no dedup]	Gemma 4 - Reasoning [no dedup]	Gemma 4 31B IT	false	true	false
+conversion	baseline_nondedup_gpt56_terra_no_ref_task1	GPT-5.6 Terra [no dedup]	GPT-5.6 Terra [no dedup]	GPT-5.6 Terra	false	true	false
+conversion	baseline_nondedup_qwen36_no_thinking_task1	Qwen 3.6 - No Reasoning [no dedup]	Qwen 3.6 - No Reasoning [no dedup]	Qwen3.6-35B-A3B	false	true	false
+conversion	baseline_nondedup_qwen_ref_no_thinking_task1	Qwen 3.6 Reference-based - No Reasoning [no dedup]	Qwen 3.6 Reference-based - No Reasoning [no dedup]	Qwen3.6-35B-A3B	true	true	false
+conversion	baseline_nondedup_qwen_ref_task1	Qwen 3.6 Reference-based - Reasoning [no dedup]	Qwen 3.6 Reference-based - Reasoning [no dedup]	Qwen3.6-35B-A3B	true	true	false
+conversion	baseline_nondedup_qwen_task1	Qwen 3.6 - Reasoning [no dedup]	Qwen 3.6 - Reasoning [no dedup]	Qwen3.6-35B-A3B	false	true	false
+conversion	baseline_qwen36_no_thinking_task1	Qwen 3.6 - No Reasoning [dedup]	Qwen 3.6 - No Reasoning [dedup]	Qwen3.6-35B-A3B	false	true	false
+conversion	baseline_qwen_ref_no_thinking_task1	Qwen 3.6 Reference-based - No Reasoning [dedup]	Qwen 3.6 Reference-based - No Reasoning [dedup]	Qwen3.6-35B-A3B	true	true	false
+conversion	baseline_qwen_ref_task1	Qwen 3.6 Reference-based - Reasoning [dedup]	Qwen 3.6 Reference-based - Reasoning [dedup]	Qwen3.6-35B-A3B	true	true	false
+conversion	baseline_qwen_task1	Qwen 3.6 - Reasoning [dedup]	Qwen 3.6 - Reasoning [dedup]	Qwen3.6-35B-A3B	false	true	false
+conversion	baseline_xcomet_xl_no_ref_task1	xCOMET XL	xCOMET XL	xCOMET-XL	false	true	true
+conversion	baseline_xcomet_xl_ref_task1	xCOMET XL	xCOMET XL	xCOMET-XL	true	true	true
+conversion	baseline_xcomet_xxl_no_ref_task1	xCOMET XXL	xCOMET XXL	xCOMET-XXL	false	true	true
+conversion	baseline_xcomet_xxl_ref_task1	xCOMET XXL	xCOMET XXL	xCOMET-XXL	true	true	true

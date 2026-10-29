@@ -1,0 +1,92 @@
+[
+  {
+    "question": "Organization name",
+    "required": true,
+    "answer": "Karlsruhe Institute of Technology"
+  },
+  {
+    "question": "Submission name",
+    "required": true,
+    "answer": "gemba-poly"
+  },
+  {
+    "question": "Submission description (a short paragraph)",
+    "required": true,
+    "answer": "GEMBA-poly-cand is a reference-free, LLM-based quality estimation metric built on Llama 3.3 70B. Following the poly-cand approach introduced in Züfle et al. (2025, \"COMET-poly: Machine Translation Metric Grounded in Other Candidates\"), each translation is scored alongside up to 5 additional candidate translations of the same source segment, selected by cosine similarity over all-MiniLM-L12-v2 sentence embeddings, giving the model contrastive context rather than scoring the translation in isolation. Candidate pools are drawn primarily from other participating systems' outputs for the same source segment; for segments with too few available system outputs, additional synthetic candidates were generated with TranslateGemma-4B to ensure a sufficient pool for similarity-based selection."
+  },
+  {
+    "question": "Does your system use the provided reference translations in any form? (true|false)",
+    "required": true,
+    "answer": "false"
+  },
+  {
+    "question": "If your system uses reference translations, please briefly describe which types of references you use (native|postedit|pseudo) and how you use them.",
+    "required": false,
+    "answer": ""
+  },
+  {
+    "question": "Is an ensemble (true|false)",
+    "required": true,
+    "answer": "false"
+  },
+  {
+    "question": "Is supervised (did you fine-tune your model?) (true|false)",
+    "required": true,
+    "answer": "false"
+  },
+  {
+    "question": "Is based on open-weight models (true|false)",
+    "required": true,
+    "answer": "true"
+  },
+  {
+    "question": "Model size",
+    "required": false,
+    "answer": "70B (Llama 3.3, scoring); 4B (TranslateGemma, synthetic candidate generation)"
+  },
+  {
+    "question": "Closed-source model name (e.g. GPT-5.6-luna)",
+    "required": false,
+    "answer": ""
+  },
+  {
+    "question": "Closed-source API provider (Who is the provider/host for this API? e.g. AWS/Azure/OpenAI/OpenRouter)",
+    "required": false,
+    "answer": ""
+  },
+  {
+    "question": "Is the submitted system open-source? (true|false)",
+    "required": true,
+    "answer": "true"
+  },
+  {
+    "question": "Provide link to the submitted system if you have any",
+    "required": false,
+    "answer": "https://github.com/zouharvi/COMET-poly and https://github.com/TuAnh23/GEMBA/"
+  },
+  {
+    "question": "Allow automatic conversion from Task 1 to Task 2 (true|false)",
+    "required": true,
+    "answer": "false"
+  },
+  {
+    "question": "Allow automatic conversion from Task 1 to Task 3 (true|false)",
+    "required": true,
+    "answer": "false"
+  },
+  {
+    "question": "Allow automatic conversion from Task 2 to Task 3 (true|false)",
+    "required": true,
+    "answer": "true"
+  },
+  {
+    "question": "Task 2 to 3 conversion threshold (everything above this score will be regarded as error-free)",
+    "required": false,
+    "answer": "98"
+  },
+  {
+    "question": "Should the above threshold be inclusive (≥) or exclusive (>)?",
+    "required": false,
+    "answer": "inclusive (≥)"
+  }
+]

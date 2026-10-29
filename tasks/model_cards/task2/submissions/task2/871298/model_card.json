@@ -1,0 +1,92 @@
+[
+  {
+    "question": "Organization name",
+    "required": true,
+    "answer": "IIT Patna; Shiv Nadar University"
+  },
+  {
+    "question": "Submission name",
+    "required": true,
+    "answer": "AEGIS"
+  },
+  {
+    "question": "Submission description (a short paragraph)",
+    "required": true,
+    "answer": "AEGIS is a reference-skeptical, corruption-shielded evaluation system. Motivated by WMT26's shift to post-edited and synthetic references, it treats the reference as just another hypothesis: a reference-based COMET-22 score and a reference-free MetricX-24 (QE-mode) score are fused with a per-segment weight derived from the reference's own estimated quality and declared type (human / postedit / pseudo / absent), falling back to pure QE where no reference exists. Before neural scoring, a deterministic Unicode-hygiene layer separates orthographic integrity from semantic quality: default-ignorable codepoints, whitespace-class substitutions, homoglyph cloaking, and Indic conjunct-breaking joiners are detected and converted into transparent point penalties (we verified XLM-R-based metrics are provably blind to several of these corruptions), and a degeneracy guard catches empty, runaway, and repetition-loop outputs. We submit predictions for every official language pair, every system, and all challenge-set items."
+  },
+  {
+    "question": "Does your system use the provided reference translations in any form? (true|false)",
+    "required": true,
+    "answer": "true"
+  },
+  {
+    "question": "If your system uses reference translations, please briefly describe which types of references you use (native|postedit|pseudo) and how you use them.",
+    "required": false,
+    "answer": "All reference types are used when present, but with type- and quality-dependent trust: the reference-based score's fusion weight is scaled by the reference's declared type (native > postedit > pseudo) and by a reference-free quality estimate of the reference itself, so segments with unreliable references lean on the QE branch. Items without references are scored purely reference-free."
+  },
+  {
+    "question": "Is an ensemble (true|false)",
+    "required": true,
+    "answer": "true"
+  },
+  {
+    "question": "Is supervised (did you fine-tune your model?) (true|false)",
+    "required": true,
+    "answer": "false"
+  },
+  {
+    "question": "Is based on open-weight models (true|false)",
+    "required": true,
+    "answer": "true"
+  },
+  {
+    "question": "Model size",
+    "required": false,
+    "answer": "Unbabel wmt22-comet-da (XLM-RoBERTa-large backbone, ~580M parameters) + google/metricx-24-hybrid-large-v2p6 (mT5-large backbone, ~1.2B parameters); deterministic Unicode-hygiene and degeneracy layers add no learned parameters."
+  },
+  {
+    "question": "Closed-source model name (e.g. GPT-5.6-luna)",
+    "required": false,
+    "answer": ""
+  },
+  {
+    "question": "Closed-source API provider (Who is the provider/host for this API? e.g. AWS/Azure/OpenAI/OpenRouter)",
+    "required": false,
+    "answer": ""
+  },
+  {
+    "question": "Is the submitted system open-source? (true|false)",
+    "required": true,
+    "answer": "false"
+  },
+  {
+    "question": "Provide link to the submitted system if you have any",
+    "required": false,
+    "answer": ""
+  },
+  {
+    "question": "Allow automatic conversion from Task 1 to Task 2 (true|false)",
+    "required": true,
+    "answer": "false"
+  },
+  {
+    "question": "Allow automatic conversion from Task 1 to Task 3 (true|false)",
+    "required": true,
+    "answer": "false"
+  },
+  {
+    "question": "Allow automatic conversion from Task 2 to Task 3 (true|false)",
+    "required": true,
+    "answer": "true"
+  },
+  {
+    "question": "Task 2 to 3 conversion threshold (everything above this score will be regarded as error-free)",
+    "required": false,
+    "answer": "91"
+  },
+  {
+    "question": "Should the above threshold be inclusive (≥) or exclusive (>)?",
+    "required": false,
+    "answer": "inclusive"
+  }
+]

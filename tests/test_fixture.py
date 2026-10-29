@@ -79,7 +79,7 @@ def load_generator(repo_root: Path):
     return module
 
 
-def test_fixture_holds_no_raw_gold(mini_grand_path):  # Ruling R24
+def test_fixture_holds_no_raw_gold(mini_grand_path):
     """Every cell of ``ground_truth__record`` is null: the raw cESA records are not committed."""
     column = pq.read_table(mini_grand_path, columns=[GOLD]).column(GOLD)
     assert len(column) == 16

@@ -10,7 +10,7 @@ already been taken by an earlier case, so the fixture has exactly one row per ca
 copied verbatim, apart from the gold: ``pq.write_table(drop_gold(table.take(idx)), OUT)`` keeps
 all 107 columns, their Arrow types (``arrow.json`` extension columns included) and the
 schema-level metadata. The one exception is ``ground_truth__record``, the raw human-annotation
-records, every cell of which is set to null (Ruling R24), so that the committed fixture holds no
+records, every cell of which is set to null, so that the committed fixture holds no
 gold. The column stays in the schema, because the fixture must have the schema of the real file.
 
 Item ids have six ``_###_``-separated parts::

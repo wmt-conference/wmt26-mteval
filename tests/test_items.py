@@ -77,7 +77,7 @@ def test_items(mini_grand_path, ctx):
     # Review Focus 5
     assert (ukr["ref_type"], ukr["ref_text"], ukr["ref_type_orig"]) == ("none", None, None)
     fece = next(v for k, v in r.items() if "_###_FECE_###_" in k)
-    # Ruling R23: a reference text of unrecorded type is "unknown"; "none" means no reference text
+    # a reference text of unrecorded type is "unknown"; "none" means no reference text
     assert (fece["ref_type"], fece["ref_type_orig"], fece["domain"]) == (
         "unknown",
         "undefined",

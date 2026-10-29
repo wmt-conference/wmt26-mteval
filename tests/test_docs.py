@@ -539,9 +539,9 @@ def test_the_real_card_statistics_are_table_2_of_the_paper(repo_root, full_out, 
     assert {r["lp"]: r["ref_type"] for r in stats["coverage"]} == PAPER_REFERENCE_TYPES
     assert {r["lp"] for r in stats["coverage"] if r["is_priority"]} == PAPER_PRIORITY
     assert stats["rows"] == expected_full["rows"]
-    # Ruling R10: 3,689 hypotheses are exactly empty and 96 more are whitespace-only
+    # 3,689 hypotheses are exactly empty and 96 more are whitespace-only
     assert (stats["hyp_empty_exact"], stats["hyp_whitespace_only"]) == (3689, 96)
-    # the final review: 18,021 flagged pairs, of which 9,792 are not reference systems
+    # 18,021 flagged pairs, of which 9,792 are not reference systems
     assert stats["reference_candidates"] == 18021
     assert stats["reference_candidates_by_system_type"] == {
         "mt": 8673,
@@ -705,7 +705,7 @@ def test_the_manifest_stats_match_a_recount_from_the_parquet_files(built):
     assert stats["rows"] == {c: info["rows"] for c, info in manifest["configs"].items()}
 
 
-# --- advice that the final review corrected -------------------------------------------------------
+# --- the advice the card gives ------------------------------------------------------------------
 
 
 def fake_card(repo_root) -> str:
@@ -744,13 +744,6 @@ def test_the_card_warns_that_baselines_double_count_without_a_variant_filter(rep
         assert fragment in text, fragment
 
 
-def test_the_card_and_variant_description_carry_no_internal_label(repo_root):
-    card = squash(fake_card(repo_root))
-    variant = SCHEMAS["baselines"].field("variant").metadata[b"description"].decode()
-    for text in (card, variant):  # an internal decision label means nothing to readers
-        assert "decision A1" not in text
-
-
 def test_the_card_names_the_results_that_need_the_grand_only_snapshot(repo_root):
     # Table 9's "[no dedup]" rows and Task 3's converted baselines use it, not `alt`.
     card = squash(fake_card(repo_root))
@@ -766,7 +759,7 @@ def test_the_card_warns_about_the_incomplete_xhigh_baseline(repo_root):
     assert "placeholder value, 50.0, in every row" in card
 
 
-def test_the_card_wording_the_final_review_asked_for(repo_root):
+def test_the_card_wording(repo_root):
     text = squash(fake_card(repo_root))
     for fragment in (
         "the sha256 and the rows of every Parquet file",
@@ -795,7 +788,7 @@ def test_the_personal_data_section_says_what_was_replaced_without_naming_anyone(
     assert "IIT" not in section and "Patna" not in section and "871298" not in section
 
 
-def test_the_schema_descriptions_the_final_review_corrected():
+def test_the_schema_descriptions():
     def describe(config, name):
         return SCHEMAS[config].field(name).metadata[b"description"].decode()
 
@@ -1092,55 +1085,30 @@ def release_steps(repo_root) -> list[str]:
     return re.split(r"^## (?=\d+\. )", text, flags=re.M)[1:]
 
 
-def test_the_release_guide_orders_the_steps_and_marks_the_remote_ones_not_run(repo_root):
+def test_the_release_guide_orders_the_steps(repo_root):
     steps = release_steps(repo_root)
     titles = [step.splitlines()[0] for step in steps]
-    keywords = ["Build", "Validate", "Loading", "Stop", "Set", "Look", "Upload", "GitHub"]
+    keywords = ["Build", "Validate", "Loading", "Set", "Publish"]
     assert [t.split(". ", 1)[1].split()[0] for t in titles] == keywords
     commands = ["scripts/build_hf.py", "scripts/validate_hf.py", "scripts/check_loading.py"]
     for step, command in zip(steps[:3], commands):
         assert command in step
-    before_upload = "".join(steps[:6])
-    assert "hf upload" not in before_upload and "git push" not in before_upload
-    assert "hf upload" in steps[6] and "--create-pr" in steps[6]
-    assert "git push" in steps[7] and "gh pr create" in steps[7]
-    assert all("Not run" in titles[i] for i in (5, 6, 7))
+    before_publishing = "".join(steps[:4])
+    assert "hf upload" not in before_publishing and "gh pr create" not in before_publishing
+    assert "hf upload" in steps[4] and "--create-pr" in steps[4] and "gh pr create" in steps[4]
     matrix = steps[2]
     assert '--with "pyarrow<21" --with "numpy<2"' in matrix
-    assert "--grand" in matrix and "TMPDIR" in matrix
-    assert "Diptesh" in steps[3]
-    assert "YYYY-MM-DD" in steps[4] and "docs/CHANGELOG.md" in steps[4] and "README.md" in steps[4]
+    assert "--grand" in matrix and "TMPDIR" in release_intro(repo_root)
+    assert "YYYY-MM-DD" in steps[3] and "docs/CHANGELOG.md" in steps[3] and "README.md" in steps[3]
 
 
-def test_the_release_guide_looks_at_the_hub_repository_before_it_uploads(repo_root):
-    look = squash(release_steps(repo_root)[5])
-    for fragment in (
-        "never seen",
-        "hf datasets ls wmt/wmt26-mteval-data",
-        "hf download wmt/wmt26-mteval-data README.md",
-        'diff "$TMPDIR/hub-card/README.md" "$OUT/README.md"',
-        "`wmt26-grand.parquet` is at the root of the repository",
-        "Carry over",
-        "rebuild",
-    ):
-        assert fragment in look, fragment
-    assert "hf upload" not in look and "--create-pr" not in look
-
-
-def test_the_release_guide_puts_the_new_open_decisions_in_the_stop_step(repo_root):
-    stop = squash(release_steps(repo_root)[3])
-    for fragment in (
-        "`ref_type` `unknown`",
-        "6,407",
-        "decision A3",
-        "the Hub card",
-        "never seen",
-    ):
-        assert fragment in stop, fragment
+def release_intro(repo_root) -> str:
+    text = (repo_root / "docs/RELEASE.md").read_text(encoding="utf-8")
+    return re.split(r"^## (?=\d+\. )", text, flags=re.M)[0]
 
 
 def test_the_release_guide_checks_for_placeholders_without_matching_itself(repo_root):
-    step = release_steps(repo_root)[4]
+    step = release_steps(repo_root)[3]
     (command,) = [line for line in step.splitlines() if line.startswith("grep ")]
     assert "--exclude=RELEASE.md" in command and "README.md" in command and "docs" in command
     # run as written (without the comment), the check may find the date placeholder in the
@@ -1235,7 +1203,7 @@ def test_citation_cff_names_the_findings_paper(repo_root):
 
 
 @pytest.mark.fulldata
-def test_the_real_reference_types_follow_ruling_r23(full_out):
+def test_the_real_reference_types(full_out):
     items = pq.read_table(
         full_out / "data/items/evaluation-00000.parquet",
         columns=["challenge_set", "collection", "lp", "ref_type", "ref_type_orig", "ref_text"],

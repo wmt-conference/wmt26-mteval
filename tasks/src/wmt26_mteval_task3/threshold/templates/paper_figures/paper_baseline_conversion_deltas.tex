@@ -1,0 +1,33 @@
+% Import with \input{.../paper_baseline_conversion_deltas.tex}.
+% Requires \usepackage{booktabs}.
+\begin{table*}[t]
+  \centering
+  \small
+  \setlength{\tabcolsep}{3.5pt}
+  \begin{tabular}{lrrrrrrrr}
+    \toprule
+    Baseline & \multicolumn{1}{c}{ces-deu} & \multicolumn{1}{c}{ces-vie} &
+    \multicolumn{1}{c}{eng-arz} & \multicolumn{1}{c}{eng-ekk} &
+    \multicolumn{1}{c}{eng-ind} & \multicolumn{1}{c}{eng-isl} &
+    \multicolumn{1}{c}{eng-sme} & \multicolumn{1}{c}{zho-jpn} \\
+    \midrule
+    Gemini 3.6 Flash              & @@DELTA_0_0@@  & @@DELTA_0_1@@  & @@DELTA_0_2@@ & @@DELTA_0_3@@  & @@DELTA_0_4@@  & @@DELTA_0_5@@  & @@DELTA_0_6@@  & @@DELTA_0_7@@ \\
+    Gemma 4 (no reasoning)        & @@DELTA_1_0@@  & @@DELTA_1_1@@  & @@DELTA_1_2@@ & @@DELTA_1_3@@  & @@DELTA_1_4@@  & @@DELTA_1_5@@  & @@DELTA_1_6@@  & @@DELTA_1_7@@  \\
+    Gemma 4 (reasoning)           & @@DELTA_2_0@@  & @@DELTA_2_1@@  & @@DELTA_2_2@@  & @@DELTA_2_3@@  & @@DELTA_2_4@@  & @@DELTA_2_5@@  & @@DELTA_2_6@@ & @@DELTA_2_7@@  \\
+    GPT-5.6 Sol (medium)          & @@DELTA_3_0@@  & @@DELTA_3_1@@ & @@DELTA_3_2@@ & @@DELTA_3_3@@  & @@DELTA_3_4@@  & @@DELTA_3_5@@  & @@DELTA_3_6@@  & @@DELTA_3_7@@ \\
+    GPT-5.6 Terra                 & @@DELTA_4_0@@  & @@DELTA_4_1@@  & @@DELTA_4_2@@ & @@DELTA_4_3@@  & @@DELTA_4_4@@  & @@DELTA_4_5@@  & @@DELTA_4_6@@  & @@DELTA_4_7@@ \\
+    Qwen 3.6 (no reasoning)       & @@DELTA_5_0@@  & @@DELTA_5_1@@ & @@DELTA_5_2@@ & @@DELTA_5_3@@  & @@DELTA_5_4@@  & @@DELTA_5_5@@  & @@DELTA_5_6@@ & @@DELTA_5_7@@ \\
+    Qwen 3.6 (reasoning)          & @@DELTA_6_0@@  & @@DELTA_6_1@@  & @@DELTA_6_2@@ & @@DELTA_6_3@@  & @@DELTA_6_4@@  & @@DELTA_6_5@@  & @@DELTA_6_6@@  & @@DELTA_6_7@@ \\
+    xCOMET XL (reference-free)    & @@DELTA_7_0@@ & @@DELTA_7_1@@ & @@DELTA_7_2@@ & @@DELTA_7_3@@ & @@DELTA_7_4@@ & @@DELTA_7_5@@ & @@DELTA_7_6@@ & @@DELTA_7_7@@ \\
+    xCOMET XXL (reference-free)   & @@DELTA_8_0@@ & @@DELTA_8_1@@ & @@DELTA_8_2@@ & @@DELTA_8_3@@  & @@DELTA_8_4@@ & @@DELTA_8_5@@ & @@DELTA_8_6@@ & @@DELTA_8_7@@ \\
+    \bottomrule
+  \end{tabular}
+  \caption{Per-language difference between organizer-baseline conversions,
+  reported as the optimal Task~2-to-Task~3 MCC minus the Task~1-to-Task~3 MCC,
+  multiplied by 100. Positive values favor Task~2-to-Task~3 conversion using
+  independently selected per-language thresholds. The eight columns are the
+  WMT26 priority language pairs. Task~2 thresholds are selected and evaluated
+  on the same assessments, so their advantage is a post-hoc optimistic
+  estimate.}
+  \label{tab:task1-task2-baseline-conversion-deltas}
+\end{table*}

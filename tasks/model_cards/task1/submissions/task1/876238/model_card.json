@@ -1,0 +1,92 @@
+[
+    {
+        "question": "Organization name",
+        "required": true,
+        "answer": "Lexicala"
+    },
+    {
+        "question": "Submission name",
+        "required": true,
+        "answer": "Lexicala-QE-Ensemble (STAPLE)"
+    },
+    {
+        "question": "Submission description (a short paragraph)",
+        "required": true,
+        "answer": "A reference-free, LLM-ensemble quality-estimation system. Three independent LLM judges (Gemini 2.5 Flash, DeepSeek V4 Flash, Qwen Plus) annotate each translation under an MQM/ESA-style protocol; a neutral cross-verification stage re-judges every proposed span, and a dedicated source-coverage stage detects omissions. Per-character judge masks are fused with STAPLE (Simultaneous Truth And Performance Level Estimation) — an EM algorithm that jointly estimates each judge's sensitivity and specificity and the latent error truth, followed by HMM run-smoothing — yielding Task-1 error spans with minor/major severity and an omission label. The Task-2 quality score is an inverse-variance fusion of a reliability-weighted holistic estimator and a span-derived MQM-penalty estimator, clamped to [0,100]. The Task-3 error-free label is an adequacy-gated conjunction (no error spans, no omission, and holistic quality at or above threshold). No reference translations are used at any stage."
+    },
+    {
+        "question": "Does your system use the provided reference translations in any form? (true|false)",
+        "required": true,
+        "answer": "false"
+    },
+    {
+        "question": "If your system uses reference translations, please briefly describe which types of references you use (native|postedit|pseudo) and how you use them.",
+        "required": false,
+        "answer": ""
+    },
+    {
+        "question": "Is an ensemble (true|false)",
+        "required": true,
+        "answer": "true"
+    },
+    {
+        "question": "Is supervised (did you fine-tune your model?) (true|false)",
+        "required": true,
+        "answer": "false"
+    },
+    {
+        "question": "Is based on open-weight models (true|false)",
+        "required": true,
+        "answer": "false"
+    },
+    {
+        "question": "Model size",
+        "required": false,
+        "answer": "N/A — ensemble of hosted LLM APIs (no trained or fine-tuned model)"
+    },
+    {
+        "question": "Closed-source model name (e.g. GPT-5.6-luna)",
+        "required": false,
+        "answer": "gemini-2.5-flash; deepseek-v4-flash; qwen-plus"
+    },
+    {
+        "question": "Closed-source API provider (Who is the provider/host for this API? e.g. AWS/Azure/OpenAI/OpenRouter)",
+        "required": false,
+        "answer": "Google AI (Gemini); DeepSeek (DeepSeek); Alibaba Cloud DashScope (Qwen)"
+    },
+    {
+        "question": "Is the submitted system open-source? (true|false)",
+        "required": true,
+        "answer": "false"
+    },
+    {
+        "question": "Provide link to the submitted system if you have any",
+        "required": false,
+        "answer": ""
+    },
+    {
+        "question": "Allow automatic conversion from Task 1 to Task 2 (true|false)",
+        "required": true,
+        "answer": "true"
+    },
+    {
+        "question": "Allow automatic conversion from Task 1 to Task 3 (true|false)",
+        "required": true,
+        "answer": "true"
+    },
+    {
+        "question": "Allow automatic conversion from Task 2 to Task 3 (true|false)",
+        "required": true,
+        "answer": "true"
+    },
+    {
+        "question": "Task 2 to 3 conversion threshold (everything above this score will be regarded as error-free)",
+        "required": false,
+        "answer": "85"
+    },
+    {
+        "question": "Should the above threshold be inclusive (≥) or exclusive (>)?",
+        "required": false,
+        "answer": "inclusive"
+    }
+]

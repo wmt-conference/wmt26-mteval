@@ -84,8 +84,9 @@ This is **v0.9**: typed data configs and documentation.
 - v0.9 contains no human-annotation gold in its typed configs. The human evaluation was carried
   out by General MT and is public in
   [its release](https://github.com/wmt-conference/wmt26-general-mt/releases/tag/humeval).
-  A gold config is planned for v1.0, together with the converted predictions, the results tables
-  and the scoring code.
+  A gold config is planned for v1.0, together with the converted predictions and the results
+  tables. The organisers' scoring code is in the `tasks/` folder of the
+  [GitHub repository](https://github.com/wmt-conference/wmt26-mteval/tree/main/tasks).
   The unchanged `grand` config still carries the organisers' raw annotation records in its
   `ground_truth__record` column; see [Human annotations](#human-annotations).
 

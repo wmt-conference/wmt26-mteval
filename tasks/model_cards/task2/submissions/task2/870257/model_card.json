@@ -1,0 +1,92 @@
+[
+  {
+    "question": "Organization name",
+    "required": true,
+    "answer": "Université Grenoble Alpes, OVHai LLM"
+  },
+  {
+    "question": "Submission name",
+    "required": true,
+    "answer": "Vertical_2"
+  },
+  {
+    "question": "Submission description (a short paragraph)",
+    "required": true,
+    "answer": "Vertical is an MT evaluation metric trained using an LLM as backbone (namely google/gemma-3-1b-it). We insert a special token into the input sequence, and the model uses it as the representation of the full sequence; hidden states across all layers are combined via a layer-wise attention mechanism before being fed to a two-layer linear network that predicts the final score on a 0 to 1 scale. We use the unified training approach, meaning we train the model on reference-based and reference-free data and leverage the decoder-only causal attention to predict the score under two variants: using the source and hypothesis as inputs (the special token is inserted after the hypothesis, so it only attends to the previous sequence) and using the source, hypothesis and reference as inputs (a second special token is inserted after the reference, so it attends to all previous tokens). The model is trained to minimize the weighted average of the MSE losses of the two variants against the ground truth score. At inference time, we use the appropriate variant depending on whether the reference is available, but any post-hoc combination of the two variant scores is possible when both exist. The model is trained on public WMT data from previous years. To boost performance on longer inputs, we propose a training curriculum that splits data into three stages: 1) sentence-level data, 2) paragraphs reconstructed from sentences, and 3) real paragraphs (WMT25 data)."
+  },
+  {
+    "question": "Does your system use the provided reference translations in any form? (true|false)",
+    "required": true,
+    "answer": "true"
+  },
+  {
+    "question": "If your system uses reference translations, please briefly describe which types of references you use (native|postedit|pseudo) and how you use them.",
+    "required": false,
+    "answer": "The model uses any reference available."
+  },
+  {
+    "question": "Is an ensemble (true|false)",
+    "required": true,
+    "answer": "false"
+  },
+  {
+    "question": "Is supervised (did you fine-tune your model?) (true|false)",
+    "required": true,
+    "answer": "true"
+  },
+  {
+    "question": "Is based on open-weight models (true|false)",
+    "required": true,
+    "answer": "true"
+  },
+  {
+    "question": "Model size",
+    "required": false,
+    "answer": "1B"
+  },
+  {
+    "question": "Closed-source model name (e.g. GPT-5.6-luna)",
+    "required": false,
+    "answer": ""
+  },
+  {
+    "question": "Closed-source API provider (Who is the provider/host for this API? e.g. AWS/Azure/OpenAI/OpenRouter)",
+    "required": false,
+    "answer": ""
+  },
+  {
+    "question": "Is the submitted system open-source? (true|false)",
+    "required": true,
+    "answer": "true"
+  },
+  {
+    "question": "Provide link to the submitted system if you have any",
+    "required": false,
+    "answer": ""
+  },
+  {
+    "question": "Allow automatic conversion from Task 1 to Task 2 (true|false)",
+    "required": true,
+    "answer": "false"
+  },
+  {
+    "question": "Allow automatic conversion from Task 1 to Task 3 (true|false)",
+    "required": true,
+    "answer": "false"
+  },
+  {
+    "question": "Allow automatic conversion from Task 2 to Task 3 (true|false)",
+    "required": true,
+    "answer": "true"
+  },
+  {
+    "question": "Task 2 to 3 conversion threshold (everything above this score will be regarded as error-free)",
+    "required": false,
+    "answer": "0.85"
+  },
+  {
+    "question": "Should the above threshold be inclusive (≥) or exclusive (>)?",
+    "required": false,
+    "answer": "≥"
+  }
+]

@@ -1,0 +1,27 @@
+# Private Task 3 inputs and generated reproduction artifacts.
+/outputs/task3/
+/data/
+/submissions/
+/baselines/
+/human_annotations/
+/test-set-files
+/annotations.json
+*.zip
+/wmt26-grand.parquet
+
+# Keep the Task 3 public-card tree limited to direct model_card.json files.
+/model_cards/task3/*
+!/model_cards/task3/submissions/
+/model_cards/task3/submissions/*
+!/model_cards/task3/submissions/task3/
+/model_cards/task3/submissions/task3/*/*
+!/model_cards/task3/submissions/task3/*/model_card.json
+
+# Local Python environments and shell/session artifacts.
+.venv/
+/build/
+/dist/
+*.egg-info/
+__pycache__/
+.pytest_cache/
+.bash_history.local

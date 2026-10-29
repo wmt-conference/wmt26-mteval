@@ -1,0 +1,92 @@
+[
+    {
+        "question": "Organization name",
+        "required": true,
+        "answer": "BrainVentures"
+    },
+    {
+        "question": "Submission name",
+        "required": true,
+        "answer": "PragmaSpan"
+    },
+    {
+        "question": "Submission description (a short paragraph)",
+        "required": true,
+        "answer": "PragmaSpan is a training-free, few-shot GPT-5.5 span-error detector wrapped in a reliability-oriented inference and submission harness. References are included as optional prompt context when provided, and provided ASR transcripts are used as text context for speech items; video and screenshots are not consumed. The harness converts structured API responses into complete, deterministic, format-valid WMT26 Task 1 artifacts through truncation-aware row retries, conservative JSON and offset recovery, deterministic exact-span deduplication, exact item/system completeness checks against the official input, and mandatory validation before packaging. These safeguards target artifact reliability rather than claiming to improve diagnostic accuracy. The detector uses a seven-axis diagnostic taxonomy covering semantic, linguistic, discourse, and interpersonal errors; an ablation found that its four pragmatic axes provide interpretive structure but change detection accuracy by at most ±0.001 F on the evaluated domain mix. Model and prompt choices were evaluated against WMT25 ESA surrogate gold and WMT22 MQM en-de using the official severity-weighted MPP metric, and several prompt, span, and severity refinements were tested but excluded after failing to improve consistently across benchmarks."
+    },
+    {
+        "question": "Does your system use the provided reference translations in any form? (true|false)",
+        "required": true,
+        "answer": "true"
+    },
+    {
+        "question": "If your system uses reference translations, please briefly describe which types of references you use (native|postedit|pseudo) and how you use them.",
+        "required": false,
+        "answer": "The submitted directions use the provided pseudo references for English-Indonesian and the provided references labeled undefined for the English-Korean QEbreak set. Reference text is included as optional prompt context when present; the system does not otherwise treat reference types differently and remains functional without a reference. No native or postedit references are used in this submission."
+    },
+    {
+        "question": "Is an ensemble (true|false)",
+        "required": true,
+        "answer": "false"
+    },
+    {
+        "question": "Is supervised (did you fine-tune your model?) (true|false)",
+        "required": true,
+        "answer": "false"
+    },
+    {
+        "question": "Is based on open-weight models (true|false)",
+        "required": true,
+        "answer": "false"
+    },
+    {
+        "question": "Model size",
+        "required": false,
+        "answer": "Not publicly disclosed (closed-source API model)"
+    },
+    {
+        "question": "Closed-source model name (e.g. GPT-5.6-luna)",
+        "required": false,
+        "answer": "GPT-5.5 (reasoning_effort=none)"
+    },
+    {
+        "question": "Closed-source API provider (Who is the provider/host for this API? e.g. AWS/Azure/OpenAI/OpenRouter)",
+        "required": false,
+        "answer": "OpenAI"
+    },
+    {
+        "question": "Is the submitted system open-source? (true|false)",
+        "required": true,
+        "answer": "false"
+    },
+    {
+        "question": "Provide link to the submitted system if you have any",
+        "required": false,
+        "answer": ""
+    },
+    {
+        "question": "Allow automatic conversion from Task 1 to Task 2 (true|false)",
+        "required": true,
+        "answer": "true"
+    },
+    {
+        "question": "Allow automatic conversion from Task 1 to Task 3 (true|false)",
+        "required": true,
+        "answer": "true"
+    },
+    {
+        "question": "Allow automatic conversion from Task 2 to Task 3 (true|false)",
+        "required": true,
+        "answer": "false"
+    },
+    {
+        "question": "Task 2 to 3 conversion threshold (everything above this score will be regarded as error-free)",
+        "required": false,
+        "answer": ""
+    },
+    {
+        "question": "Should the above threshold be inclusive (≥) or exclusive (>)?",
+        "required": false,
+        "answer": ""
+    }
+]

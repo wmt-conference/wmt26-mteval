@@ -1,0 +1,1013 @@
+{
+  "description": "Unchanged upstream definitions, AST fingerprints ignoring docstrings/import paths. Output targets remain the independent numerical regression contract.",
+  "definitions": [
+    {
+      "file": "task1_conversion.py",
+      "definition": "Task1Decision",
+      "ast_sha256": "eecd5c0b348efea3ff25f027991deb0765ff9952f01f4f0e49b83be23f02c995",
+      "origin": "src/task3_analysis/task1_conversion.py"
+    },
+    {
+      "file": "task1_conversion.py",
+      "definition": "Task1ConversionResult",
+      "ast_sha256": "a3c1e6470799e34c0b5e6e729d61346fddc9707a0c2b3632ff899f14854d720e",
+      "origin": "src/task3_analysis/task1_conversion.py"
+    },
+    {
+      "file": "task1_conversion.py",
+      "definition": "task1_input_digest",
+      "ast_sha256": "0d7ecc87b2021de0af31f72de69f935595875eab7fdf2657bb34687b45778749",
+      "origin": "src/task3_analysis/task1_conversion.py"
+    },
+    {
+      "file": "task1_conversion.py",
+      "definition": "_local_task1_submission_ids",
+      "ast_sha256": "7ecbcf1eb126697ed62d5a871626e8b8e452a7dd5b422d28e46a23f040ceab1d",
+      "origin": "src/task3_analysis/task1_conversion.py"
+    },
+    {
+      "file": "task1_conversion.py",
+      "definition": "load_task1_submission_ids",
+      "ast_sha256": "c07696595dc43e59bc39c4759049bba0ccb1d3cb71ea366f932e8cd5e22beb66",
+      "origin": "src/task3_analysis/task1_conversion.py"
+    },
+    {
+      "file": "task1_conversion.py",
+      "definition": "inspect_task1_decision",
+      "ast_sha256": "45cb015ff0d0b7e71b957b4de54fcfcaf9e48d8f0a8467685b8e2e8056be9735",
+      "origin": "src/task3_analysis/task1_conversion.py"
+    },
+    {
+      "file": "task1_conversion.py",
+      "definition": "build_task1_display_names",
+      "ast_sha256": "2ffc2b277efd40bf34d020346a0ac52afbc0d713d43d72ff3e1177622f35d7b4",
+      "origin": "src/task3_analysis/task1_conversion.py"
+    },
+    {
+      "file": "task1_conversion.py",
+      "definition": "_is_clean_task1_judgment",
+      "ast_sha256": "9f07473c6fc7d33e43f6404d80a2e03a4a9876323d07aa1c2cba9b9e64055536",
+      "origin": "src/task3_analysis/task1_conversion.py"
+    },
+    {
+      "file": "task1_conversion.py",
+      "definition": "convert_task1_and_evaluate",
+      "ast_sha256": "013577749543fa424bb67fe8053b55edcce39190a981324cbdc294726052922b",
+      "origin": "src/task3_analysis/task1_conversion.py"
+    },
+    {
+      "file": "canonical_reference.py",
+      "definition": "_severity",
+      "ast_sha256": "49e140f5de9204d3c5dbdf42a57359e6b29c51876407ef1a77fab4a789c2bc18",
+      "origin": "src/task3_analysis/canonical_reference.py"
+    },
+    {
+      "file": "canonical_reference.py",
+      "definition": "_assessment",
+      "ast_sha256": "94518f8ffd0b68701f36b32289a057fcadc4b059da04b40655bfc407c8009529",
+      "origin": "src/task3_analysis/canonical_reference.py"
+    },
+    {
+      "file": "canonical_reference.py",
+      "definition": "load_canonical_human_reference",
+      "ast_sha256": "bc483afd037d2f7eced8038f53382826743dd482928ab0116ca80ec531e40841",
+      "origin": "src/task3_analysis/canonical_reference.py"
+    },
+    {
+      "file": "submissions.py",
+      "definition": "_validate_prediction_map",
+      "ast_sha256": "a79865073fde3d837a38051430fd87f4834c92b8ef46e956d59bdfef6e8e06b9",
+      "origin": "src/task3_analysis/submissions.py"
+    },
+    {
+      "file": "submissions.py",
+      "definition": "validate_model_card",
+      "ast_sha256": "84381ffc1f229e2249d426dc16824b03463735b858246f881c90bbc174b36120",
+      "origin": "src/task3_analysis/submissions.py"
+    },
+    {
+      "file": "task2_reporting.py",
+      "definition": "_conversion_info_rows",
+      "ast_sha256": "0c563107b79cb253a1459c1c77a5f3ff2d0eb7bce5fd8fb5aa0468dcca65d816",
+      "origin": "src/task3_analysis/task2_reporting.py"
+    },
+    {
+      "file": "task2_reporting.py",
+      "definition": "_metric_rows",
+      "ast_sha256": "668b437c05e21e9e93f188deb6144ac82f718a1c8646fbc663fb6dfdf527f688",
+      "origin": "src/task3_analysis/task2_reporting.py"
+    },
+    {
+      "file": "task2_reporting.py",
+      "definition": "_table_rows",
+      "ast_sha256": "09ed7dbfc143e7d4a5a0198578b5bc42e20838574e771d002656b10bf67328a7",
+      "origin": "src/task3_analysis/task2_reporting.py"
+    },
+    {
+      "file": "task2_reporting.py",
+      "definition": "_write_conversion_markdown",
+      "ast_sha256": "499a4fbb0567ec2a073a15792d046533515ba9a0761c1c0c1aa7a82cb11b6e61",
+      "origin": "src/task3_analysis/task2_reporting.py"
+    },
+    {
+      "file": "io.py",
+      "definition": "DataError",
+      "ast_sha256": "868e15ac572f01993e3e1d2b1681956800c0ae83304ecb3dcda8a99f87fcc7ca",
+      "origin": "src/task3_analysis/io.py"
+    },
+    {
+      "file": "io.py",
+      "definition": "DuplicateKeyError",
+      "ast_sha256": "b70b346bb04111817060054c0c04573ff579bfbf2f4c4dd353bd3ced39473af0",
+      "origin": "src/task3_analysis/io.py"
+    },
+    {
+      "file": "io.py",
+      "definition": "_reject_duplicate_keys",
+      "ast_sha256": "66249d82b06076b6c786cb8cb6796d98d234d8ece3e999028eabfeb7d793ac62",
+      "origin": "src/task3_analysis/io.py"
+    },
+    {
+      "file": "io.py",
+      "definition": "_reject_nonstandard_constant",
+      "ast_sha256": "87ebeee46e039bf4e3ab25f80a315c1c53a596d605c1cdede9695465df9aeef7",
+      "origin": "src/task3_analysis/io.py"
+    },
+    {
+      "file": "io.py",
+      "definition": "parse_json",
+      "ast_sha256": "d3da7e76f5aab54d353ba053ab84ec7d6f7e89708f47624d1e8730a1e40191f3",
+      "origin": "src/task3_analysis/io.py"
+    },
+    {
+      "file": "io.py",
+      "definition": "load_json",
+      "ast_sha256": "25d79ef7f10916e762f186ef5fb36bc19b1368732269495efc3ac0f5030f1cec",
+      "origin": "src/task3_analysis/io.py"
+    },
+    {
+      "file": "io.py",
+      "definition": "iter_jsonl_text",
+      "ast_sha256": "f726753707d625bd8e4169c0702a50edcebe5dcf28e89c3f6166ed6f10518701",
+      "origin": "src/task3_analysis/io.py"
+    },
+    {
+      "file": "io.py",
+      "definition": "iter_jsonl",
+      "ast_sha256": "997888faa80ba6ee249966fcf4aff0e796bad14a6828e2c5831d8b6cb4b7691f",
+      "origin": "src/task3_analysis/io.py"
+    },
+    {
+      "file": "io.py",
+      "definition": "parse_item_id",
+      "ast_sha256": "ba6a3b3b9ef15dfa345f45ed80136bdfd9435f62e301ed17dca59d0e046c68aa",
+      "origin": "src/task3_analysis/io.py"
+    },
+    {
+      "file": "io.py",
+      "definition": "sha256_bytes",
+      "ast_sha256": "7224332505e6c8b4edee6c67951cb5a3b8c44896337e084d9b450b2a280393f7",
+      "origin": "src/task3_analysis/io.py"
+    },
+    {
+      "file": "io.py",
+      "definition": "sha256_file",
+      "ast_sha256": "cd39635ab16795a358fd995ac15dca3bba3e0f7a776d3e028a7df5af9b5819da",
+      "origin": "src/task3_analysis/io.py"
+    },
+    {
+      "file": "io.py",
+      "definition": "find_file_by_sha256",
+      "ast_sha256": "68a9a1c5463ee95d2edcef44bddcf807958021f6773fc5000c207c870756ce97",
+      "origin": "src/task3_analysis/io.py"
+    },
+    {
+      "file": "io.py",
+      "definition": "canonical_json_sha256",
+      "ast_sha256": "a7ee2105535ebcb38ee985b8a238d4da4af0f50696a5d089959ddf78609ac668",
+      "origin": "src/task3_analysis/io.py"
+    },
+    {
+      "file": "io.py",
+      "definition": "load_submission_specs",
+      "ast_sha256": "adceb7332059e9e8c673dc0016e5ac48c06dd6136df9ada56cc7f6cb6a753275",
+      "origin": "src/task3_analysis/io.py"
+    },
+    {
+      "file": "io.py",
+      "definition": "find_submission_archive",
+      "ast_sha256": "63ff25720e942fd1b007d48328d555b906a288e3436b5bc740f20c073ef69bb6",
+      "origin": "src/task3_analysis/io.py"
+    },
+    {
+      "file": "io.py",
+      "definition": "read_archive_member",
+      "ast_sha256": "da160958b565e23b27df1c57469e0f907d261efd37267db05b2504f6dc9c1de3",
+      "origin": "src/task3_analysis/io.py"
+    },
+    {
+      "file": "task1_reporting.py",
+      "definition": "_conversion_info_rows",
+      "ast_sha256": "b9db00ec6d1b24d040705da3021afe60bf802336a6a1cbad7932948f6c5d34f5",
+      "origin": "src/task3_analysis/task1_reporting.py"
+    },
+    {
+      "file": "task1_reporting.py",
+      "definition": "_metric_rows",
+      "ast_sha256": "5bd97c16f3b99e4b0d3d564f52d2e45a4df8876e28146f73bacee2f8cc3c548c",
+      "origin": "src/task3_analysis/task1_reporting.py"
+    },
+    {
+      "file": "task1_reporting.py",
+      "definition": "_table_rows",
+      "ast_sha256": "f380bf09be5ba84e41c8cc34c560c9e3232dee364907308e4c90d3209a6d1df9",
+      "origin": "src/task3_analysis/task1_reporting.py"
+    },
+    {
+      "file": "task1_reporting.py",
+      "definition": "_write_conversion_markdown",
+      "ast_sha256": "1afc050250497a8021eb2802e5b6de30eefd90b04a1f33254f9e29d318dd4bd7",
+      "origin": "src/task3_analysis/task1_reporting.py"
+    },
+    {
+      "file": "models.py",
+      "definition": "ParsedItemId",
+      "ast_sha256": "51a16cf4d1fac20f8ef83c4447bfb22503110bf072398c9b785a9d107afb0f01",
+      "origin": "src/task3_analysis/models.py"
+    },
+    {
+      "file": "models.py",
+      "definition": "TestItem",
+      "ast_sha256": "e55b416c9993c03b671a88a2b8e1a9c115efb1ea8cbb22de39d619edb74ac0dd",
+      "origin": "src/task3_analysis/models.py"
+    },
+    {
+      "file": "models.py",
+      "definition": "OfficialInventory",
+      "ast_sha256": "210ef2e73a157d29e9add95c2be619f40e648e4b63a810c87fe117ef16b8af38",
+      "origin": "src/task3_analysis/models.py"
+    },
+    {
+      "file": "models.py",
+      "definition": "SubmissionSpec",
+      "ast_sha256": "f4c3aaba0563aa5cb9f751d645102c8b8313cc87fef842cfa37b833846963fd9",
+      "origin": "src/task3_analysis/models.py"
+    },
+    {
+      "file": "models.py",
+      "definition": "NormalizedSpan",
+      "ast_sha256": "e1619d490be682d947cb2c26cfedf1cc20d3aab405dded5d6388473d5c8dd4bb",
+      "origin": "src/task3_analysis/models.py"
+    },
+    {
+      "file": "models.py",
+      "definition": "HumanJudgment",
+      "ast_sha256": "8f573dbb9cc8fbc811759d5df0049f74b576e3884e0315a870055c3cd7bbb342",
+      "origin": "src/task3_analysis/models.py"
+    },
+    {
+      "file": "models.py",
+      "definition": "HumanReference",
+      "ast_sha256": "1425afef7a7a9b9fde95725db80d1dd8de604a4eca311e5b4cc69f1777be5c9d",
+      "origin": "src/task3_analysis/models.py"
+    },
+    {
+      "file": "models.py",
+      "definition": "SubmissionMetadata",
+      "ast_sha256": "d1a7851b550f11f78b52700c04e58878424103f2d46e77afef90ad93c6a74fea",
+      "origin": "src/task3_analysis/models.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "short_pair",
+      "ast_sha256": "61d2b3e7d8f8ab778646b5244f8f5a82d6409068cae77735a029828f7d9d7883",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "pair_slug",
+      "ast_sha256": "23af32284a327d343b5a69981ce22d181d23d6c16a4cf63e679e0884bb22531b",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "escape",
+      "ast_sha256": "7a97522e49d554e4f2ce3b1477bc24a3f92bc5a3a6a8ad476786367f4747a17a",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "breakable",
+      "ast_sha256": "cf2bcc1dc7552a2192d34aa3db8fd89206fd179f153f19407e5a2921fb2d42e1",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "fmt",
+      "ast_sha256": "9a3f5f26fa5476618f4608233f8ad3aebca6eecc266c277834d259642074e31e",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "load_reference_flags",
+      "ast_sha256": "f70771c42a4efce58cbfc0043c1a41cb5a65b6764621244a9438c4666b0d5da8",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "load_rows",
+      "ast_sha256": "967690a176d516acb7d811ef7990a79b948b6ac67a983278b1ee6617ac23005b",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "metric_key",
+      "ast_sha256": "d2120d3333c5d9f29b844f52d90223b8963ea369eb5e6f1965dbdc1e34058f80",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "load_clusters",
+      "ast_sha256": "7df5e0cde5f69b0e414fab28f0184b2ad8bbe967522006a7b07ba871e0883804",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "load_summary",
+      "ast_sha256": "d38673dd64a07229944c13f206286b09ea961c334b6db29c293d25ad57efdcb2",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "macro_average",
+      "ast_sha256": "85dedfa8c33d2de45c2af5c0652881b717e9ce21566f580f1a4c8a0f9686f0b0",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "assign_ranks",
+      "ast_sha256": "6b38b747b6cd4eccfd122cdfcc8921ec7a0b3553b231f57fa6cd6be95ad49bfe",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "pretty_submission",
+      "ast_sha256": "a2ec1249d8489c7d6932a10e864ca8c317466cfd581a027c3c9d443b9e2a58a2",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "pretty_model",
+      "ast_sha256": "c7f64dc6d8af268b89529a2de96855f1fe008be03ff1fd2ac9b784932e233a59",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "is_ensemble",
+      "ast_sha256": "c5b18b45e7228d08e1d8439b092e02aacccd4500c650c26f0ad6bb7c627a817c",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "ensemble_components",
+      "ast_sha256": "c6249e54dec191b5a8e61b80fb7931199f99108e76ba291c6de28f616fe3c3cc",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "assign_org_colors",
+      "ast_sha256": "dcd8a845468ec9452721cf33b961c385b2ee962c3813a7a028bea932383ca097",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "TableStyle",
+      "ast_sha256": "f19cb2d871cc5d5a4669105a9ff36e8b0e177b34c4bd1c8928dbeaff59176db0",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "num",
+      "ast_sha256": "fc9343243342b3a1144f777f0e32d1e2ded5cecf47552c4f9a4c2b463b149d9f",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "centered",
+      "ast_sha256": "768d6707a9412fa15f19d77f7ed07b3d6b58f617247315ec107940807a6e0062",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "macro_table",
+      "ast_sha256": "97d6abf216d3179e1a2bc8ac89ff58c107f635371e02dbe98a0bdb75ef433270",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "per_pair_mcc_table",
+      "ast_sha256": "34bc46dcf40eb4cb78940ede0e9ea4b31ad6c643dea60a0f887851aa11b47964",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "build_omitted",
+      "ast_sha256": "511be120aeb6f2073daa4661d9e4f4395d9dafd6bbfeabab52d5905893c701e9",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "build_ranking",
+      "ast_sha256": "3f52f8465b022e059568c5ea94897cb073ab37590272dea9019713d1435c6406",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "omitted_note",
+      "ast_sha256": "c64fd4c5288c91379a92666bc48813615be6fd5c6fa2e355ad6c953c641d068e",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "per_language_table",
+      "ast_sha256": "8edb6a2e0c43e902c6c80a7664e9399217463bfa8fff023bcedea1feb4627581",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "load_descriptions",
+      "ast_sha256": "51cc307cf0425a0037d4f826ab3846eae57e7bc148c0dd3d51cfca9a5da32a07",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "edited",
+      "ast_sha256": "65e800eb2aefb1d1e203bad8e8aa51c9be17cca1f240b627bb4cfd0a9cefd9dc",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "quote",
+      "ast_sha256": "4e154272a3f2ea4caf937788d98c41702f00844991e8e8d6adf5ac61ebe52074",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "description_entries",
+      "ast_sha256": "f7871ca4df68ef2ff9e774f344b185f04155c462f80f002b17984a7c494955fd",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "join_names",
+      "ast_sha256": "57bd8c9da00127c99dc66ba866a149ae395e09ab77652f646cab8995e86e9312",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "sentences",
+      "ast_sha256": "8c701c8dc219604d758a3cd15ea0c04605a3f96b80ae06182d66dfb4c6d8bf8f",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "shared_run",
+      "ast_sha256": "26cb640105c88ee35b6e69153bf8275fddff59bc55c6e2ad18adc6977dc24249",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "lead_in",
+      "ast_sha256": "2e929d0b8cf647130b66d9aca460f33bd9fadcb467d4bc5e3787758673dc7dbb",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "entry_paragraph",
+      "ast_sha256": "43a2971d7bf99b37e87888aef5b41cf6f7c6a705783d2fd126393d68dd86cb3a",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "paper_tables.py",
+      "definition": "descriptions_document",
+      "ast_sha256": "f20bc3dba8877b4481fe3d9941009f1e98779446ccbddc01ab5f1bd1124d4b30",
+      "origin": "run_latex_tables.py"
+    },
+    {
+      "file": "reporting.py",
+      "definition": "write_csv",
+      "ast_sha256": "d33eb9c3fc6ddf8e12ea5e5a68f5439b41e6f575eac3ae6bcf66bde18a0abbb0",
+      "origin": "src/task3_analysis/reporting.py"
+    },
+    {
+      "file": "reporting.py",
+      "definition": "write_json",
+      "ast_sha256": "b7d4fc7bc347d8616f5d38eb32e894acc276c7fbdd437f164432f7f2ab410cef",
+      "origin": "src/task3_analysis/reporting.py"
+    },
+    {
+      "file": "reporting.py",
+      "definition": "human_reference_rows",
+      "ast_sha256": "ca8b67c3b65b8e361f7f46e5e5547de717000324fed61e56a404ef6ef03bf8ca",
+      "origin": "src/task3_analysis/reporting.py"
+    },
+    {
+      "file": "reporting.py",
+      "definition": "build_display_names",
+      "ast_sha256": "2031d8e2d30efcc975ec8958e88c2a2a861ca46b38740b3e04774a9d7ea703a2",
+      "origin": "src/task3_analysis/reporting.py"
+    },
+    {
+      "file": "reporting.py",
+      "definition": "_add_reference_columns",
+      "ast_sha256": "556b99a965bb17e6af0ded61890184ee5b5415ac6d263155f66c3a37f2542b79",
+      "origin": "src/task3_analysis/reporting.py"
+    },
+    {
+      "file": "reporting.py",
+      "definition": "table_rows",
+      "ast_sha256": "8af82f2acfc2ef99004d19ba24d7c078133305c834e2b6457dc2636abfc171c7",
+      "origin": "src/task3_analysis/reporting.py"
+    },
+    {
+      "file": "reporting.py",
+      "definition": "rank_pair_rows",
+      "ast_sha256": "cee6d86e7c143d85f84581eadf6c3556180d4fcd914c75f357b1d24e7cc1fee3",
+      "origin": "src/task3_analysis/reporting.py"
+    },
+    {
+      "file": "reporting.py",
+      "definition": "_format_metric",
+      "ast_sha256": "b863e508af609a1342f71d98ab68f6a1a96d192f18e1a35085fc701d5041609e",
+      "origin": "src/task3_analysis/reporting.py"
+    },
+    {
+      "file": "reporting.py",
+      "definition": "write_markdown_tables",
+      "ast_sha256": "cfcdbb24cbc93cf6a18aaddb5e7ba461b129734f19e2d85f5bcc3a01447c55a1",
+      "origin": "src/task3_analysis/reporting.py"
+    },
+    {
+      "file": "inventory.py",
+      "definition": "load_official_inventory",
+      "ast_sha256": "7d6abe33fa783ca9df856e3e32976822fde62fc6d4e21c996c9031134297a178",
+      "origin": "src/task3_analysis/inventory.py"
+    },
+    {
+      "file": "task2_conversion.py",
+      "definition": "ConversionDecision",
+      "ast_sha256": "4f29b1f0da391e776aa9113924336129c64397baf5f313c694d4ef0195dc187c",
+      "origin": "src/task3_analysis/task2_conversion.py"
+    },
+    {
+      "file": "task2_conversion.py",
+      "definition": "ConversionResult",
+      "ast_sha256": "69b5042fb501b9d10b10cec101457154ad832f68e3e24508f5d28289e4a3b3f8",
+      "origin": "src/task3_analysis/task2_conversion.py"
+    },
+    {
+      "file": "task2_conversion.py",
+      "definition": "task2_input_digest",
+      "ast_sha256": "ac6b407c3ef287fa4813128c77b10a1611c764b6fa1b418048b31185bd2fc81c",
+      "origin": "src/task3_analysis/task2_conversion.py"
+    },
+    {
+      "file": "task2_conversion.py",
+      "definition": "load_task2_submission_ids",
+      "ast_sha256": "e7939a4c6883397f10d1ae8e7edd5bfa50f044b52aa9e2275f3295f38c12b860",
+      "origin": "src/task3_analysis/task2_conversion.py"
+    },
+    {
+      "file": "task2_conversion.py",
+      "definition": "_parse_threshold",
+      "ast_sha256": "66db83ab532b5c6677fa4d634e822125a667c830fac791d6976f3be0b178f65d",
+      "origin": "src/task3_analysis/task2_conversion.py"
+    },
+    {
+      "file": "task2_conversion.py",
+      "definition": "_parse_inclusive",
+      "ast_sha256": "6eae5a2e9691223afbc0e59c51f5f3e9706e9b779fc1bf4667bb73e0b485f2b6",
+      "origin": "src/task3_analysis/task2_conversion.py"
+    },
+    {
+      "file": "task2_conversion.py",
+      "definition": "build_conversion_display_names",
+      "ast_sha256": "5802869c7ace5d512691d7398ada9d295238fe97b70df4e0c733113de7540351",
+      "origin": "src/task3_analysis/task2_conversion.py"
+    },
+    {
+      "file": "task2_conversion.py",
+      "definition": "_numeric_scores",
+      "ast_sha256": "d3b636d4ca4ce94726f3b57b9d3d522ab8f9654d9a60618e8e1113ef38446903",
+      "origin": "src/task3_analysis/task2_conversion.py"
+    },
+    {
+      "file": "task2_conversion.py",
+      "definition": "convert_and_evaluate",
+      "ast_sha256": "c676c4b19dbe0fabc997f0fdffd29ff16f4bdd44846d5f28e1d7409c15611cac",
+      "origin": "src/task3_analysis/task2_conversion.py"
+    },
+    {
+      "file": "model_cards.py",
+      "definition": "load_answers",
+      "ast_sha256": "551990316308a4654a581bac9b194e597ee86e847f5c2acdb7ca3831d1c0fd2d",
+      "origin": "src/task3_analysis/model_cards.py"
+    },
+    {
+      "file": "model_cards.py",
+      "definition": "required_text",
+      "ast_sha256": "fa7e5fb0db616f6fe0ec99982327d746cc827b8842b6818d43ac881c0711308a",
+      "origin": "src/task3_analysis/model_cards.py"
+    },
+    {
+      "file": "model_cards.py",
+      "definition": "parse_boolean",
+      "ast_sha256": "1dadf24e951eb1ae47e362c7339ba9c85c14c49180c8bce90d569d2216e481e1",
+      "origin": "src/task3_analysis/model_cards.py"
+    },
+    {
+      "file": "model_cards.py",
+      "definition": "raw_answer",
+      "ast_sha256": "0275823eb18cd08e6ed2a86181c67f45012b77bc491880c2e45fb7f36eb22f52",
+      "origin": "src/task3_analysis/model_cards.py"
+    },
+    {
+      "file": "model_cards.py",
+      "definition": "declared_base_model",
+      "ast_sha256": "2f7bf9d6e1c3520aa1df5fa447276d1abb57dba8933c531d7fd43a68031c04d4",
+      "origin": "src/task3_analysis/model_cards.py"
+    },
+    {
+      "file": "model_cards.py",
+      "definition": "load_base_model_overrides",
+      "ast_sha256": "2a421c1ee2076e054da261093592efb1da21121a9f27760874513dfdec921cc6",
+      "origin": "src/task3_analysis/model_cards.py"
+    },
+    {
+      "file": "model_cards.py",
+      "definition": "resolved_base_model",
+      "ast_sha256": "4adf973b860a1c25a4c005fdb43b8a32f1a705777cb7695ba2ae09bf58307972",
+      "origin": "src/task3_analysis/model_cards.py"
+    },
+    {
+      "file": "metrics.py",
+      "definition": "PairObservations",
+      "ast_sha256": "92ecfb9d7ef309b1ca72bb0c3604f6f83e906b670cc8cc3559de8730cb9ce7bd",
+      "origin": "src/task3_analysis/metrics.py"
+    },
+    {
+      "file": "significance.py",
+      "definition": "_Item",
+      "ast_sha256": "d3a974f56c6b95ce6f5b887dfbec002ba6457f0cccdd1c842f90c033d32555e9",
+      "origin": "significance-test/CLEAN_CODE/src/scoring.py"
+    },
+    {
+      "file": "significance.py",
+      "definition": "_System",
+      "ast_sha256": "63ff08bf383e74e13d561658e5fba36d3f308c97da487b8aa35d1c8baf080901",
+      "origin": "significance-test/CLEAN_CODE/src/scoring.py"
+    },
+    {
+      "file": "significance.py",
+      "definition": "ScoredSystem",
+      "ast_sha256": "e8aaeeebdfe59b5217bc1663f738edabc83078800bb128dcb006757379ea86c7",
+      "origin": "significance-test/CLEAN_CODE/src/scoring.py"
+    },
+    {
+      "file": "significance.py",
+      "definition": "_Scores",
+      "ast_sha256": "582ed0996b41616675f90edf5ede8e22050268843756577fcb7c7c869dd86541",
+      "origin": "significance-test/CLEAN_CODE/src/scoring.py"
+    },
+    {
+      "file": "significance.py",
+      "definition": "_Dataset",
+      "ast_sha256": "8ee7858369801cadb309b1a92bc5b272704d7ec3731c88c2c10ff9938163d2d2",
+      "origin": "significance-test/CLEAN_CODE/src/scoring.py"
+    },
+    {
+      "file": "significance.py",
+      "definition": "_item_parts",
+      "ast_sha256": "10556a342527f3f1ae7852dce0c363f60729351e4b603a088e953780932b3c85",
+      "origin": "significance-test/CLEAN_CODE/src/scoring.py"
+    },
+    {
+      "file": "significance.py",
+      "definition": "_is_clean",
+      "ast_sha256": "d5ae87858e3d472e32deba359bc20306e1338fe902a7b79ba3711c84f6cc7f05",
+      "origin": "significance-test/CLEAN_CODE/src/scoring.py"
+    },
+    {
+      "file": "significance.py",
+      "definition": "_predictions",
+      "ast_sha256": "3e1766f4b9bc2cdfae6eb52f65a769c1f7ed7a4c9b9ce65bdbc92b52eb300b1d",
+      "origin": "significance-test/CLEAN_CODE/src/scoring.py"
+    },
+    {
+      "file": "significance.py",
+      "definition": "_mcc",
+      "ast_sha256": "b40d8a3cd527d4cfc9d3fa9ce8e827a36186767ad2e12051e6dbe518616eef4b",
+      "origin": "significance-test/CLEAN_CODE/src/scoring.py"
+    },
+    {
+      "file": "significance.py",
+      "definition": "_scores",
+      "ast_sha256": "a6ec26d51413971810eeb934f16b80086553d14f1e2395120360b94c306db457",
+      "origin": "significance-test/CLEAN_CODE/src/scoring.py"
+    },
+    {
+      "file": "significance.py",
+      "definition": "_pair_counts",
+      "ast_sha256": "e891b1db64dc60d9030251c576f7d8e52be2da8fe1d4b365910106d100cef901",
+      "origin": "significance-test/CLEAN_CODE/src/scoring.py"
+    },
+    {
+      "file": "significance.py",
+      "definition": "_permutation_p_values",
+      "ast_sha256": "ebe849261a9e8ee0c3f0cb013a2b906ddb65c532c1e39b587b2e87cd2c65b4ed",
+      "origin": "significance-test/CLEAN_CODE/src/scoring.py"
+    },
+    {
+      "file": "significance.py",
+      "definition": "_seed",
+      "ast_sha256": "1624ef863250b6cf694a0e14178a2049fcdc70186da67083e81dbd824ffe51e6",
+      "origin": "significance-test/CLEAN_CODE/src/scoring.py"
+    },
+    {
+      "file": "significance.py",
+      "definition": "_ranked_results",
+      "ast_sha256": "6e7ae8d1cc349a76755381da8196816ca4883836ec9c61631977a7fd04027e51",
+      "origin": "significance-test/CLEAN_CODE/src/scoring.py"
+    },
+    {
+      "file": "threshold/reporting.py",
+      "definition": "write_csv",
+      "ast_sha256": "a588268a613546e7c2658e24a2cdb5309c9568ce128e8bdf102135aa101551fa",
+      "origin": "experiments/task2_threshold/reporting.py"
+    },
+    {
+      "file": "threshold/reporting.py",
+      "definition": "write_result_tables",
+      "ast_sha256": "40815f0afd2afff8bb0f18098a68ef9325b010e642a4e77870e9be440c11f4a5",
+      "origin": "experiments/task2_threshold/reporting.py"
+    },
+    {
+      "file": "threshold/reporting.py",
+      "definition": "fmt_threshold",
+      "ast_sha256": "46c1b5261c6472e3915caf04edf6a971e36eb0ac83f72911bf83b1ec7e93f335",
+      "origin": "experiments/task2_threshold/reporting.py"
+    },
+    {
+      "file": "threshold/reporting.py",
+      "definition": "fmt_mcc",
+      "ast_sha256": "1a5f521a7a19fb89db176fad049948db46ec8e2cafb55c25cef1d6b18cfa0751",
+      "origin": "experiments/task2_threshold/reporting.py"
+    },
+    {
+      "file": "threshold/reporting.py",
+      "definition": "markdown_report",
+      "ast_sha256": "2295ad91962e367d1e473e7791bbf332a57fe827e54d183536f7b53fa101af9a",
+      "origin": "experiments/task2_threshold/reporting.py"
+    },
+    {
+      "file": "threshold/plotting.py",
+      "definition": "select_language_pairs",
+      "ast_sha256": "d651b90eb20a8140ef0e12d31948c07d9a5b4de9c50269e1136af77d2a716fd2",
+      "origin": "experiments/task2_threshold/plotting.py"
+    },
+    {
+      "file": "threshold/plotting.py",
+      "definition": "plot_slug",
+      "ast_sha256": "673f215d33b7ed13dfc4318b26036615f59fd5a405f096e3bea7afa654370992",
+      "origin": "experiments/task2_threshold/plotting.py"
+    },
+    {
+      "file": "threshold/plotting.py",
+      "definition": "save_pdf",
+      "ast_sha256": "128ae87de967f8bd36385383afbb868ca8c3e7de4a4bbca4ec90b821a3a7f021",
+      "origin": "experiments/task2_threshold/plotting.py"
+    },
+    {
+      "file": "threshold/plotting.py",
+      "definition": "write_delta_plot",
+      "ast_sha256": "975089c0c9d59d691ebb8953fa8f732195ef3d9026ea1b2593f279db3eed0735",
+      "origin": "experiments/task2_threshold/plotting.py"
+    },
+    {
+      "file": "threshold/plotting.py",
+      "definition": "write_summary_plots",
+      "ast_sha256": "742e10ebca13826d3786288a5a4c8496c039e5722baf2eaa31053c963c6e3939",
+      "origin": "experiments/task2_threshold/plotting.py"
+    },
+    {
+      "file": "threshold/plotting.py",
+      "definition": "write_paper_gain_plot",
+      "ast_sha256": "9d891113d010287be189a76e2a03d0f8462eba2d332002688e7df815f7ab5533",
+      "origin": "experiments/task2_threshold/plotting.py"
+    },
+    {
+      "file": "threshold/plotting.py",
+      "definition": "threshold_x",
+      "ast_sha256": "4da39f78a8eab4480bf359ee6086319e18e6b71b33e3b17e5860f9c79d6472ad",
+      "origin": "experiments/task2_threshold/plotting.py"
+    },
+    {
+      "file": "threshold/plotting.py",
+      "definition": "plottable_curve_points",
+      "ast_sha256": "90744f4aba286603ec57fc80e77f5d665fc9b302e79a016e70bcf320d6451cdf",
+      "origin": "experiments/task2_threshold/plotting.py"
+    },
+    {
+      "file": "threshold/plotting.py",
+      "definition": "plot_legend",
+      "ast_sha256": "734ddbb6a03b1aa25ab4090eaa46f8b29adc779ecd35b5f410227191488f10fc",
+      "origin": "experiments/task2_threshold/plotting.py"
+    },
+    {
+      "file": "threshold/plotting.py",
+      "definition": "paper_plot_legend",
+      "ast_sha256": "915024c35f8cf27ea91c3f68f36ea2529eb2422995994aaaf2838d8521f153df",
+      "origin": "experiments/task2_threshold/plotting.py"
+    },
+    {
+      "file": "threshold/plotting.py",
+      "definition": "select_results_by_id",
+      "ast_sha256": "227a254176d6185dcf633f54ba8e475affc51a28bce5498e60bb89e039d199d1",
+      "origin": "experiments/task2_threshold/plotting.py"
+    },
+    {
+      "file": "threshold/plotting.py",
+      "definition": "short_pair_label",
+      "ast_sha256": "6fa3b300cd327329c6c1df48e950df22791959f0968243465057baea0fd228a7",
+      "origin": "experiments/task2_threshold/plotting.py"
+    },
+    {
+      "file": "threshold/plotting.py",
+      "definition": "write_paper_grid_plot",
+      "ast_sha256": "01bd5a04714110ac84f07bfbcdaefca89a8661d57d5d109b74050b9a47516be2",
+      "origin": "experiments/task2_threshold/plotting.py"
+    },
+    {
+      "file": "threshold/plotting.py",
+      "definition": "write_curve_plot",
+      "ast_sha256": "8d5e49b8f6b45c49f963f6137f982750700325b36f426b36718b6275b82e8ba9",
+      "origin": "experiments/task2_threshold/plotting.py"
+    },
+    {
+      "file": "threshold/plotting.py",
+      "definition": "write_curve_plot_set",
+      "ast_sha256": "58e55dd26c4044cee8a7cd332d527baf9ed5860161d75c9f01505ecc2220c3d3",
+      "origin": "experiments/task2_threshold/plotting.py"
+    },
+    {
+      "file": "threshold/plotting.py",
+      "definition": "write_pooled_plots",
+      "ast_sha256": "22ed68a3e80f1adb1020580622fb0d3de91b92b2b59b739c131bfb00ae322afa",
+      "origin": "experiments/task2_threshold/plotting.py"
+    },
+    {
+      "file": "threshold/plotting.py",
+      "definition": "write_language_plots",
+      "ast_sha256": "60002265140e2478d778ebd6676798bde18fde2c56f668e6a1f294af6a130a4c",
+      "origin": "experiments/task2_threshold/plotting.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "Observation",
+      "ast_sha256": "2a491047b1f2dcde5d41c58fa7403de187e8205d905428f1401b76626c9d1972",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "ScoreData",
+      "ast_sha256": "9c87529f68ba1e4c0919476930aad2e6a7d5a6984975fed2b96a888d2c520827",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "CurvePoint",
+      "ast_sha256": "632337af52da44c35b44e4c47d84d650a32acfe3492750ad8d787bef74c7c1f9",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "SweepResult",
+      "ast_sha256": "a1d7285c903e7f358a7617619987975d2bb60bf24c939e698a15c8db0eadb1d1",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "LanguageAnalysis",
+      "ast_sha256": "7a5e9dc88ec2c99af2b2f7f066f58fe6efbc98b7471df5756fea8063d28078b1",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "AnalysisResult",
+      "ast_sha256": "d28d261afc5c6f770a48fc05bb47fc83fe408fe12cb9ebd2a64d81ceacdca095",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "mcc_from_counts",
+      "ast_sha256": "75c9dc802d743646bfb2149794823241cb99545d1849dc26cdfee9f007829778",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "precision_from_counts",
+      "ast_sha256": "3a53167e76269a3caf827210c7bb99eb1215b9dc3d1e5a7e22ebb2f841a5e19a",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "recall_from_counts",
+      "ast_sha256": "c9b7f2f1d05ec8fc3c9a95bf5a3ecb81d4a872bcc491e97807de01961ff99a88",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "confusion",
+      "ast_sha256": "b67a873abe9d8fbfe2799d0cf2af524eda97a4440b8766a79fe2988d06b47b54",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "representative_threshold",
+      "ast_sha256": "9eb5fbc0ddba9c8e658f84d0336814e6fb05d2bb71a01186e4dc3e7d7d9d48e0",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "optimize_threshold",
+      "ast_sha256": "4020ffcea51eac87b271ec02512d856e1409fbc11c109d7d3220783a4b9610e5",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "load_score_data",
+      "ast_sha256": "b15640a901de76be2e0006b1c1b8cab019638994324e1ff4730f13c08b7c162d",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "pair_metrics",
+      "ast_sha256": "e42b53d16caf67e9fe195b8df1ba3872433eeccf8232658e9ebc91d7ff57a71a",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "downsample_curve",
+      "ast_sha256": "c0153e787400cfb294d2c280f930452936360b43d8758edddb91957f2ab230b7",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "analyze_per_language",
+      "ast_sha256": "e19d57d0bae4ed5d6944c1acb2c4dcd84abfe5e9971b4566a3202195d3ecc57e",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "optimize_per_language",
+      "ast_sha256": "342d561650b831c693cfec9b9a9b7c09413fae746da979fea7085c432290de44",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "item_fold",
+      "ast_sha256": "c32ccdb8b21a78181ca371a0cd9b91a120c3d5764c56bb683c748eb205b155ef",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "cross_validated_mcc",
+      "ast_sha256": "fbc4f54b3692925c76e0beeb6f5f74d507f632d6c41f407657ea27707e6e4ab3",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "analyze_system",
+      "ast_sha256": "b1dce110cca5403f06ccd32a6a57d56f3dcb63ec442dadcb4387274b44ca49ee",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "load_official_metrics",
+      "ast_sha256": "37020da5e952069a842895e34ebc9bda3f064bc3cd20c8be4d814da46a6b1be4",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "pooled_metrics_from_official_rows",
+      "ast_sha256": "bb8ba296ccad7a3d7caed8e88abaa98036eec6d1799b1e6e69e406b268fbb9de",
+      "origin": "experiments/task2_threshold/core.py"
+    },
+    {
+      "file": "threshold/core.py",
+      "definition": "verify_declared_result",
+      "ast_sha256": "d7d4c32ffb05b38c0a871b5a15b410a947c250d5cf9aafde5da7e51d9810ca27",
+      "origin": "experiments/task2_threshold/core.py"
+    }
+  ]
+}

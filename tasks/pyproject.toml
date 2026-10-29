@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wmt26-mteval-task1"
+version = "0.1.0"
+description = "Utilities for reproducing the WMT26 Tasks 1, 2, and 3 paper results"
+requires-python = ">=3.12"
+dependencies = [
+  # Shared numerical/plotting versions used for validated Task 3 reproduction.
+  "numpy==2.3.5",
+  "scipy==1.18.1",
+  "matplotlib==3.10.7",
+  "scikit-learn==1.8.0",
+  "tokenizers>=0.20,<1",
+  "pyarrow==23.0.1",
+  "span-mt-metrics-eval @ git+https://github.com/sted19/span-mt-metrics-eval.git@b55b90f8d466f1c44907a8b3629566d21bedee3e",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+wmt26_mteval_task2 = ["evaluators.tsv"]
+wmt26_mteval_task3 = ["*.json", "*.csv", "*.toml", "threshold/templates/*.tex", "threshold/templates/paper_figures/*.tex"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

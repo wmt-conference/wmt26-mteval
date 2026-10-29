@@ -982,6 +982,7 @@ TEXT_DOCS = [
     "instructions/baseline-prompts.md",
     "hf/README.template.md",
     "data/MANIFEST.tsv",
+    "tasks/README.md",
 ]
 
 
@@ -1000,6 +1001,7 @@ BRITISH_DOCS = [
     "docs/RELEASE.md",
     "docs/FORMAT.md",
     "hf/README.template.md",
+    "tasks/README.md",
 ]
 
 
@@ -1042,6 +1044,38 @@ def test_the_readme_gives_the_contact_the_commands_and_the_layout(repo_root):
         HUMEVAL,
     ):
         assert fragment in text, fragment
+
+
+def test_the_readme_points_to_the_task_code_and_its_guide(repo_root):
+    text = (repo_root / "README.md").read_text(encoding="utf-8")
+    assert "## Reproduce the paper's results" in text
+    assert "[`tasks/README.md`](tasks/README.md)" in text
+    assert re.search(r"^tasks/ +the organisers' code", text, flags=re.M)
+
+
+def test_the_task_guide_says_how_to_get_the_data_from_the_hub(repo_root):
+    text = squash((repo_root / "tasks/README.md").read_text(encoding="utf-8"))
+    for fragment in (
+        "wmt/wmt26-mteval-data",
+        "hf auth login",
+        "python ../scripts/download.py --config grand --out data/hub",
+        "a61675552cebb68fb8303cf08a23fbec31e5bb4e0bd26a1fdee1a9bfafc2fb7a",
+        "python scripts/stage_task2_inputs.py",
+    ):
+        assert fragment in text, fragment
+
+
+def test_every_file_the_task_guide_points_to_exists(repo_root):
+    tasks = repo_root / "tasks"
+    text = (tasks / "README.md").read_text(encoding="utf-8")
+    # relative to tasks/: "../scripts/download.py" is the repository's own download script
+    named = r"(?<![\w/.])((?:\.\./)?(?:scripts|docs|src)/[\w./-]+\.(?:py|md))"
+    paths = set(re.findall(named, text))
+    paths |= set(re.findall(r"\]\(([\w./-]+\.(?:md|tsv))\)", text))
+    assert paths
+    assert sorted(p for p in paths if not (tasks / p).exists()) == []
+    for module in re.findall(r"python -m (wmt26_mteval_task3[\w.]*)", text):
+        assert (tasks / "src" / (module.replace(".", "/") + ".py")).is_file(), module
 
 
 @pytest.mark.parametrize("name", ["README.md", "docs/RELEASE.md", "docs/CHANGELOG.md"])

@@ -1,0 +1,92 @@
+[
+    {
+        "question": "Organization name",
+        "required": true,
+        "answer": "AIST"
+    },
+    {
+        "question": "Submission name",
+        "required": true,
+        "answer": "Qwen-based Omission"
+    },
+    {
+        "question": "Submission description (a short paragraph)",
+        "required": true,
+        "answer": "To address the Segment-Level Error Detection and Span Annotation, a reasoning-based LLM with few-shot learning that leverage structure output is applied. The Qwen3 32B model is adapted to generate the output that includes error span detection, classify each span according to its severity, and identify a possible omission for each segment in a completed translation."
+    },
+    {
+        "question": "Does your system use the provided reference translations in any form? (true|false)",
+        "required": true,
+        "answer": "false"
+    },
+    {
+        "question": "If your system uses reference translations, please briefly describe which types of references you use (native|postedit|pseudo) and how you use them.",
+        "required": false,
+        "answer": ""
+    },
+    {
+        "question": "Is an ensemble (true|false)",
+        "required": true,
+        "answer": "false"
+    },
+    {
+        "question": "Is supervised (did you fine-tune your model?) (true|false)",
+        "required": true,
+        "answer": "true"
+    },
+    {
+        "question": "Is based on open-weight models (true|false)",
+        "required": true,
+        "answer": "true"
+    },
+    {
+        "question": "Model size",
+        "required": false,
+        "answer": "27B"
+    },
+    {
+        "question": "Closed-source model name (e.g. GPT-5.6-luna)",
+        "required": false,
+        "answer": ""
+    },
+    {
+        "question": "Closed-source API provider (Who is the provider/host for this API? e.g. AWS/Azure/OpenAI/OpenRouter)",
+        "required": false,
+        "answer": ""
+    },
+    {
+        "question": "Is the submitted system open-source? (true|false)",
+        "required": true,
+        "answer": "true"
+    },
+    {
+        "question": "Provide link to the submitted system if you have any",
+        "required": false,
+        "answer": ""
+    },
+    {
+        "question": "Allow automatic conversion from Task 1 to Task 2 (true|false)",
+        "required": true,
+        "answer": "true"
+    },
+    {
+        "question": "Allow automatic conversion from Task 1 to Task 3 (true|false)",
+        "required": true,
+        "answer": "true"
+    },
+    {
+        "question": "Allow automatic conversion from Task 2 to Task 3 (true|false)",
+        "required": true,
+        "answer": "true"
+    },
+    {
+        "question": "Task 2 to 3 conversion threshold (everything above this score will be regarded as error-free)",
+        "required": false,
+        "answer": ""
+    },
+    {
+        "question": "Should the above threshold be inclusive (≥) or exclusive (>)?",
+        "required": false,
+        "answer": ""
+    }
+]

@@ -36,10 +36,13 @@ them setting the date above, are in [`RELEASE.md`](RELEASE.md).
   baselines, and a round trip of every run against the grand file), `scripts/check_loading.py`
   (every config loads with `datasets` 2.18.0, 4.0.0 and 5.1.0) and `scripts/scrub_model_cards.py`
   (allow-list scrubbing of model cards).
+- `tasks/`: the organisers' code for Tasks 1, 2 and 3, from their repository at commit `a8b9b6f`,
+  with `tasks/README.md`, which runs it from the `grand` config, and
+  `tasks/scripts/stage_task2_inputs.py`, which builds the Task 2 inputs from it.
 
 ### Not in v0.9
 
-Planned for v1.0, which also needs the organisers' scoring code:
+Planned for v1.0, which builds on the organisers' scoring code (now in `tasks/`):
 
 - a gold config and gold columns with the human annotations (General MT's public release is at
   <https://github.com/wmt-conference/wmt26-general-mt/releases/tag/humeval>; the unchanged `grand`

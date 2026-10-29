@@ -19,3 +19,20 @@ jobs:
       - run: uv sync --dev --locked
       - run: uv run ruff check
       - run: uv run pytest -q -m "not fulldata"
+
+  tasks:
+    # The organisers' task code is its own project: Python 3.12 and the pins in tasks/pyproject.toml.
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tasks
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[test]"
+      # This test needs wmt26-grand.parquet, which CI does not download.
+      - run: >-
+          python -m pytest -q
+          --deselect tests/test_task1_significance.py::test_cli_paper_rankings_and_validation

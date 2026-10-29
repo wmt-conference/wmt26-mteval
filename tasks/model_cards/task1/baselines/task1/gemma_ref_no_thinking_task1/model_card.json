@@ -1,0 +1,92 @@
+[
+    {
+        "question": "Organization name",
+        "required": true,
+        "answer": "WMT Automated MT Evaluation Organizing Committee"
+    },
+    {
+        "question": "Submission name",
+        "required": true,
+        "answer": "Gemma 4 Reference-based - No Reasoning Baseline"
+    },
+    {
+        "question": "Submission description (a short paragraph)",
+        "required": true,
+        "answer": "Reference-based Gemma 4 (google/gemma-4-31B-it) WITHOUT reasoning enabled."
+    },
+    {
+        "question": "Does your system use the provided reference translations in any form? (true|false)",
+        "required": true,
+        "answer": "true"
+    },
+    {
+        "question": "If your system uses reference translations, please briefly describe which types of references you use (native|postedit|pseudo) and how you use them.",
+        "required": false,
+        "answer": "Our system uses all three reference types (native/human, postedit, and pseudo) where available, with the reference type determined per language pair from the shared task data. The reference translation is included in both stages of our two-stage GEMBA-ESA prompting pipeline: in Stage 1, the model is shown the source, MT hypothesis, and reference together when annotating error spans; in Stage 2, the reference is again provided alongside the source, hypothesis, and Stage 1 error annotations when assigning the final quality score. The prompt labels the reference according to its type (\"Human reference translation,\" \"Post-edited reference translation,\" or \"High-quality machine translation reference\") so the model can appropriately weight it. For language pairs where no reference is available, the system falls back to the reference-free prompt variant."
+    },
+    {
+        "question": "Is an ensemble (true|false)",
+        "required": true,
+        "answer": "false"
+    },
+    {
+        "question": "Is supervised (did you fine-tune your model?) (true|false)",
+        "required": true,
+        "answer": "false"
+    },
+    {
+        "question": "Is based on open-weight models (true|false)",
+        "required": true,
+        "answer": "true"
+    },
+    {
+        "question": "Model size",
+        "required": false,
+        "answer": "30.7B Parameters"
+    },
+    {
+        "question": "Closed-source model name (e.g. GPT-5.6-luna)",
+        "required": false,
+        "answer": ""
+    },
+    {
+        "question": "Closed-source API provider (Who is the provider/host for this API? e.g. AWS/Azure/OpenAI/OpenRouter)",
+        "required": false,
+        "answer": ""
+    },
+    {
+        "question": "Is the submitted system open-source? (true|false)",
+        "required": true,
+        "answer": "true"
+    },
+    {
+        "question": "Provide link to the submitted system if you have any",
+        "required": false,
+        "answer": "https://huggingface.co/google/gemma-4-31B-it"
+    },
+    {
+        "question": "Allow automatic conversion from Task 1 to Task 2 (true|false)",
+        "required": true,
+        "answer": "true"
+    },
+    {
+        "question": "Allow automatic conversion from Task 1 to Task 3 (true|false)",
+        "required": true,
+        "answer": "true"
+    },
+    {
+        "question": "Allow automatic conversion from Task 2 to Task 3 (true|false)",
+        "required": true,
+        "answer": "true"
+    },
+    {
+        "question": "Task 2 to 3 conversion threshold (everything above this score will be regarded as error-free)",
+        "required": false,
+        "answer": ""
+    },
+    {
+        "question": "Should the above threshold be inclusive (≥) or exclusive (>)?",
+        "required": false,
+        "answer": "inclusive"
+    }
+]

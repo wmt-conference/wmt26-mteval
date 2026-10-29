@@ -1,0 +1,19 @@
+% Import with \input{.../paper_macro_threshold_gains.tex}.
+% Requires \usepackage{graphicx}.
+% Override this path before \input if needed.
+\providecommand{\taskThresholdFigureDir}{outputs/task3/threshold/paper_figures}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{\taskThresholdFigureDir/paper_macro_threshold_gains.pdf}
+  \caption{MCC changes over submitted Task~2 thresholds for the 16
+  paper-eligible systems covering all eight priority language pairs. The horizontal axis shows
+  macro-averaged MCC change from one threshold selected by pooled MCC; the
+  vertical axis shows macro-averaged MCC change from independently selected
+  per-language thresholds. Circles are participant submissions and
+  squares are organizer baselines; the dotted diagonal marks equal numerical
+  change. Both axes use the same data for selection and evaluation, so changes
+  are post-hoc optimistic upper bounds, especially for the more flexible
+  per-language optimization.}
+  \label{fig:task2-threshold-gains}
+\end{figure}

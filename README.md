@@ -11,9 +11,10 @@ This repository holds the test set, the instructions that participants received,
 of the data and the tools that build and check the release. The data themselves are on Hugging
 Face, as typed Parquet tables.
 
-**Version: v0.9, a pre-release.** It contains the typed data configs and the documentation.
-Human-annotation gold, converted predictions, results tables and the scoring code are planned for
-v1.0. The release date is in [`docs/CHANGELOG.md`](docs/CHANGELOG.md) and the release steps are in
+**Version: v0.9, a pre-release.** It contains the typed data configs and the documentation, and
+this repository also holds the organisers' scoring code, in [`tasks/`](tasks/). Human-annotation
+gold, converted predictions and results tables are planned for v1.0. The release date is in
+[`docs/CHANGELOG.md`](docs/CHANGELOG.md) and the release steps are in
 [`docs/RELEASE.md`](docs/RELEASE.md).
 
 ## Data on Hugging Face
@@ -71,6 +72,8 @@ src/wmt26_mteval/               the package behind the build and the checks
 scripts/                        build_hf, validate_hf, check_loading, render_docs, download,
                                 scrub_model_cards
 tests/
+tasks/                          the organisers' code for Tasks 1-3, which computes the paper's
+                                results for the three tasks (its own project and guide)
 ```
 
 `annotation-instructions.txt` and `translation-instructions.txt` are General MT's instructions to
@@ -101,6 +104,12 @@ schemas, the keys that link the configs, the texts of `items` and `pairs`, the T
 every config with the installed `datasets`; `render_docs.py` regenerates `docs/FORMAT.md` and
 `data/MANIFEST.tsv`. The full procedure, with the loading matrix for `datasets` 2.18.0, 4.0.0 and
 5.1.0, is in [`docs/RELEASE.md`](docs/RELEASE.md).
+
+## Reproduce the paper's results
+
+The organisers' code for the three tasks is in `tasks/`, a project of its own with Python 3.12 or
+newer and its own tests. [`tasks/README.md`](tasks/README.md) runs it from the `grand` config to
+the findings paper's tables and figures for Tasks 1, 2 and 3.
 
 ## Citation
 

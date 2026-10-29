@@ -1,0 +1,92 @@
+[
+    {
+        "question": "Organization name",
+        "required": true,
+        "answer": "Algebras"
+    },
+    {
+        "question": "Submission name",
+        "required": true,
+        "answer": "fluencyscore-multispan-v2"
+    },
+    {
+        "question": "Submission description (a short paragraph)",
+        "required": true,
+        "answer": "fluencyscore-multispan-v2: reference-free LLM judge (Gemini 3.5 Flash) prompted to enumerate all distinct error spans per hypothesis (0..N) with major/minor severity following MQM-style conventions, plus an explicit omission field. Phrases are mapped to character spans with a deterministic Unicode-normalizing locator (exact / normalized / bounded-fuzzy tiers) with occurrence disambiguation; overlapping and adjacent same-severity spans are merged; whole-segment spans are restricted to garbled outputs. Empty or unscored hypotheses fall back to our prior single-span system. Covers official 21 LPs + challenge sets on mteval-test26."
+    },
+    {
+        "question": "Does your system use the provided reference translations in any form? (true|false)",
+        "required": true,
+        "answer": "false"
+    },
+    {
+        "question": "If your system uses reference translations, please briefly describe which types of references you use (native|postedit|pseudo) and how you use them.",
+        "required": false,
+        "answer": ""
+    },
+    {
+        "question": "Is an ensemble (true|false)",
+        "required": true,
+        "answer": "false"
+    },
+    {
+        "question": "Is supervised (did you fine-tune your model?) (true|false)",
+        "required": true,
+        "answer": "false"
+    },
+    {
+        "question": "Is based on open-weight models (true|false)",
+        "required": true,
+        "answer": "false"
+    },
+    {
+        "question": "Model size",
+        "required": false,
+        "answer": ""
+    },
+    {
+        "question": "Closed-source model name (e.g. GPT-5.6-luna)",
+        "required": false,
+        "answer": "gemini-3.5-flash"
+    },
+    {
+        "question": "Closed-source API provider (Who is the provider/host for this API? e.g. AWS/Azure/OpenAI/OpenRouter)",
+        "required": false,
+        "answer": "Google AI Studio / Gemini API"
+    },
+    {
+        "question": "Is the submitted system open-source? (true|false)",
+        "required": true,
+        "answer": "false"
+    },
+    {
+        "question": "Provide link to the submitted system if you have any",
+        "required": false,
+        "answer": ""
+    },
+    {
+        "question": "Allow automatic conversion from Task 1 to Task 2 (true|false)",
+        "required": true,
+        "answer": "true"
+    },
+    {
+        "question": "Allow automatic conversion from Task 1 to Task 3 (true|false)",
+        "required": true,
+        "answer": "true"
+    },
+    {
+        "question": "Allow automatic conversion from Task 2 to Task 3 (true|false)",
+        "required": true,
+        "answer": "false"
+    },
+    {
+        "question": "Task 2 to 3 conversion threshold (everything above this score will be regarded as error-free)",
+        "required": false,
+        "answer": "85"
+    },
+    {
+        "question": "Should the above threshold be inclusive (≥) or exclusive (>)?",
+        "required": false,
+        "answer": "inclusive"
+    }
+]

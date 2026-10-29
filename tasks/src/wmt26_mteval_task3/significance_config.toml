@@ -1,0 +1,58 @@
+# Shared analysis and presentation settings.
+# Scores, ranks, clusters, coverage, and row order come from the input ZIP.
+
+[analysis]
+human_error_free_threshold = 85
+permutations = 100000
+random_seed = 20260911
+significance_alpha = 0.05
+priority_language_pairs = [
+  "ces_Latn---deu_Latn",
+  "ces_Latn---vie_Latn",
+  "eng_Latn---arz_Arab",
+  "eng_Latn---ekk_Latn",
+  "eng_Latn---ind_Latn",
+  "eng_Latn---isl_Latn",
+  "eng_Latn---sme_Latn",
+  "zho_Hans---jpn_Jpan",
+]
+
+[presentation]
+metric_decimals = 4
+
+# Paper-facing aliases for model values read from the ZIP. Unlisted values are
+# displayed unchanged.
+[model_display_names]
+"gemini-3.6-flash" = "Gemini 3.6 Flash"
+"gpt-5.6-terra" = "GPT-5.6 Terra"
+"gpt-5.6-sol" = "GPT-5.6 Sol"
+"google/gemma-4-31B-it" = "Gemma 4 31B IT"
+"Qwen/Qwen3.6-35B-A3B" = "Qwen3.6-35B-A3B"
+"gemini-3.5-flash" = "Gemini 3.5 Flash"
+"GPT-4.1-mini-2025-04-14" = "GPT-4.1 Mini (2025-04-14)"
+"Unbabel/XCOMET-XXL" = "xCOMET-XXL"
+"Unbabel/XCOMET-XL" = "xCOMET-XL"
+
+# Values are either a six-digit HTML color or a LaTeX xcolor expression.
+[colors]
+baseline = "black!15"
+green = "E0FFEA"
+blue = "E0F0FF"
+orange = "FFEAE0"
+purple = "FCE0FF"
+yellow = "F9FFE0"
+cream = "FFF6E0"
+
+# Organizer baselines are always grey. Participant colors are determined by
+# the organization name in the submitted model card. Unlisted organizations
+# receive no row color.
+[color_rules]
+organizer_baseline = "baseline"
+
+[color_rules.organizations]
+"1020 Group" = "green"
+"Soongsil University" = "blue"
+"Charles University" = "orange"
+"Algebras" = "purple"
+"AIST" = "yellow"
+"Cohere" = "cream"

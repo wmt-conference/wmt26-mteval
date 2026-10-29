@@ -1,0 +1,39 @@
+\begin{table*}[t]
+\centering
+\small
+\begin{tabular}{rrllrrr}
+\toprule
+\multicolumn{1}{c}{Rank} & \multicolumn{1}{c}{Cluster} & Auto-evaluator & Underlying model & \multicolumn{1}{c}{P} & \multicolumn{1}{c}{R} & \multicolumn{1}{c}{F1} \\
+\midrule
+\rowcolor{black!15} $1$ & $1$ & Gemini-3.6-Flash\textsuperscript{*} & Gemini 3.6 Flash & $39.21$ & $32.95$ & $34.07$ \\
+$2$ & $2$ & PhraseT1-01\textsuperscript{*} & Gemini 3.5 Flash & $34.73$ & $36.34$ & $33.47$ \\
+$3$ & $2$ & fluencyscore-multispan-v2\textsuperscript{*} & Gemini 3.5 Flash & $40.39$ & $31.39$ & $33.46$ \\
+$4$ & $2$ & fluencyscore-multispan-v2.1\textsuperscript{*} & Gemini 3.5 Flash & $40.27$ & $31.44$ & $33.46$ \\
+$5$ & $3$ & gemma4-31b-v4ref-struct-best & Gemma 4 31B IT & $33.79$ & $36.04$ & $32.85$ \\
+\rowcolor{black!15} $6$ & $4$ & Gemma 4 - thinking & Gemma 4 31B IT & $30.89$ & $39.03$ & $32.58$ \\
+\rowcolor{black!15} $7$ & $5$ & Gemma 4 & Gemma 4 31B IT & $27.05$ & $44.71$ & $32.08$ \\
+\rowcolor{black!15} $8$ & $5$ & Gemma 4\textsuperscript{*} & Gemma 4 31B IT & $29.20$ & $39.61$ & $32.02$ \\
+\rowcolor{black!15} $9$ & $5$ & GPT-5.6 Sol - medium thinking\textsuperscript{*} & GPT-5.6 Sol & $28.45$ & $40.65$ & $31.98$ \\
+\rowcolor{black!15} $10$ & $6$ & Gemma 4 - thinking\textsuperscript{*} & Gemma 4 31B IT & $32.16$ & $35.03$ & $31.72$ \\
+\rowcolor{black!15} $11$ & $6$ & GPT-5.6 Terra\textsuperscript{*} & GPT-5.6 Terra & $31.37$ & $34.79$ & $31.50$ \\
+$12$ & $7$ & cuni-cat-v4\textsuperscript{*} & Gemma 4 31B & $33.58$ & $32.80$ & $31.35$ \\
+$13$ & $8$ & cuni-v14\textsuperscript{*} & Gemma 4 31B & $33.10$ & $32.76$ & $31.13$ \\
+\rowcolor{black!15} $14$ & $9$ & Qwen 3.6 - thinking\textsuperscript{*} & Qwen3.6-35B-A3B & $26.08$ & $38.21$ & $29.77$ \\
+\rowcolor{black!15} $15$ & $10$ & Qwen 3.6 - thinking & Qwen3.6-35B-A3B & $23.79$ & $43.01$ & $29.38$ \\
+$16$ & $10$ & PhraseT1-02\textsuperscript{*} & Ensemble\textsuperscript{E1} & $22.74$ & $44.85$ & $29.17$ \\
+$17$ & $11$ & Cohere CAT+\textsuperscript{*} & Command A+ & $27.04$ & $30.78$ & $26.93$ \\
+\rowcolor{black!15} $18$ & $12$ & Qwen 3.6\textsuperscript{*} & Qwen3.6-35B-A3B & $17.50$ & $46.44$ & $24.62$ \\
+$19$ & $13$ & FACET\textsuperscript{*} & GPT-4.1 Mini (2025-04-14) & $24.22$ & $26.89$ & $23.79$ \\
+$20$ & $14$ & doc-FACET\textsuperscript{*} & GPT-4.1 Mini (2025-04-14) & $24.19$ & $26.93$ & $23.78$ \\
+\rowcolor{black!15} $21$ & $14$ & Qwen 3.6 & Qwen3.6-35B-A3B & $15.74$ & $52.11$ & $23.46$ \\
+\rowcolor{black!15} $22$ & $15$ & xCOMET XXL\textsuperscript{\textdagger} & xCOMET-XXL & $13.89$ & $31.28$ & $17.85$ \\
+\rowcolor{black!15} $23$ & $16$ & xCOMET XL\textsuperscript{\textdagger} & xCOMET-XL & $11.31$ & $37.94$ & $16.74$ \\
+\rowcolor{black!15} $24$ & $17$ & xCOMET XXL\textsuperscript{*}\textsuperscript{\textdagger} & xCOMET-XXL & $11.98$ & $26.42$ & $13.93$ \\
+$25$ & $17$ & Qwen-based Omission\textsuperscript{*}\textsuperscript{\textdagger} & Qwen3-32B & $17.81$ & $13.41$ & $13.81$ \\
+$26$ & $18$ & Rule-based Omission\textsuperscript{*}\textsuperscript{\textdagger} & Qwen3-32B & $17.80$ & $13.35$ & $13.78$ \\
+\rowcolor{black!15} $27$ & $18$ & xCOMET XL\textsuperscript{*}\textsuperscript{\textdagger} & xCOMET-XL & $9.33$ & $35.95$ & $13.77$ \\
+\bottomrule
+\end{tabular}
+\caption{Task 1 ranking for the set of eight priority translation directions. \textsuperscript{*} marks reference-free submissions. \textsuperscript{\textdagger} marks fine-tuned systems. Light-grey rows indicate organizer baselines. The ensemble components listed in the model card are E1 [Gemini 3.5 Flash; Gemma 4 12B; Gemma 4 31B]. Similar to previous years \cite{freitag-etal-2023-results, freitag-etal-2024-llms, lavie-etal-2025-findings}, statistical significance uses the PERM-BOTH hypothesis test introduced by \citet{10.1162/tacl_a_00417}, with clusters computed greedily ($p\leq0.05$, unadjusted, two-sided, 10000 draws).}
+\label{tab:task1-priority-results}
+\end{table*}

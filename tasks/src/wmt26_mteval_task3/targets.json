@@ -1,0 +1,1212 @@
+{
+  "schema_version": 1,
+  "source": {
+    "repository_commit": "91210d87e0aeda557b3e5a1a5cf8cd1f8c6ba546",
+    "description": "Frozen aggregate results in analysis/, inspected 2026-10-13; expected outputs only, never scoring inputs."
+  },
+  "dump": {
+    "file": "wmt26-mteval-data.zip",
+    "bytes": 816296098,
+    "sha256": "6db0ac730133e3dd010a594a197dc3e5d8d2022db02741c4fa1d4b207f5301ca"
+  },
+  "shared_inputs": [
+    {
+      "member": "human_annotations/ground-truth.jsonl",
+      "sha256": "6ac39baaeea0092090f04320d65abefeff959cdeac0798eb854bc492443d9c8c"
+    },
+    {
+      "member": "test-set-files/mteval-test26.jsonl",
+      "sha256": "aa2e17ebd075feedd07435f1b99d20cf3e98895ea5e86e43e5df9ef674163187"
+    },
+    {
+      "member": "annotations.json",
+      "sha256": "9fb5f27b1041461be3f4e599f83b0526da805378b96c1051f888d8861af682a2"
+    }
+  ],
+  "families": [
+    {
+      "name": "submissions",
+      "historical_summary": {
+        "retained_submissions": 13
+      },
+      "required_card_questions": [],
+      "entries": [
+        {
+          "entry_id": "869556",
+          "dump_candidates": [
+            "submissions/task3/869556"
+          ],
+          "prediction_filename": "prediction.jsonl",
+          "historical_prediction_sha256": "ac5a731161a319cd25ebb4202e718f2513ac98e34b05f680bb05892e0fbe91d2",
+          "historical_model_card_sha256": "be23db44d6bc0a8e5213872668c7f1250f3657058fdc0c83885c14d76adff372"
+        },
+        {
+          "entry_id": "869557",
+          "dump_candidates": [
+            "submissions/task3/869557"
+          ],
+          "prediction_filename": "prediction.jsonl",
+          "historical_prediction_sha256": "fc8089f2557e94313137ca7c91efc5a1bd0610e18de9e442212a3a17f4068e72",
+          "historical_model_card_sha256": "be23db44d6bc0a8e5213872668c7f1250f3657058fdc0c83885c14d76adff372"
+        },
+        {
+          "entry_id": "870955",
+          "dump_candidates": [
+            "submissions/task3/870955"
+          ],
+          "prediction_filename": "prediction.jsonl",
+          "historical_prediction_sha256": "aa21be2a00d04cca87a5735c9803939d6e5b9734443c5469af5c39276c2ce495",
+          "historical_model_card_sha256": "7568afadc9c588b970f0fd2f4dea00cf5cfbcfe562facdceb883ba9fcd289cf3"
+        },
+        {
+          "entry_id": "870958",
+          "dump_candidates": [
+            "submissions/task3/870958"
+          ],
+          "prediction_filename": "prediction.jsonl",
+          "historical_prediction_sha256": "ee19c2fedc8643979fd00be7bed6b3ecc728b36b0addae6e0d6915cf2ee632fd",
+          "historical_model_card_sha256": "b5df894dcedf6089e23b97d0a571e39fa23fcb148974e3fd0e00c50f4d6d3118"
+        },
+        {
+          "entry_id": "871721",
+          "dump_candidates": [
+            "submissions/task3/871721"
+          ],
+          "prediction_filename": "prediction.jsonl",
+          "historical_prediction_sha256": "80ece15e2374126e2bd14eca217da3598aff50e6430671d0b057ffca935f6f72",
+          "historical_model_card_sha256": "0c327907ec1aa06da3ecbcb6091497d3ba7039aeb6d33bd019ae108a70fc3168"
+        },
+        {
+          "entry_id": "872036",
+          "dump_candidates": [
+            "submissions/task3/872036"
+          ],
+          "prediction_filename": "prediction.jsonl",
+          "historical_prediction_sha256": "5c0226319462f8cc2817beee305a80bede97e804472d3876ad83db37c809951c",
+          "historical_model_card_sha256": "aa5f074d47869ead2d14baefd4192e74b5bb5c9454498ec23dabd3fc83c57b8f"
+        },
+        {
+          "entry_id": "872037",
+          "dump_candidates": [
+            "submissions/task3/872037"
+          ],
+          "prediction_filename": "prediction.jsonl",
+          "historical_prediction_sha256": "e31b27f9553b5b59dc560f34570d2c10bc10d107a7058756feef14f3f370e6c9",
+          "historical_model_card_sha256": "ff08fa2d565ca3eec7e0a45f2dfbcffe40d3c105cacc6c873d44593e03bd6f19"
+        },
+        {
+          "entry_id": "874374",
+          "dump_candidates": [
+            "submissions/task3/874374"
+          ],
+          "prediction_filename": "prediction.jsonl",
+          "historical_prediction_sha256": "5b4da9bd004607c8074db742db59f62dd1cd611266af9093b6c98995e8fa1ce9",
+          "historical_model_card_sha256": "0c327907ec1aa06da3ecbcb6091497d3ba7039aeb6d33bd019ae108a70fc3168"
+        },
+        {
+          "entry_id": "875519",
+          "dump_candidates": [
+            "submissions/task3/875519"
+          ],
+          "prediction_filename": "prediction.jsonl",
+          "historical_prediction_sha256": "9ac199d5d162f8ce3db8d186789e0b1f557897a1ebc2c4793a45d483dca1413a",
+          "historical_model_card_sha256": "058231b9d13c2e209abfd8fb1516db4da984adaac9cef1e8ae2c7de8ad143786"
+        },
+        {
+          "entry_id": "875520",
+          "dump_candidates": [
+            "submissions/task3/875520"
+          ],
+          "prediction_filename": "prediction.jsonl",
+          "historical_prediction_sha256": "138446efb2a7d3262260e51fd5b34ffda58b6e1dee36e50bb12b1612775f3504",
+          "historical_model_card_sha256": "058231b9d13c2e209abfd8fb1516db4da984adaac9cef1e8ae2c7de8ad143786"
+        },
+        {
+          "entry_id": "876247",
+          "dump_candidates": [
+            "submissions/task3/876247"
+          ],
+          "prediction_filename": "prediction.jsonl",
+          "historical_prediction_sha256": "3834025fb143e3db8e5500375d85dc34e640060ed5e39c24ec1143ba8ec9a6a6",
+          "historical_model_card_sha256": "8f691ffed88045df3b66b36f8a5be4199ec2c03cfe8e71dee25717c16c3e3be7"
+        },
+        {
+          "entry_id": "876248",
+          "dump_candidates": [
+            "submissions/task3/876248"
+          ],
+          "prediction_filename": "prediction.jsonl",
+          "historical_prediction_sha256": "b710560e1074e0eaceed7bf3b8467f1b1bcc287ff146746a98e2577efec10afc",
+          "historical_model_card_sha256": "0a402a6d2351742a241f759b5f483f9c50f13138bbd11c506310aa065d26ceae"
+        },
+        {
+          "entry_id": "876250",
+          "dump_candidates": [
+            "submissions/task3/876250"
+          ],
+          "prediction_filename": "prediction.jsonl",
+          "historical_prediction_sha256": "e920bb7069e9da09c78528c106c208948013df69f73c5bbfbd9cdd2097927be5",
+          "historical_model_card_sha256": "4d83d128642252f905059bb0c2230a4d7b700f128773a8c6bbdbd3cbd34c2151"
+        }
+      ]
+    },
+    {
+      "name": "task1_converted",
+      "historical_summary": {
+        "converted_submissions": 12,
+        "instruction_error_marker_spans": 0,
+        "local_submissions": 15,
+        "nonstandard_zero_length_spans": 5916,
+        "omission_marker_spans": 440,
+        "status_counts": {
+          "converted": 12,
+          "opted_out": 3
+        },
+        "zero_length_spans": 6356
+      },
+      "required_card_questions": [
+        "Allow automatic conversion from Task 1 to Task 3 (true|false)"
+      ],
+      "entries": [
+        {
+          "entry_id": "869016",
+          "dump_candidates": [
+            "submissions/task1/869016"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "3063ff02f3e3ef0f001e564672ed6062ce007005c4cd18951c2bab46825810fd",
+          "historical_model_card_sha256": "a1f3557fec4072eab80418ece7eb93d4cd37535039a1c0270b650089eae08cf3"
+        },
+        {
+          "entry_id": "871892",
+          "dump_candidates": [
+            "submissions/task1/871892"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "0d4835b139a73d8ba283a31291340d90c153b9845ed99a5d65db767e27af7df6",
+          "historical_model_card_sha256": "e04b6e3d52d6c4d894092a8ea8f5fbf72a039db020fefe56a54c6c939f744040"
+        },
+        {
+          "entry_id": "871898",
+          "dump_candidates": [
+            "submissions/task1/871898"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "a2e47b6f9707e1c2073b0b1eda18b2b21361d1959962850136ad3ff3969be503",
+          "historical_model_card_sha256": "ab12f00fc7dee960ec0c6bcc276cfab2388de2db25a341b7fca7187c3d2831d4"
+        },
+        {
+          "entry_id": "872022",
+          "dump_candidates": [
+            "submissions/task1/872022"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "1c74aeef12ea9eeaed1a25f12bfd89fe93d556336198fbcc325e25d703dc905a",
+          "historical_model_card_sha256": "8836d39ee26904ea3bd03998f88e3a02d821665f6ce9c0347473be3758ece8eb"
+        },
+        {
+          "entry_id": "873483",
+          "dump_candidates": [
+            "submissions/task1/873483"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "f007f7953c2c6b99942c4b4f7d7d279762586afafc253d010eb993fb1d040a8a",
+          "historical_model_card_sha256": "4baf10e4db7feab265a34866d9e71d6b903c2aef602560c1510fbe4b335e2f0e"
+        },
+        {
+          "entry_id": "875417",
+          "dump_candidates": [
+            "submissions/task1/875417"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "b4431f4e7c9a04d43d2b0e0fcf173fbf44fe6b06e2d10cb0386ec1b24d16c7e5",
+          "historical_model_card_sha256": "a5e6c6813e9d08c67e557ce553914af01f7042072a711b4bb137e44edf56fb01"
+        },
+        {
+          "entry_id": "875796",
+          "dump_candidates": [
+            "submissions/task1/875796"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "95aadf638ec4a9482f0beca9ace8a68ba56e6b8e75a7483bbc6e433f81ec2303",
+          "historical_model_card_sha256": "7b7ffc7ff627152699cb3f2516e5188771b32141a5dc1b46c5698d02c756a2ae"
+        },
+        {
+          "entry_id": "875857",
+          "dump_candidates": [
+            "submissions/task1/875857"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "481900a3036c166fc9312adfc4181e609e5dfea88d0ea1fb1044454b56733a7a",
+          "historical_model_card_sha256": "19d11661e0d0e244faea84807e24db0250ba93407e8ec9bb2d89c63a12a0ba23"
+        },
+        {
+          "entry_id": "875859",
+          "dump_candidates": [
+            "submissions/task1/875859"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "cae7c07a7726d0ba986d0e8e05731a6af4b681f806c33d5d4873eae1c18f646b",
+          "historical_model_card_sha256": "72a0d1a0141994fde8f43b1cdbb283ea1001d65717a4066de18099658eb05b86"
+        },
+        {
+          "entry_id": "875860",
+          "dump_candidates": [
+            "submissions/task1/875860"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "47559acf5c672156d0b58e9ea4b32c53231827f2f8749b45e7e783742413be52",
+          "historical_model_card_sha256": "e331455f66c59fdf85d28327ba45a3d96b77d4ba575acc2d04521639176a81bf"
+        },
+        {
+          "entry_id": "876237",
+          "dump_candidates": [
+            "submissions/task1/876237"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "7e4d75981714ee4bb627b14e4d7c19100316f1a5783523cd2ccc999e36cdfeb7",
+          "historical_model_card_sha256": "8f691ffed88045df3b66b36f8a5be4199ec2c03cfe8e71dee25717c16c3e3be7"
+        },
+        {
+          "entry_id": "876238",
+          "dump_candidates": [
+            "submissions/task1/876238"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "bdf694d29314cae1fe5b3f019d03016f29b01f5089802cce5f8d54e97a0156d1",
+          "historical_model_card_sha256": "0a402a6d2351742a241f759b5f483f9c50f13138bbd11c506310aa065d26ceae"
+        },
+        {
+          "entry_id": "876357",
+          "dump_candidates": [
+            "submissions/task1/876357"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "3ac90f58dea21680d1c5604aa1084f37b83b302314ef04583a68133c325e8ca2",
+          "historical_model_card_sha256": "b936ba73ac7b1110d3bb5ff26471fb23a403a46110ec9861f3f75c742e5398e5"
+        },
+        {
+          "entry_id": "876365",
+          "dump_candidates": [
+            "submissions/task1/876365"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "c0464769aa1b79ca599c9bef8f5429040e90c940e95362af4cd4966db3051295",
+          "historical_model_card_sha256": "c93d9c1113554a7865c245b792877a6e0af967dd3b75e18eb936939ec6ac7858"
+        },
+        {
+          "entry_id": "876421",
+          "dump_candidates": [
+            "submissions/task1/876421"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "0aac9231795f17991adffcb92466c9b67603ea11659f5de9d01d723b7fe307ab",
+          "historical_model_card_sha256": "eb703e3cb1200db3763422b306efc03a8795379bc0d3265dc9ac618e59ce3b94"
+        }
+      ]
+    },
+    {
+      "name": "task2_converted",
+      "historical_summary": {
+        "converted_submissions": 14,
+        "retained_submissions": 27,
+        "status_counts": {
+          "converted": 14,
+          "missing_threshold": 9,
+          "opted_out": 4
+        }
+      },
+      "required_card_questions": [
+        "Allow automatic conversion from Task 2 to Task 3 (true|false)",
+        "Task 2 to 3 conversion threshold (everything above this score will be regarded as error-free)"
+      ],
+      "entries": [
+        {
+          "entry_id": "867652",
+          "dump_candidates": [
+            "submissions/task2/867652",
+            "baselines/task2/867652"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "538387b8a243f6109439bffedaf7628159240972695c85dfd10780e9c7b5686e",
+          "historical_model_card_sha256": "6770eed4d7e4a4bdbd8b71417200a2332dbb8307d43289c99343ad55e51ec9d0"
+        },
+        {
+          "entry_id": "869543",
+          "dump_candidates": [
+            "submissions/task2/869543",
+            "baselines/task2/869543"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "4c61c33c0b782689e98e87d5bec1c9553653c1aa2e2613021c50e7414dab91f2",
+          "historical_model_card_sha256": "17748436a27f4b4f7186e3fe68029482fdd5bd754812fc360091f172d5f17cd8"
+        },
+        {
+          "entry_id": "869546",
+          "dump_candidates": [
+            "submissions/task2/869546",
+            "baselines/task2/869546"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "cf123c4761ac545653af9de4c992a1c85e0b6dedd901e14e4e9a35948828ddce",
+          "historical_model_card_sha256": "682ed9ed951e16f61eea120b88bd217f345b93439250b59d8e87ed785b5bb2c8"
+        },
+        {
+          "entry_id": "869552",
+          "dump_candidates": [
+            "submissions/task2/869552",
+            "baselines/task2/869552"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "8a5439bfc14a731dd3baf8bcc2707363774d6d9706e9036624eb6a40b9ab48e4",
+          "historical_model_card_sha256": "b211aa91c75d4bc567d3fa48721cad2ced2667082745d49610885db2ec612744"
+        },
+        {
+          "entry_id": "870257",
+          "dump_candidates": [
+            "submissions/task2/870257",
+            "baselines/task2/870257"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "851f87e7faff63ef518ae64ef62dbad1bc0ce9d284fbbc5d35ab59f02c545f3a",
+          "historical_model_card_sha256": "b5193da94968d9638b84fa611bd316bb51ab61422f0fe925cdf480ea86723877"
+        },
+        {
+          "entry_id": "870554",
+          "dump_candidates": [
+            "submissions/task2/870554",
+            "baselines/task2/870554"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "df03a15575a20c9b3851b312e9ffcb91325ff23283c9aac0b0ad10fec81e6327",
+          "historical_model_card_sha256": "c24c7d8d5ec931d66eb085d77607c0f0c6c9aeec46b636eac47076880c420979"
+        },
+        {
+          "entry_id": "870859",
+          "dump_candidates": [
+            "submissions/task2/870859",
+            "baselines/task2/870859"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "b6c5e7e9482b06d781943a49eb51d8b9e66028ba5dc8cd9e67172f5405da8b97",
+          "historical_model_card_sha256": "bde683cc164193014ce8ea7ff77025c1d2d8ce97cd5c82292120e43492cfb224"
+        },
+        {
+          "entry_id": "871298",
+          "dump_candidates": [
+            "submissions/task2/871298",
+            "baselines/task2/871298"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "ad15d2ef976aa4fdb4f8b00c18dc242a3a85d362cfb238353ee70a4c773916c7",
+          "historical_model_card_sha256": "88c4d05ca96faced384c72b771cbb0b45b242bdc951cd3549e0636d370b493f4"
+        },
+        {
+          "entry_id": "871400",
+          "dump_candidates": [
+            "submissions/task2/871400",
+            "baselines/task2/871400"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "69b41b6abe0f14dbbd99829ce8b900b61205d4df00a9aa2c8aa9fc5537e9eafa",
+          "historical_model_card_sha256": "25fe32d6259e34cfd74d39b9a7e749e9b4c6772159035bd36fbbf35fc8e6d2a6"
+        },
+        {
+          "entry_id": "871401",
+          "dump_candidates": [
+            "submissions/task2/871401",
+            "baselines/task2/871401"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "a5e7286acff24306fb04ced5083dec241398072b41925fb677d295b48ca8dec8",
+          "historical_model_card_sha256": "8398fa960a529fd12f11e808b56701dd203b73cc696d34dd60f0367f1e9c1c23"
+        },
+        {
+          "entry_id": "872013",
+          "dump_candidates": [
+            "submissions/task2/872013",
+            "baselines/task2/872013"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "84e6115ba5e8f3518547d2b80da686e4fe59e7f43c59f0734da61a02438d609f",
+          "historical_model_card_sha256": "05b023eb28d0ae36302b212a59d2ab2ad36e0bb771884bb6cacf8af78ab84844"
+        },
+        {
+          "entry_id": "872028",
+          "dump_candidates": [
+            "submissions/task2/872028",
+            "baselines/task2/872028"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "53abeb66fb63c11a290770d6ee0ac549a462e3a9169cbc8bdd8a6ede0dd932ac",
+          "historical_model_card_sha256": "fa04975ea4a8504b118fdc0c8baf6f7686567fb4226696a9ac9c54751e0261d2"
+        },
+        {
+          "entry_id": "872029",
+          "dump_candidates": [
+            "submissions/task2/872029",
+            "baselines/task2/872029"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "24671864d6492c76df1360224ea342d1726e9f76d9cbb8fa67734d3d39052653",
+          "historical_model_card_sha256": "ce54c247c5fe62b34026327a61b81d4f84c338163244b186b36003fd48550fe7"
+        },
+        {
+          "entry_id": "872030",
+          "dump_candidates": [
+            "submissions/task2/872030",
+            "baselines/task2/872030"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "31630794e3b19e768e098843c91a7936fef0cbec782ddb40c76564a482bf2b44",
+          "historical_model_card_sha256": "46b291bbf625b025675fd1ac7826c74f987fb353b5f2a9cd17a23e32ec152767"
+        },
+        {
+          "entry_id": "872031",
+          "dump_candidates": [
+            "submissions/task2/872031",
+            "baselines/task2/872031"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "4f02fbe6d34d310dcf4362381bb6f389a86364b352b9bc6ab9f6deffe732ada4",
+          "historical_model_card_sha256": "547055712216480d40ac6f0d12a62254670e27668be6e5e4f3a2b495cd6c98c8"
+        },
+        {
+          "entry_id": "872032",
+          "dump_candidates": [
+            "submissions/task2/872032",
+            "baselines/task2/872032"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "4555523042bed6b59b19676b9d1ff46e38a42cf6a42ffe12065f83c5c25b5c23",
+          "historical_model_card_sha256": "a2b786e0c57d68a1e9f4d7b08ed73f63b9c27bd9ef4f86e15e6c69b354ab41f1"
+        },
+        {
+          "entry_id": "872033",
+          "dump_candidates": [
+            "submissions/task2/872033",
+            "baselines/task2/872033"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "d96c1d83cedc80fede9c896fd53be328f97c76d114d80ed6c1e7d96e63d2d80e",
+          "historical_model_card_sha256": "351f5e772f1ff5112d0c6b09f5d00ea4c77dd8b6d7b8ec391ca2dc3c1c6acb8e"
+        },
+        {
+          "entry_id": "872328",
+          "dump_candidates": [
+            "submissions/task2/872328",
+            "baselines/task2/872328"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "09966c506cbaaa14250c658cb789e2cb31f74f2a5117ac9f08efac47530e0509",
+          "historical_model_card_sha256": "298061fb2c53ce225570c3a90408a73d4f37b7bea9d74fcf71d2ab0b24b4337b"
+        },
+        {
+          "entry_id": "873001",
+          "dump_candidates": [
+            "submissions/task2/873001",
+            "baselines/task2/873001"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "e7d352b2b6d1495905a69bda0ac975bf273aceb8c424e411fae8e61738ff2c14",
+          "historical_model_card_sha256": "c943e975fa96aaad067ddb4b326edf430da03f52ded2c85ff4a39580807924af"
+        },
+        {
+          "entry_id": "873002",
+          "dump_candidates": [
+            "submissions/task2/873002",
+            "baselines/task2/873002"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "6c9fecd1e41ddcccc8d595c2b66d81e14936c9563e876571c4682c95e8a3b000",
+          "historical_model_card_sha256": "65d9213b4468332722f907216c9b1e9de5f26995c473969738333b9ab3b5ecc9"
+        },
+        {
+          "entry_id": "875949",
+          "dump_candidates": [
+            "submissions/task2/875949",
+            "baselines/task2/875949"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "9720677af4a31915712b7116453b8cb17b8eb695698c6ae731bff39cff49b79b",
+          "historical_model_card_sha256": "9577be550e1a05444dc3e3ba7df33fa6463950f58446cbd5e8c71d58c392dd8a"
+        },
+        {
+          "entry_id": "876039",
+          "dump_candidates": [
+            "submissions/task2/876039",
+            "baselines/task2/876039"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "7189348bbdac4aefb3685ee757a4dbed881bdeef1372bf39a7668ad8f757d71c",
+          "historical_model_card_sha256": "486a5c4af14aeec73733234e88b9d2adf449bfcca013102fd4bf93b8440ad326"
+        },
+        {
+          "entry_id": "876059",
+          "dump_candidates": [
+            "submissions/task2/876059",
+            "baselines/task2/876059"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "e5a6d1b4c08cd87e28b8a96a27e067c19f5b243d1b9ecb4a4340f4f60e5bb705",
+          "historical_model_card_sha256": "cef51835ccf6baf27f941733adc8def1b7b262d40353dde9f3b47f1b5edd31e7"
+        },
+        {
+          "entry_id": "876231",
+          "dump_candidates": [
+            "submissions/task2/876231",
+            "baselines/task2/876231"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "6c046ce42196627bec495e610a4e50363d3afc933a3131f5274824a0c79d0b29",
+          "historical_model_card_sha256": "ac38b2283e3e762d4baf41d0e2f26f9e1ed8d15764a666d5581f495b65d62d41"
+        },
+        {
+          "entry_id": "876242",
+          "dump_candidates": [
+            "submissions/task2/876242",
+            "baselines/task2/876242"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "279f4c40105eff5fb01604e92378381ac8fb9989494a1515b0dc15007336fdca",
+          "historical_model_card_sha256": "8f691ffed88045df3b66b36f8a5be4199ec2c03cfe8e71dee25717c16c3e3be7"
+        },
+        {
+          "entry_id": "876244",
+          "dump_candidates": [
+            "submissions/task2/876244",
+            "baselines/task2/876244"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "879ebe4bb19a6655c7600b3bfb73715160f18424fd786eb35020179d5b44839e",
+          "historical_model_card_sha256": "0a402a6d2351742a241f759b5f483f9c50f13138bbd11c506310aa065d26ceae"
+        },
+        {
+          "entry_id": "876271",
+          "dump_candidates": [
+            "submissions/task2/876271",
+            "baselines/task2/876271"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "beb67a6c3a26bf2ca18a9483e9cb374863a44be7f6d369043195d33041ea40e1",
+          "historical_model_card_sha256": "44927bdfa4fb435898e4bdde0017a56f2f168e30089856454d2d5144131ff594"
+        }
+      ]
+    },
+    {
+      "name": "task1_baselines_converted",
+      "historical_summary": {
+        "converted_submissions": 9,
+        "instruction_error_marker_spans": 0,
+        "local_submissions": 9,
+        "nonstandard_zero_length_spans": 1844,
+        "omission_marker_spans": 0,
+        "status_counts": {
+          "converted": 9
+        },
+        "zero_length_spans": 1844
+      },
+      "required_card_questions": [],
+      "entries": [
+        {
+          "entry_id": "gemini-3.6-flash",
+          "dump_candidates": [
+            "baselines/task1_prededup_and_enhy_fix/gemini_task1__pre_dedup_pre_enhy_fix"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "2181e4496cf6893b20b7c993bfe2813191b1a79cbb73d0cb9d0d14251f3a3442",
+          "model_card_member": "baselines/task2/gemini_task2/model_card.json",
+          "snapshot_policy": "Historical Task 3 payload; do not change Task 1/2 paper defaults.",
+          "historical_model_card_sha256": "916a07194a61a7e1a0726d2ac488a279a47f31dd6921186108977151f01fa257"
+        },
+        {
+          "entry_id": "gemma4-no-reasoning",
+          "dump_candidates": [
+            "baselines/task1_prededup_and_enhy_fix/gemma4_no_thinking_task1__pre_dedup_pre_enhy_fix"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "b42a0a6e48a9e9b3a3ecd3f1a78a509e160947d458ddeb137b1dcd45d4d150a4",
+          "model_card_member": "baselines/task2/gemma4_no_thinking_task2/model_card.json",
+          "snapshot_policy": "Historical Task 3 payload; do not change Task 1/2 paper defaults.",
+          "historical_model_card_sha256": "c411a01118e5f22d9a71c524e6d4d0c0ed6d956639445553fa04af972ba35261"
+        },
+        {
+          "entry_id": "gemma4-reasoning",
+          "dump_candidates": [
+            "baselines/task1_prededup_and_enhy_fix/gemma_task1__pre_dedup_pre_enhy_fix"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "4339508aa069445d62729ad833001b0f7afc8d6615d8890eb6747b823b1d36d1",
+          "model_card_member": "baselines/task2/gemma_task2/model_card.json",
+          "snapshot_policy": "Historical Task 3 payload; do not change Task 1/2 paper defaults.",
+          "historical_model_card_sha256": "839243bfa9c0dc9042da988585630f9fdc78a83dab41668dd07be10a41833d86"
+        },
+        {
+          "entry_id": "gpt-5.6-sol-medium",
+          "dump_candidates": [
+            "baselines/task1_prededup_and_enhy_fix/gpt_56_sol_medium_no_ref_task1__pre_dedup_pre_enhy_fix"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "5f24b383b0e6edba4c098b5abcc5f0f6ef37fa9fd1405f6e711d52e7d93aa5c9",
+          "model_card_member": "baselines/task2/gpt_56_sol_medium_no_ref_task2/model_card.json",
+          "snapshot_policy": "Historical Task 3 payload; do not change Task 1/2 paper defaults.",
+          "historical_model_card_sha256": "f190c8a5db12ace16d0f7fc3c88bff80644f420214cecc8330c61ee660393acc"
+        },
+        {
+          "entry_id": "gpt-5.6-terra",
+          "dump_candidates": [
+            "baselines/task1_prededup_and_enhy_fix/gpt56_terra_no_ref_task1__pre_dedup_pre_enhy_fix"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "f7eb96633be484460b7590cc0bddcc3abe2031013719ef4a9445c66266aa5a49",
+          "model_card_member": "baselines/task2/gpt56_terra_no_ref_task2/model_card.json",
+          "snapshot_policy": "Historical Task 3 payload; do not change Task 1/2 paper defaults.",
+          "historical_model_card_sha256": "d610c32efcde008c28d38ceac80e85214ad9a82a8e092afa5da86620a30a5464"
+        },
+        {
+          "entry_id": "qwen3.6-no-reasoning",
+          "dump_candidates": [
+            "baselines/task1_prededup_and_enhy_fix/qwen36_no_thinking_task1__pre_dedup_pre_enhy_fix"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "48bb6e29a73339ed876af1e45fb62b8cb6084db351a0690aaacd20d1c7c70b1b",
+          "model_card_member": "baselines/task2/qwen36_no_thinking_task2/model_card.json",
+          "snapshot_policy": "Historical Task 3 payload; do not change Task 1/2 paper defaults.",
+          "historical_model_card_sha256": "58a5c09b0c0e05c1fa20bcd8071515f1f397ed01b23562d981d1d1213c041f7b"
+        },
+        {
+          "entry_id": "qwen3.6-reasoning",
+          "dump_candidates": [
+            "baselines/task1_prededup_and_enhy_fix/qwen_task1__pre_dedup_pre_enhy_fix"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "5cd3860c6ac7e5bde987da4122b4ebfece6743c9493b6194a0b880a4bdede91c",
+          "model_card_member": "baselines/task2/qwen_task2/model_card.json",
+          "snapshot_policy": "Historical Task 3 payload; do not change Task 1/2 paper defaults.",
+          "historical_model_card_sha256": "f3282d198761dce7e533b4ed0cfcdbbc8c230d47ef1f4ffaf48a8099abaa7713"
+        },
+        {
+          "entry_id": "xcomet-xl-no-reference",
+          "dump_candidates": [
+            "baselines/task1_prededup_and_enhy_fix/xcomet_xl_no_ref_task1__pre_dedup_pre_enhy_fix"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "8786873b5d508a1a136c6a976902c3cdf2f05c0e0214ddb2ef06e30e71a184ee",
+          "model_card_member": "baselines/task2/xcomet_xl_no_ref_task2/model_card.json",
+          "snapshot_policy": "Historical Task 3 payload; do not change Task 1/2 paper defaults.",
+          "historical_model_card_sha256": "9f6de8c111a83bedb62b16d6796ab62f9ae3b2a0b9c405952dfae5eaed11fe15"
+        },
+        {
+          "entry_id": "xcomet-xxl-no-reference",
+          "dump_candidates": [
+            "baselines/task1_prededup_and_enhy_fix/xcomet_xxl_no_ref_task1__pre_dedup_pre_enhy_fix"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "f825a52f600d75dea6e8712d208d2f9ebc9966f683265cc141f3f0e6cb11f172",
+          "model_card_member": "baselines/task2/xcomet_xxl_no_ref_task2/model_card.json",
+          "snapshot_policy": "Historical Task 3 payload; do not change Task 1/2 paper defaults.",
+          "historical_model_card_sha256": "547d64beccdc103669b48a668dda2345082c693eb1e07aa1c5c4b8051e1a6d72"
+        }
+      ]
+    },
+    {
+      "name": "task2_baselines_converted",
+      "historical_summary": {
+        "converted_submissions": 9,
+        "retained_submissions": 9,
+        "status_counts": {
+          "converted": 9
+        }
+      },
+      "required_card_questions": [],
+      "entries": [
+        {
+          "entry_id": "gemini-3.6-flash",
+          "dump_candidates": [
+            "baselines/task1_prededup_and_enhy_fix/gemini_task1__pre_dedup_pre_enhy_fix"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "2181e4496cf6893b20b7c993bfe2813191b1a79cbb73d0cb9d0d14251f3a3442",
+          "model_card_member": "baselines/task2/gemini_task2/model_card.json",
+          "snapshot_policy": "Historical Task 3 payload; do not change Task 1/2 paper defaults.",
+          "historical_model_card_sha256": "916a07194a61a7e1a0726d2ac488a279a47f31dd6921186108977151f01fa257"
+        },
+        {
+          "entry_id": "gemma4-no-reasoning",
+          "dump_candidates": [
+            "baselines/task1_prededup_and_enhy_fix/gemma4_no_thinking_task1__pre_dedup_pre_enhy_fix"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "b42a0a6e48a9e9b3a3ecd3f1a78a509e160947d458ddeb137b1dcd45d4d150a4",
+          "model_card_member": "baselines/task2/gemma4_no_thinking_task2/model_card.json",
+          "snapshot_policy": "Historical Task 3 payload; do not change Task 1/2 paper defaults.",
+          "historical_model_card_sha256": "c411a01118e5f22d9a71c524e6d4d0c0ed6d956639445553fa04af972ba35261"
+        },
+        {
+          "entry_id": "gemma4-reasoning",
+          "dump_candidates": [
+            "baselines/task1_prededup_and_enhy_fix/gemma_task1__pre_dedup_pre_enhy_fix"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "4339508aa069445d62729ad833001b0f7afc8d6615d8890eb6747b823b1d36d1",
+          "model_card_member": "baselines/task2/gemma_task2/model_card.json",
+          "snapshot_policy": "Historical Task 3 payload; do not change Task 1/2 paper defaults.",
+          "historical_model_card_sha256": "839243bfa9c0dc9042da988585630f9fdc78a83dab41668dd07be10a41833d86"
+        },
+        {
+          "entry_id": "gpt-5.6-sol-medium",
+          "dump_candidates": [
+            "baselines/task1_prededup_and_enhy_fix/gpt_56_sol_medium_no_ref_task1__pre_dedup_pre_enhy_fix"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "5f24b383b0e6edba4c098b5abcc5f0f6ef37fa9fd1405f6e711d52e7d93aa5c9",
+          "model_card_member": "baselines/task2/gpt_56_sol_medium_no_ref_task2/model_card.json",
+          "snapshot_policy": "Historical Task 3 payload; do not change Task 1/2 paper defaults.",
+          "historical_model_card_sha256": "f190c8a5db12ace16d0f7fc3c88bff80644f420214cecc8330c61ee660393acc"
+        },
+        {
+          "entry_id": "gpt-5.6-terra",
+          "dump_candidates": [
+            "baselines/task1_prededup_and_enhy_fix/gpt56_terra_no_ref_task1__pre_dedup_pre_enhy_fix"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "f7eb96633be484460b7590cc0bddcc3abe2031013719ef4a9445c66266aa5a49",
+          "model_card_member": "baselines/task2/gpt56_terra_no_ref_task2/model_card.json",
+          "snapshot_policy": "Historical Task 3 payload; do not change Task 1/2 paper defaults.",
+          "historical_model_card_sha256": "d610c32efcde008c28d38ceac80e85214ad9a82a8e092afa5da86620a30a5464"
+        },
+        {
+          "entry_id": "qwen3.6-no-reasoning",
+          "dump_candidates": [
+            "baselines/task1_prededup_and_enhy_fix/qwen36_no_thinking_task1__pre_dedup_pre_enhy_fix"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "48bb6e29a73339ed876af1e45fb62b8cb6084db351a0690aaacd20d1c7c70b1b",
+          "model_card_member": "baselines/task2/qwen36_no_thinking_task2/model_card.json",
+          "snapshot_policy": "Historical Task 3 payload; do not change Task 1/2 paper defaults.",
+          "historical_model_card_sha256": "58a5c09b0c0e05c1fa20bcd8071515f1f397ed01b23562d981d1d1213c041f7b"
+        },
+        {
+          "entry_id": "qwen3.6-reasoning",
+          "dump_candidates": [
+            "baselines/task1_prededup_and_enhy_fix/qwen_task1__pre_dedup_pre_enhy_fix"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "5cd3860c6ac7e5bde987da4122b4ebfece6743c9493b6194a0b880a4bdede91c",
+          "model_card_member": "baselines/task2/qwen_task2/model_card.json",
+          "snapshot_policy": "Historical Task 3 payload; do not change Task 1/2 paper defaults.",
+          "historical_model_card_sha256": "f3282d198761dce7e533b4ed0cfcdbbc8c230d47ef1f4ffaf48a8099abaa7713"
+        },
+        {
+          "entry_id": "xcomet-xl-no-reference",
+          "dump_candidates": [
+            "baselines/task1_prededup_and_enhy_fix/xcomet_xl_no_ref_task1__pre_dedup_pre_enhy_fix"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "8786873b5d508a1a136c6a976902c3cdf2f05c0e0214ddb2ef06e30e71a184ee",
+          "model_card_member": "baselines/task2/xcomet_xl_no_ref_task2/model_card.json",
+          "snapshot_policy": "Historical Task 3 payload; do not change Task 1/2 paper defaults.",
+          "historical_model_card_sha256": "9f6de8c111a83bedb62b16d6796ab62f9ae3b2a0b9c405952dfae5eaed11fe15"
+        },
+        {
+          "entry_id": "xcomet-xxl-no-reference",
+          "dump_candidates": [
+            "baselines/task1_prededup_and_enhy_fix/xcomet_xxl_no_ref_task1__pre_dedup_pre_enhy_fix"
+          ],
+          "prediction_filename": "predictions.jsonl",
+          "historical_prediction_sha256": "f825a52f600d75dea6e8712d208d2f9ebc9966f683265cc141f3f0e6cb11f172",
+          "model_card_member": "baselines/task2/xcomet_xxl_no_ref_task2/model_card.json",
+          "snapshot_policy": "Historical Task 3 payload; do not change Task 1/2 paper defaults.",
+          "historical_model_card_sha256": "547d64beccdc103669b48a668dda2345082c693eb1e07aa1c5c4b8051e1a6d72"
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "submissions/metrics_by_language.csv",
+      "historical_path": "results/submissions/metrics_by_language.csv",
+      "keys": [
+        "submission_id",
+        "language_pair"
+      ],
+      "columns": [
+        "submission_id",
+        "language_pair",
+        "inventory_items",
+        "annotated_items",
+        "item_coverage",
+        "inventory_item_systems",
+        "annotated_item_systems",
+        "item_system_coverage",
+        "human_assessments",
+        "gold_error_free",
+        "gold_error",
+        "true_positive",
+        "false_positive",
+        "false_negative",
+        "true_negative",
+        "mcc",
+        "precision",
+        "recall",
+        "f1"
+      ],
+      "rows": 174,
+      "projection_sha256": "ef6aee1cf5e833db77e756e2f3fd2baa7583fed4d0ea81c90a4926e2620f63b7",
+      "historical_file_sha256": "d6de951e4536bb00fa1b69ef2515a979d22a25866b8aaf1821465783ecd824fa"
+    },
+    {
+      "path": "task1_converted/metrics_by_language.csv",
+      "historical_path": "results/task1_converted/metrics_by_language.csv",
+      "keys": [
+        "submission_id",
+        "language_pair"
+      ],
+      "columns": [
+        "submission_id",
+        "language_pair",
+        "inventory_items",
+        "annotated_items",
+        "item_coverage",
+        "inventory_item_systems",
+        "annotated_item_systems",
+        "item_system_coverage",
+        "human_assessments",
+        "gold_error_free",
+        "gold_error",
+        "true_positive",
+        "false_positive",
+        "false_negative",
+        "true_negative",
+        "mcc",
+        "precision",
+        "recall",
+        "f1"
+      ],
+      "rows": 163,
+      "projection_sha256": "bbb17fcda7ba046f81c1e658b5ddf86245245d0267640868bfb58f7ce9ad7635",
+      "historical_file_sha256": "215665b10a43da97ac18c00dc4133ec330c07391a90837361ba2bd16285bbbb2"
+    },
+    {
+      "path": "task2_converted/metrics_by_language.csv",
+      "historical_path": "results/task2_converted/metrics_by_language.csv",
+      "keys": [
+        "submission_id",
+        "language_pair"
+      ],
+      "columns": [
+        "submission_id",
+        "threshold",
+        "comparison",
+        "language_pair",
+        "inventory_items",
+        "annotated_items",
+        "item_coverage",
+        "inventory_item_systems",
+        "annotated_item_systems",
+        "item_system_coverage",
+        "human_assessments",
+        "gold_error_free",
+        "gold_error",
+        "true_positive",
+        "false_positive",
+        "false_negative",
+        "true_negative",
+        "mcc",
+        "precision",
+        "recall",
+        "f1"
+      ],
+      "rows": 264,
+      "projection_sha256": "d869d712aa889d60c95ba8a315ec046acdca733017dae39257ec9c5dd13b5992",
+      "historical_file_sha256": "8785a7bd7729102abc480f4bec2d5d8ca8a174e884403dbf5794529eece73619"
+    },
+    {
+      "path": "task1_baselines_converted/metrics_by_language.csv",
+      "historical_path": "results/task1_baselines_converted/metrics_by_language.csv",
+      "keys": [
+        "entry_key",
+        "language_pair"
+      ],
+      "columns": [
+        "entry_key",
+        "language_pair",
+        "inventory_items",
+        "annotated_items",
+        "item_coverage",
+        "inventory_item_systems",
+        "annotated_item_systems",
+        "item_system_coverage",
+        "human_assessments",
+        "gold_error_free",
+        "gold_error",
+        "true_positive",
+        "false_positive",
+        "false_negative",
+        "true_negative",
+        "mcc",
+        "precision",
+        "recall",
+        "f1"
+      ],
+      "rows": 163,
+      "projection_sha256": "2faac1d22ddacb438c29e390c5751a2c7cdeaf5fdcabe709fa2a90e4f73f3935",
+      "historical_file_sha256": "7a04c1a11f72f5332d8b1b010ab763388686d97196962eb8ef5d31d039891c9b"
+    },
+    {
+      "path": "task2_baselines_converted/metrics_by_language.csv",
+      "historical_path": "results/task2_baselines_converted/metrics_by_language.csv",
+      "keys": [
+        "entry_key",
+        "language_pair"
+      ],
+      "columns": [
+        "entry_key",
+        "threshold",
+        "comparison",
+        "language_pair",
+        "inventory_items",
+        "annotated_items",
+        "item_coverage",
+        "inventory_item_systems",
+        "annotated_item_systems",
+        "item_system_coverage",
+        "human_assessments",
+        "gold_error_free",
+        "gold_error",
+        "true_positive",
+        "false_positive",
+        "false_negative",
+        "true_negative",
+        "mcc",
+        "precision",
+        "recall",
+        "f1"
+      ],
+      "rows": 163,
+      "projection_sha256": "c58b77a9779b36b1fc9bc7219c57d9cbb712144fe4ea6a0914108cbcaebdb168",
+      "historical_file_sha256": "b662147fd01775b8545914595ca7053ca5d34d813d8068d4a12abbf4d3c16c69"
+    },
+    {
+      "path": "submissions/human_reference_summary.csv",
+      "historical_path": "results/submissions/human_reference_summary.csv",
+      "keys": [
+        "language_pair"
+      ],
+      "columns": [
+        "language_pair",
+        "inventory_items",
+        "annotated_items",
+        "item_coverage",
+        "inventory_item_systems",
+        "annotated_item_systems",
+        "item_system_coverage",
+        "human_assessments",
+        "error_free",
+        "error",
+        "ordinary_spans",
+        "omission_markers",
+        "instruction_error_markers"
+      ],
+      "rows": 21,
+      "projection_sha256": "aa12ca9234d12a52a906978db7d82dc3bd1cf6ba1c4f79f7aa2e4546dd97fb2d",
+      "historical_file_sha256": "e9c0c6a5992195161cb9232467b677ee0a71ce9f39ab6bf2b6f38ec9aad556eb"
+    },
+    {
+      "path": "latex/table1_official_ranking.csv",
+      "historical_path": "results/latex/table1_official_ranking.csv",
+      "keys": [
+        "track",
+        "entry_id"
+      ],
+      "columns": [
+        "rank",
+        "track",
+        "entry_id",
+        "n_pairs",
+        "mcc",
+        "precision",
+        "recall",
+        "f1"
+      ],
+      "rows": 18,
+      "projection_sha256": "cf24916a4d67a6961b8eaefad7dcf5d3805a607634fa23d7315bcd5076224ede",
+      "historical_file_sha256": "a517ae689d98851edfd71751a3fe2cca7fc50f978e68b551b01591f36a62830a"
+    },
+    {
+      "path": "latex/table3_priority_all_tracks.csv",
+      "historical_path": "results/latex/table3_priority_all_tracks.csv",
+      "keys": [
+        "track",
+        "entry_id"
+      ],
+      "columns": [
+        "rank",
+        "track",
+        "entry_id",
+        "n_pairs",
+        "mcc",
+        "precision",
+        "recall",
+        "f1"
+      ],
+      "rows": 34,
+      "projection_sha256": "475812b88dab8a023b2dee97b94938fe7a9aef98ddbf9407296d32f774b07501",
+      "historical_file_sha256": "fdc6754d53500c267c57f27b1afc2f6c5fa5c2a309ddeae91ed882808278a963"
+    },
+    {
+      "path": "latex/table4_all_pairs.csv",
+      "historical_path": "results/latex/table4_all_pairs.csv",
+      "keys": [
+        "track",
+        "entry_id"
+      ],
+      "columns": [
+        "rank",
+        "track",
+        "entry_id",
+        "n_pairs",
+        "mcc",
+        "precision",
+        "recall",
+        "f1"
+      ],
+      "rows": 25,
+      "projection_sha256": "e63396c53dabc071f560d4552396a61c777d646fdf95e6592c98e98825f198bc",
+      "historical_file_sha256": "e97675e9d4a54a116acdbc8238006a65e2263d46c14bb0839e5131bf6a75a594"
+    },
+    {
+      "path": "latex/significance_clusters.csv",
+      "historical_path": "results/latex/significance_clusters.csv",
+      "keys": [
+        "table",
+        "metric_key"
+      ],
+      "columns": [
+        "table",
+        "metric_key",
+        "short_name",
+        "rank",
+        "cluster",
+        "mcc"
+      ],
+      "rows": 77,
+      "projection_sha256": "41e36592bd6a4598ce941f9c648e485466cdd096a8e035ca993eba5201653701",
+      "historical_file_sha256": "ca7308e4a80f30cbe1f6c77f82e33e6fa07753cd0542ee04fa8ebcab116a574f"
+    },
+    {
+      "path": "threshold/threshold_summary.csv",
+      "historical_path": "experiments/task2_threshold_results/threshold_summary.csv",
+      "keys": [
+        "track",
+        "entry_id"
+      ],
+      "columns": [
+        "track",
+        "entry_id",
+        "uses_reference",
+        "language_pairs",
+        "official_labels",
+        "annotated_items",
+        "annotated_item_systems",
+        "human_assessments",
+        "gold_error_free_rate",
+        "source_score_min",
+        "source_score_max",
+        "observed_unique_scores",
+        "declared_comparison",
+        "declared_threshold",
+        "declared_pooled_mcc",
+        "declared_macro_language_mcc",
+        "optimal_comparison",
+        "optimal_threshold",
+        "optimal_pooled_mcc",
+        "optimal_macro_language_mcc",
+        "language_optimal_macro_mcc",
+        "apparent_pooled_mcc_delta",
+        "pooled_optimum_macro_language_mcc_delta",
+        "language_optimal_macro_mcc_delta_vs_declared",
+        "language_optimal_macro_mcc_delta_vs_pooled_optimum",
+        "optimal_exact_plateau_cutpoints",
+        "near_optimal_tolerance",
+        "near_optimal_threshold_min",
+        "near_optimal_threshold_max",
+        "near_optimal_cutpoints",
+        "cv_folds",
+        "cv_item_grouped_pooled_mcc",
+        "cv_pooled_mcc_delta_vs_declared",
+        "cv_selected_threshold_median",
+        "cv_selected_threshold_min",
+        "cv_selected_threshold_max",
+        "true_positive_declared",
+        "false_positive_declared",
+        "false_negative_declared",
+        "true_negative_declared",
+        "true_positive_optimal",
+        "false_positive_optimal",
+        "false_negative_optimal",
+        "true_negative_optimal"
+      ],
+      "rows": 21,
+      "projection_sha256": "8b8a87208b24861cebdb16af97b178d5684ca52472513efd827abd4ce10a0b15",
+      "historical_file_sha256": "7065e711c9c81c247da6a521576bbf774411b384fbd7489683c3de73efa30d98"
+    },
+    {
+      "path": "threshold/per_language_threshold_summary.csv",
+      "historical_path": "experiments/task2_threshold_results/per_language_threshold_summary.csv",
+      "keys": [
+        "track",
+        "entry_id",
+        "language_pair"
+      ],
+      "columns": [
+        "track",
+        "entry_id",
+        "language_pair",
+        "human_assessments",
+        "source_score_min",
+        "source_score_max",
+        "observed_unique_scores",
+        "declared_mcc",
+        "pooled_optimal_threshold_mcc",
+        "language_optimal_threshold",
+        "language_optimal_mcc",
+        "language_optimal_mcc_delta_vs_declared",
+        "language_optimal_mcc_delta_vs_pooled_optimum",
+        "true_positive_language_optimal",
+        "false_positive_language_optimal",
+        "false_negative_language_optimal",
+        "true_negative_language_optimal"
+      ],
+      "rows": 168,
+      "projection_sha256": "37d3559507796d72354e3ce0ce480539a9fab9d7d5dcfcc4cb27efcd2a3a25ee",
+      "historical_file_sha256": "109cc984ca9c7aaea240ac0e399d2c5471c633b84111f048984031fd467ad6d8"
+    }
+  ],
+  "remaining_gaps": [
+    "The original ZIP lacks participant conversion fields. A temporary explicitly authorized repair from hash-verified local cards is supported; the archive author still needs to restore these fields for standalone ZIP-only replay.",
+    "Historical baseline payloads are byte-identical under baselines/task1_prededup_and_enhy_fix, not the current/deduplicated snapshots. The Task 3 catalog pins their paths without changing Task 1/2 defaults.",
+    "Original ZIP wrappers, private directory names, full consent schemas and parser-checkout audits are not distributed. Release runners use payload/member and staged-file provenance instead.",
+    "Reviewed base-model overrides are packaged from the original analysis configuration; some underlying model names cannot be reconstructed from the sanitized cards alone.",
+    "Historical PDF bytes contain renderer/time-dependent metadata. Verify numeric tables, selected figure content and vector rendering, not PDF-byte identity.",
+    "Archival WMT24/July-dump experiments and GPU regeneration of submitted predictions are outside the frozen current-results scope and are not all supported by this ZIP."
+  ],
+  "human_reference": {
+    "extra_assessments": 22657,
+    "groups": 21,
+    "records": 7250,
+    "repeated_keys": 19080,
+    "screens": 57258,
+    "selected_error": 118989,
+    "selected_error_free": 52785,
+    "selected_keys": 149117,
+    "selected_labels": 171774
+  },
+  "presentation_artifacts": [
+    {
+      "path": "threshold/paper_figures/paper_baseline_conversion_deltas.tex",
+      "historical_path": "experiments/task2_threshold_results/paper_figures/paper_baseline_conversion_deltas.tex",
+      "sha256": "9729acf7a8e5a52e78cc68030cd156f767691f4069d22a7231806df269f9b6c3"
+    }
+  ]
+}

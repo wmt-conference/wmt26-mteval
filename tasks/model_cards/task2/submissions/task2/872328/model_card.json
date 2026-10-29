@@ -1,0 +1,92 @@
+[
+  {
+    "question": "Organization name",
+    "required": true,
+    "answer": "Algebras"
+  },
+  {
+    "question": "Submission name",
+    "required": true,
+    "answer": "fluency2-gemini35-esa"
+  },
+  {
+    "question": "Submission description (a short paragraph)",
+    "required": true,
+    "answer": "fluency2-gemini35-esa: Gemini 3.5 Flash fluency2 judge with fluency201 (γ=1.8, cap 9) display transform; ESA via WMT25 linear calib on fluency201 + moment-match to WMT25 score marginal (avoids ESA=100 saturation). Official 21 LPs + challenge. Task3 threshold 85 inclusive. Unscored hyps (~4% official) filled with ESA=50.0 fallback."
+  },
+  {
+    "question": "Does your system use the provided reference translations in any form? (true|false)",
+    "required": true,
+    "answer": "false"
+  },
+  {
+    "question": "If your system uses reference translations, please briefly describe which types of references you use (native|postedit|pseudo) and how you use them.",
+    "required": false,
+    "answer": ""
+  },
+  {
+    "question": "Is an ensemble (true|false)",
+    "required": true,
+    "answer": "false"
+  },
+  {
+    "question": "Is supervised (did you fine-tune your model?) (true|false)",
+    "required": true,
+    "answer": "false"
+  },
+  {
+    "question": "Is based on open-weight models (true|false)",
+    "required": true,
+    "answer": "false"
+  },
+  {
+    "question": "Model size",
+    "required": false,
+    "answer": ""
+  },
+  {
+    "question": "Closed-source model name (e.g. GPT-5.6-luna)",
+    "required": false,
+    "answer": "gemini-3.5-flash"
+  },
+  {
+    "question": "Closed-source API provider (Who is the provider/host for this API? e.g. AWS/Azure/OpenAI/OpenRouter)",
+    "required": false,
+    "answer": "Google AI Studio / Gemini API"
+  },
+  {
+    "question": "Is the submitted system open-source? (true|false)",
+    "required": true,
+    "answer": "false"
+  },
+  {
+    "question": "Provide link to the submitted system if you have any",
+    "required": false,
+    "answer": ""
+  },
+  {
+    "question": "Allow automatic conversion from Task 1 to Task 2 (true|false)",
+    "required": true,
+    "answer": "false"
+  },
+  {
+    "question": "Allow automatic conversion from Task 1 to Task 3 (true|false)",
+    "required": true,
+    "answer": "false"
+  },
+  {
+    "question": "Allow automatic conversion from Task 2 to Task 3 (true|false)",
+    "required": true,
+    "answer": "true"
+  },
+  {
+    "question": "Task 2 to 3 conversion threshold (everything above this score will be regarded as error-free)",
+    "required": false,
+    "answer": "70"
+  },
+  {
+    "question": "Should the above threshold be inclusive (≥) or exclusive (>)?",
+    "required": false,
+    "answer": "inclusive"
+  }
+]
